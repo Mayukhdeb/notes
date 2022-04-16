@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>Knowledge Neurons - Writing</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/writing/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/writing/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/writing/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>Knowledge Neurons</h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Apr 16, 2022
+  
+</span>
+      </div>
+      <br>
+      
+    <h1 id="knowledge-neurons">Knowledge Neurons</h1>
+<p>The knowledge neurons paper asks the following question:</p>
+<p><em>Given an output <code>y</code> from an intermediate layer, how can we determine the neurons which contributed the most/least to the prediction ?</em></p>
+<p>The neurons which contribute the most to the &ldquo;fact&rdquo; mentioned by the model are generally tagged as the &ldquo;<em>knowledge neurons</em>&quot;.</p>
+<h2 id="procedure-to-find-knowledge-neurons">Procedure to find knowledge neurons</h2>
+<ol>
+<li>
+<p>Produce <code>n</code> different and diverse prompts expressing this fact</p>
+</li>
+<li>
+<p>For each prompt, calculate the attribution score of each intermediate neurons</p>
+</li>
+<li>
+<p>For each prompt, set an attribution score threshold <code>t</code> and retain only neurons with attribution scores greater than <code>t</code>, which are coarse knowledge neurons</p>
+</li>
+<li>
+<p>We design our knowledge attribution method based on integrated gradients to evaluate the true contribution of each specific intermediate neuron in FFNs (Feed Forward Networks) to the final output.</p>
+</li>
+<li>
+<p>Considering coarse knowledge neurons of all prompts, set a sharing percentage threshold and retain only neurons shared by more than prompts. The finally retained neurons are true knowledge neurons, where the fact is located.</p>
+</li>
+</ol>
+<h2 id="drawbacks">Drawbacks:</h2>
+<ol>
+<li>
+<p>Generally this method <strong>does not work well with a single input prompt</strong>. It needs multiple sentences which have the same meaning but written differently in order to work effectively. Much like augmenting images in gradcam/IntegratedGradients to generate smoother heatmaps.  One interesting way to possibly fix this issue would be to use something like NoiseGrad in the layers to get smoother outputs with a smaller amount of alt sentences.</p>
+</li>
+<li>
+<p>Another drawback is the fact that is a <strong>localised explanation method</strong>, which can encapsulate only a small part of the model at a given instance. We can potentially find a way to find an extended &ldquo;knowledge neuron map&rdquo; which spans though multiple layers of the model.</p>
+</li>
+</ol>
+<h2 id="other-interesting-facts">Other interesting facts:</h2>
+<ul>
+<li>
+<p>Suppressing and amplifying knowledge neurons can control the expressions of the corresponding knowledge, without affecting other facts.</p>
+</li>
+<li>
+<p>Such knowledge surgery in pretrained Transformers enables us to update incorrect knowledge, and to erase unethical knowledge.</p>
+</li>
+</ul>
+<!-- # What can I try out ? 
+
+- figure out how to implement knowledge neurons in gpt 2 colab -- maybe look into knowledge neurons eleuther source code ? 
+- what happens if we use noisegrad along with integrated gradients while looking for knowledge neurons ? 
+- how do knowledge neurons from one layer "talk to" the knowledge neurons in the next layer ?
+- can we "see" knowledge being extracted and passed from one layer to another ?
+- attribute knowledge neurons from layer i+1 to knowledge neurons of layer i.  -->
+<h2 id="resources">Resources:</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2104.08696">The original paper on arxiv</a></li>
+<li><a href="https://blog.fiddler.ai/2020/04/video-ai-explained-what-are-integrated-gradients/">Intro to integrated gradients</a> Nice warm-up article explaining how integrated gradients work and why they make sense.</li>
+<li><a href="https://github.com/EleutherAI/knowledge-neurons">EleutherAI/knowledge-neurons</a> a python library where they implemented the method for some transformers.</li>
+</ul>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/writing//tags/paper/">paper</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/writing/about">Mayukh Deb</a>
+        &copy;
+        2022
+      </p>
+  </div>
+</footer></body>
+</html>

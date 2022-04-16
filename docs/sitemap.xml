@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/post/2022-04-16-attention_flow/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/post/2022-04-16-generic_attention_model_explainability/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/tags/index/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/post/2022-04-16-interpreting-language-models-with-contrastive-explanations/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/post/2022-04-16-knowledge_neurons/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/post/2022-04-16-lost-unsupervised-object-detection/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/tags/paper/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/tags/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/post/2022-04-16-transformer_interpretability_beyond_attention/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/post/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/</loc>
+    <lastmod>2021-10-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/about/</loc>
+    <lastmod>2021-10-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/writing/series/</loc>
+  </url>
+  
+</urlset>

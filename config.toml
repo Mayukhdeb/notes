@@ -1,0 +1,22 @@
+baseURL = "https://mayukhdeb.github.io/writing/"
+title = "Writing"
+paginate = 3
+languageCode = "en"
+DefaultContentLanguage = "en"
+enableInlineShortcodes = true
+footnoteReturnLinkContents = "^"
+publishDir = "docs"
+
+[author]
+  name = "Mayukh Deb"
+  abstract = "This is a place to keep my notes, mostly from the papers I read and find interesting."
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+series = "series"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

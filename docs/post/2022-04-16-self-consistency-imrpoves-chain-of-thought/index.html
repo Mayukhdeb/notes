@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>Self-Consistency Improves Chain of Thought Reasoning in LMs - Writing</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/writing/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/writing/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/writing/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>Self-Consistency Improves Chain of Thought Reasoning in LMs</h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Apr 16, 2022
+  
+</span>
+      </div>
+      <br>
+      
+    <h1 id="self-consistency-improves-chain-of-thought-reasoning-in-language-models">Self-Consistency Improves Chain of Thought Reasoning in Language Models</h1>
+<p>One issue with large language models has been to find a way to understand and leverage the concept of &ldquo;chain of thought&rdquo; (i.e reasoning).</p>
+<p>The idea behind this paper is to make the LLM generate multiple completions (i.e chains of thought) and then select the result with the most highest number of occurrences among the samples.</p>
+<p>highest number of occurrences -&gt; &ldquo;self consistency&rdquo;</p>
+<h2 id="how-does-it-work-">How does it work ?</h2>
+<p>It&rsquo;s all mostly prompt and completion engineering:</p>
+<ol>
+<li>We prepare a few-shot prompt which would contain at least one example of the kind of &ldquo;chain of thought&rdquo; we&rsquo;re looking for.</li>
+</ol>
+<pre><code>Q: If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot?
+A: There are 3 cars in the parking lot already. 2 more arrive. Now there are 3 + 2 = 5 cars. The answer is 5.
+
+Q: Janet’s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells the remainder for $2 per egg. How much does she make every day?
+A:
+</code></pre><ol start="2">
+<li>
+<p>Then, we feed this prompt into the model and collect a large set of possible completions via sampling.</p>
+</li>
+<li>
+<p>From this sampled set of completions, we pick out the most consistent answer using a majority vote.</p>
+</li>
+</ol>
+<p>If the possible final verdicts (for the given prompt) are <code>[18, 14, 18]</code>, then we pick 18. It&rsquo;s that simple.</p>
+<h2 id="resources">Resources:</h2>
+<ul>
+<li>A nice dataset of binary questions and their reasons: <a href="https://github.com/google/BIG-bench/blob/main/bigbench/benchmark_tasks/strategyqa/task.json">https://github.com/google/BIG-bench/blob/main/bigbench/benchmark_tasks/strategyqa/task.json</a></li>
+</ul>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/writing//tags/index/">index</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/writing/about">Mayukh Deb</a>
+        &copy;
+        2022
+      </p>
+  </div>
+</footer></body>
+</html>
