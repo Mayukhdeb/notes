@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Writing</title>
-    <link>https://mayukhdeb.github.io/writing/</link>
-    <description>Recent content on Writing</description>
+    <title>Notes</title>
+    <link>https://mayukhdeb.github.io/notes/</link>
+    <description>Recent content on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sun, 24 Oct 2021 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://mayukhdeb.github.io/writing/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mayukhdeb.github.io/notes/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Attention Rollout</title>
-      <link>https://mayukhdeb.github.io/writing/post/2022-04-16-attention_flow/</link>
+      <link>https://mayukhdeb.github.io/notes/post/2022-04-16-attention_flow/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/writing/post/2022-04-16-attention_flow/</guid>
-      <description>Attention Rollout for explaining transformers How is it better than just viewing raw attention maps ? Viewing raw attention maps as a way to explain transformers does not take into account the fact that we also have residual connections in the model. When we only use attention weights to approximate the flow of information in Transformers, we ignore the residual connections. But these connections play a significant role in tying corresponding positions in different layers.</description>
+      <guid>https://mayukhdeb.github.io/notes/post/2022-04-16-attention_flow/</guid>
+      <description>How is it better than just viewing raw attention maps ? Viewing raw attention maps as a way to explain transformers does not take into account the fact that we also have residual connections in the model. When we only use attention weights to approximate the flow of information in Transformers, we ignore the residual connections. But these connections play a significant role in tying corresponding positions in different layers.</description>
     </item>
     
     <item>
       <title>Generic Attention-model Explainability</title>
-      <link>https://mayukhdeb.github.io/writing/post/2022-04-16-generic_attention_model_explainability/</link>
+      <link>https://mayukhdeb.github.io/notes/post/2022-04-16-generic_attention_model_explainability/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/writing/post/2022-04-16-generic_attention_model_explainability/</guid>
+      <guid>https://mayukhdeb.github.io/notes/post/2022-04-16-generic_attention_model_explainability/</guid>
       <description>Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers Can be used to explain models like CLIP. This is how it works:
   First, let us define an input image x_image and a list of input texts [a, b, c] where a, b and c can be any strings which can be tokenized and fed into the model.
 input_texts = [&amp;#34;a bald man&amp;#34;, &amp;#34;a rocket in space&amp;#34;, &amp;#34;a man&amp;#34;]   We do a forward pass with a tokenized image and text(s) on CLIP, and obtain logits_per_image and logits_per_text.</description>
@@ -33,20 +33,20 @@ input_texts = [&amp;#34;a bald man&amp;#34;, &amp;#34;a rocket in space&amp;#34;
     
     <item>
       <title>Interpreting LMs with contrastive explanations</title>
-      <link>https://mayukhdeb.github.io/writing/post/2022-04-16-interpreting-language-models-with-contrastive-explanations/</link>
+      <link>https://mayukhdeb.github.io/notes/post/2022-04-16-interpreting-language-models-with-contrastive-explanations/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/writing/post/2022-04-16-interpreting-language-models-with-contrastive-explanations/</guid>
+      <guid>https://mayukhdeb.github.io/notes/post/2022-04-16-interpreting-language-models-with-contrastive-explanations/</guid>
       <description>Interpreting language models with contrastive explanations interpretability methods commonly used for other NLP tasks like text classification, such as gradient-based saliency maps are not as informative for LM predictions
 In general, language modeling has a large output space and a high complexity compared to other NLP tasks; at each time step, the LM chooses one word out of all vocabulary items. This contrasts with text classification (where the output space is smaller).</description>
     </item>
     
     <item>
       <title>Knowledge Neurons</title>
-      <link>https://mayukhdeb.github.io/writing/post/2022-04-16-knowledge_neurons/</link>
+      <link>https://mayukhdeb.github.io/notes/post/2022-04-16-knowledge_neurons/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/writing/post/2022-04-16-knowledge_neurons/</guid>
+      <guid>https://mayukhdeb.github.io/notes/post/2022-04-16-knowledge_neurons/</guid>
       <description>Knowledge Neurons The knowledge neurons paper asks the following question:
 Given an output y from an intermediate layer, how can we determine the neurons which contributed the most/least to the prediction ?
 The neurons which contribute the most to the &amp;ldquo;fact&amp;rdquo; mentioned by the model are generally tagged as the &amp;ldquo;knowledge neurons&amp;quot;.
@@ -56,10 +56,10 @@ Procedure to find knowledge neurons   Produce n different and diverse prompts ex
     
     <item>
       <title>LOST - Localizing objects with self supervised transformers</title>
-      <link>https://mayukhdeb.github.io/writing/post/2022-04-16-lost-unsupervised-object-detection/</link>
+      <link>https://mayukhdeb.github.io/notes/post/2022-04-16-lost-unsupervised-object-detection/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/writing/post/2022-04-16-lost-unsupervised-object-detection/</guid>
+      <guid>https://mayukhdeb.github.io/notes/post/2022-04-16-lost-unsupervised-object-detection/</guid>
       <description>Lost - Localizing objects with self supervised transformers and no labels The core idea is to be able to use the hidden info within transformers to localize objects (&amp;ldquo;subjects&amp;rdquo;) within input images (much like a YOLO model but without further training).
 How does it work ?   First, we assume that there&amp;rsquo;s at least one object to be found in the image.
   it relies on a selection of patches that are likely to belong to an object.</description>
@@ -67,10 +67,10 @@ How does it work ?   First, we assume that there&amp;rsquo;s at least one object
     
     <item>
       <title>Self-Consistency Improves Chain of Thought Reasoning in LMs</title>
-      <link>https://mayukhdeb.github.io/writing/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</link>
+      <link>https://mayukhdeb.github.io/notes/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/writing/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</guid>
+      <guid>https://mayukhdeb.github.io/notes/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</guid>
       <description>Self-Consistency Improves Chain of Thought Reasoning in Language Models One issue with large language models has been to find a way to understand and leverage the concept of &amp;ldquo;chain of thought&amp;rdquo; (i.e reasoning).
 The idea behind this paper is to make the LLM generate multiple completions (i.e chains of thought) and then select the result with the most highest number of occurrences among the samples.
 highest number of occurrences -&amp;gt; &amp;ldquo;self consistency&amp;rdquo;</description>
@@ -78,20 +78,20 @@ highest number of occurrences -&amp;gt; &amp;ldquo;self consistency&amp;rdquo;</
     
     <item>
       <title>Transformer intrepretability beyond attention </title>
-      <link>https://mayukhdeb.github.io/writing/post/2022-04-16-transformer_interpretability_beyond_attention/</link>
+      <link>https://mayukhdeb.github.io/notes/post/2022-04-16-transformer_interpretability_beyond_attention/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/writing/post/2022-04-16-transformer_interpretability_beyond_attention/</guid>
+      <guid>https://mayukhdeb.github.io/notes/post/2022-04-16-transformer_interpretability_beyond_attention/</guid>
       <description>Transformer intrepretability beyond attention Disadvantages of attention rollout and LRP Irrelevant tokens often get highlighted
 The main challenge in assigning attributions based on attentions is that attentions are combining non-linearly from one layer to the next. The rollout method assumes that attentions are combined linearly and considers paths along the pairwise attention graph. We observe that this method often leads to an emphasis on irrelevant tokens since even average attention scores can be attenuated.</description>
     </item>
     
     <item>
       <title>About</title>
-      <link>https://mayukhdeb.github.io/writing/about/</link>
+      <link>https://mayukhdeb.github.io/notes/about/</link>
       <pubDate>Sun, 24 Oct 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/writing/about/</guid>
+      <guid>https://mayukhdeb.github.io/notes/about/</guid>
       <description>I really like to create things, be it through code or art. The system never taught me to write &amp;ldquo;about&amp;rdquo; myself, so here am I starting at the screen thinking of what to write.</description>
     </item>
     

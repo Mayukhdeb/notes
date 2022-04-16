@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>index on Writing</title>
-    <link>https://mayukhdeb.github.io/writing/tags/index/</link>
-    <description>Recent content in index on Writing</description>
+    <title>index on Notes</title>
+    <link>https://mayukhdeb.github.io/notes/tags/index/</link>
+    <description>Recent content in index on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sat, 16 Apr 2022 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://mayukhdeb.github.io/writing/tags/index/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://mayukhdeb.github.io/notes/tags/index/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Self-Consistency Improves Chain of Thought Reasoning in LMs</title>
-      <link>https://mayukhdeb.github.io/writing/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</link>
+      <link>https://mayukhdeb.github.io/notes/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/writing/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</guid>
+      <guid>https://mayukhdeb.github.io/notes/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</guid>
       <description>Self-Consistency Improves Chain of Thought Reasoning in Language Models One issue with large language models has been to find a way to understand and leverage the concept of &amp;ldquo;chain of thought&amp;rdquo; (i.e reasoning).
 The idea behind this paper is to make the LLM generate multiple completions (i.e chains of thought) and then select the result with the most highest number of occurrences among the samples.
 highest number of occurrences -&amp;gt; &amp;ldquo;self consistency&amp;rdquo;</description>
@@ -24,10 +24,10 @@ highest number of occurrences -&amp;gt; &amp;ldquo;self consistency&amp;rdquo;</
     
     <item>
       <title>Writing</title>
-      <link>https://mayukhdeb.github.io/writing/post/</link>
+      <link>https://mayukhdeb.github.io/notes/post/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/writing/post/</guid>
+      <guid>https://mayukhdeb.github.io/notes/post/</guid>
       <description></description>
     </item>
     

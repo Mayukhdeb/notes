@@ -1,5 +1,5 @@
-baseURL = "https://mayukhdeb.github.io/writing/"
-title = "Writing"
+baseURL = "https://mayukhdeb.github.io/notes/"
+title = "Notes"
 paginate = 3
 languageCode = "en"
 DefaultContentLanguage = "en"
