@@ -1,4 +1,4 @@
-baseURL = "https://mayukhdeb.github.io/notes"
+baseURL = "https://mayukhdeb.github.io/notes/"
 title = "Notes"
 paginate = 3
 languageCode = "en"
