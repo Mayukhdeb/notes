@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>Language Models (mostly) Know What they know</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-14-07-lms-mostly-know-what-they-know/</link>
+      <pubDate>Thu, 14 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-14-07-lms-mostly-know-what-they-know/</guid>
+      <description>Can we make LMs predict which questions they&amp;rsquo;ll be able to answer correctly? It is important for LLMs to &amp;ldquo;know&amp;rdquo; what they know and what they do not know. The problem is that LMs are generally never trained to say &amp;ldquo;I do not know&amp;rdquo;. But it might be possible to quantify this ability post-training.
+This is how they approach the problem:
+ Finetune models with a value head to predict the probabiility that they can answer a given question correctly.</description>
+    </item>
+    
+    <item>
       <title>Attention Rollout</title>
       <link>https://mayukhdeb.github.io/notes/post/2022-04-16-attention_flow/</link>
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>

@@ -65,7 +65,23 @@ Is the proposed answer:
 The proposed answer is:
 ```
 
-## Closing comments
+4. **On "hard questions", LMs are far more confident about the "correctness" of their answer if we provide contextual information**
+
+For example, let us consider an obscure question which is very likely to not be contained in the model's world knowledge:
+
+```
+What state’s rodeo hall of fame was established in 2013?
+```
+
+The `P(IK)` for this question is 18%, which is pretty low. However, if we prepend a wikipedia article on the Idaho Rodeo Hall of Fame on the prompt, then the `P(IK)` jumps to 78%. In simple words, the model is far more confident that it can answer an unseen question correctly if we provide it some context. 
+
+```
+Wikipedia: The Idaho Rodeo Hall of Fame was established as a 501 (c)(3) nonprofit organization on May 6, 2013. Lonnie and Charmy LeaVell are thefounders of the organization. The actual charitable nonprofit status was...
+<CROPPED>
+What state’s rodeo hall of fame was established in 2013?
+```
+
+# Closing comments
 
 All of us are trying to understand and validate the factual accuracy of the answers we obtain from LLMs. It is indeed an interesting approach to use the model itself to try and validate it's own answers, but I'm still skeptical. It's like asking "are you sure?" to a guy you already don't trust as a mechanism to get reliable answers.
 

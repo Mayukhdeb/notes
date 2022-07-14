@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>Language Models (mostly) Know What they know - Notes</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>Language Models (mostly) Know What they know</h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Jul 14, 2022
+  
+</span>
+      </div>
+      <br>
+      
+    <h1 id="can-we-make-lms-predict-which-questions-theyll-be-able-to-answer-correctly">Can we make LMs predict which questions they&rsquo;ll be able to answer correctly?</h1>
+<p>It is important for LLMs to &ldquo;know&rdquo; what they know and what they do not know. The problem is that LMs are generally never trained to say &ldquo;I do not know&rdquo;. But it might be possible to quantify this ability post-training.</p>
+<p>This is how they approach the problem:</p>
+<ol>
+<li>Finetune models with a value head to predict the probabiility that they can answer a given question correctly.</li>
+<li>Verify if the answwers provided by the LM corresponds to certain sources/hints (hints could be correct or wrong)</li>
+</ol>
+<p><strong>Some terminology</strong></p>
+<ol>
+<li><code>P(IK)</code>:  probabiility that the LM can answer a given question correctly</li>
+<li><code>P(True)</code>: probability that the model assigns to the fact that it answered a given question correctly.</li>
+</ol>
+<h1 id="obervations">Obervations:</h1>
+<ol>
+<li><strong>What are &ldquo;harder&rdquo; questions?</strong></li>
+</ol>
+<p>They&rsquo;re the questions which are less likely to be contained in the world knowledge of the model. Even if they are contained, there would be many possible &ldquo;right&rdquo; answers to it. For example: <em>&ldquo;What is the name of Daniel&rsquo;s mother?&quot;</em> is a harder question than <em>&ldquo;Who is the Chancellor of Germany?&quot;</em> simply because the first question&rsquo;s answer could basically be any name, while the 2nd question only has one valid answer that the model has probably already &ldquo;seen&rdquo; many times during training.</p>
+<ol start="2">
+<li><strong>Token sequences which ask &ldquo;harder questions&rdquo; have lower <code>P(IK)</code> scores on the last few questions</strong></li>
+</ol>
+<p>My personal belief is that this is in the very nature of how transformers work. Transformers are autocomplete machines. For questions where the model already knows the answer from world knowledge, it tends to basically get into the flow through the last few tokens before throwing out the answer.</p>
+<ol start="3">
+<li><strong>Asking models if the given answer is <code>True</code> or <code>False</code></strong></li>
+</ol>
+<p>The approach is surprisinglty simple, it&rsquo;s pretty much just prompt engineering:</p>
+<p>This is how the prompt looks like:</p>
+<pre><code>Question: Who was the first president of the United States?
+Proposed Answer: George Washington
+Is the proposed answer:
+(A) True
+(B) False
+The proposed answer is:
+</code></pre><ol start="3">
+<li><strong>Asking models if their own answers are <code>True</code> or <code>False</code></strong></li>
+</ol>
+<p>This is yet again done with prompt engineering in 2 stages:</p>
+<p>First, we sample an answer from the model:</p>
+<pre><code>Question: Who was the first president of the United States?
+Answer:
+</code></pre><p>Then, we ask the model about it&rsquo;s own answer:</p>
+<pre><code>Question: Who was the first president of the United States?
+Proposed Answer: George Washington was the first president.
+Is the proposed answer:
+(A) True
+(B) False
+The proposed answer is:
+</code></pre><ol start="4">
+<li><strong>On &ldquo;hard questions&rdquo;, LMs are far more confident about the &ldquo;correctness&rdquo; of their answer if we provide contextual information</strong></li>
+</ol>
+<p>For example, let us consider an obscure question which is very likely to not be contained in the model&rsquo;s world knowledge:</p>
+<pre><code>What state’s rodeo hall of fame was established in 2013?
+</code></pre><p>The <code>P(IK)</code> for this question is 18%, which is pretty low. However, if we prepend a wikipedia article on the Idaho Rodeo Hall of Fame on the prompt, then the <code>P(IK)</code> jumps to 78%. In simple words, the model is far more confident that it can answer an unseen question correctly if we provide it some context.</p>
+<pre><code>Wikipedia: The Idaho Rodeo Hall of Fame was established as a 501 (c)(3) nonprofit organization on May 6, 2013. Lonnie and Charmy LeaVell are thefounders of the organization. The actual charitable nonprofit status was...
+&lt;CROPPED&gt;
+What state’s rodeo hall of fame was established in 2013?
+</code></pre><h1 id="closing-comments">Closing comments</h1>
+<p>All of us are trying to understand and validate the factual accuracy of the answers we obtain from LLMs. It is indeed an interesting approach to use the model itself to try and validate it&rsquo;s own answers, but I&rsquo;m still skeptical. It&rsquo;s like asking &ldquo;are you sure?&rdquo; to a guy you already don&rsquo;t trust as a mechanism to get reliable answers.</p>
+<p>Kind of reminds me of the &ldquo;Let&rsquo;s think step by step&rdquo; trick, but now it&rsquo;s more like &ldquo;Is the given answer correct?&quot;.</p>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/notes//tags/paper/">paper</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/notes/about">Mayukh Deb</a>
+        &copy;
+        2022
+      </p>
+  </div>
+</footer></body>
+</html>

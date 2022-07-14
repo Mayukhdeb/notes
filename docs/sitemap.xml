@@ -3,6 +3,26 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-14-07-lms-mostly-know-what-they-know/</loc>
+    <lastmod>2022-07-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/notes/tags/paper/</loc>
+    <lastmod>2022-07-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/notes/tags/</loc>
+    <lastmod>2022-07-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayukhdeb.github.io/notes/post/</loc>
+    <lastmod>2022-07-14T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-attention_flow/</loc>
     <lastmod>2022-04-16T00:00:00+00:00</lastmod>
   </url>
@@ -33,27 +53,12 @@
   </url>
   
   <url>
-    <loc>https://mayukhdeb.github.io/notes/tags/paper/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</loc>
     <lastmod>2022-04-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://mayukhdeb.github.io/notes/tags/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-transformer_interpretability_beyond_attention/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/</loc>
     <lastmod>2022-04-16T00:00:00+00:00</lastmod>
   </url>
   
