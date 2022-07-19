@@ -64,8 +64,19 @@
 <p>It is fair to assume that a certain fact stored within the model is  evenly distributed among all of the computations being performed during the forward pass, but that is generally not the case. It turns out that when we corrupt the embeddings of certain input tokens, the probability of the original output changes drastically.</p>
 <p>The question is, which part of the model and the prompt was responsible for this decisive change?</p>
 <p>Let&rsquo;s try to understand this with an example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">
-</code></pre></div><p>(WIP)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Miles Davis plays the&#34;</span>
+</code></pre></div><p>Now on a normal GPT2-XL, the completion would be <code>piano</code> because Miles Davis was indeed a famous piano player.</p>
+<p>The catch is, now when we &ldquo;corrupt&rdquo; the embeddings of the subject i.e <code>Miles</code> and <code>Davis</code>, then the output gets corrupted as well (i.e the probability of <code>piano</code> decreases)</p>
+<p><strong>Side note: What do we mean by corrupting an input subject?</strong></p>
+<p>The authors corrput the subject in the prompt by adding noise to the embeddings for all tokens in the prompt that refer to the subject entity (which in our case are 2 tokens <code>[&quot;Miles&quot;, &quot;Davis&quot;]</code>)</p>
+<p>Since the input is now corrupted for some tokens along the seq dim, the hidden states of the model also get altered. In order to find which part(s) of the model was responsible for the original output (<code>piano</code>), we can now replace the specific &ldquo;corrupted hidden states&rdquo; with the original &ldquo;clean hidden states&rdquo; and see which combination leads to the highest probability of the original output.</p>
+<p>(WIP)</p>
+<h2 id="resources">Resources</h2>
+<ol>
+<li>The paper (of course): <a href="https://arxiv.org/pdf/2202.05262.pdf">https://arxiv.org/pdf/2202.05262.pdf</a></li>
+<li>Website: <a href="https://rome.baulab.info/">https://rome.baulab.info/</a></li>
+<li>Nice and elaborate walkthrough by the folks at Eleuther: <a href="https://www.youtube.com/watch?v=IkbYu_poZVE">https://www.youtube.com/watch?v=IkbYu_poZVE</a></li>
+</ol>
 
 
 

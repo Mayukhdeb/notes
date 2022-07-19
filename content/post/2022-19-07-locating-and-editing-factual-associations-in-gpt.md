@@ -37,7 +37,23 @@ The question is, which part of the model and the prompt was responsible for this
 Let's try to understand this with an example:
 
 ```python
-
+prompt = "Miles Davis plays the"
 ```
 
+Now on a normal GPT2-XL, the completion would be `piano` because Miles Davis was indeed a famous piano player.
+
+The catch is, now when we "corrupt" the embeddings of the subject i.e `Miles` and `Davis`, then the output gets corrupted as well (i.e the probability of `piano` decreases)
+
+**Side note: What do we mean by corrupting an input subject?**
+
+The authors corrput the subject in the prompt by adding noise to the embeddings for all tokens in the prompt that refer to the subject entity (which in our case are 2 tokens `["Miles", "Davis"]`)
+
+Since the input is now corrupted for some tokens along the seq dim, the hidden states of the model also get altered. In order to find which part(s) of the model was responsible for the original output (`piano`), we can now replace the specific "corrupted hidden states" with the original "clean hidden states" and see which combination leads to the highest probability of the original output.
+
 (WIP)
+
+## Resources
+
+1. The paper (of course): https://arxiv.org/pdf/2202.05262.pdf
+2. Website: https://rome.baulab.info/
+3. Nice and elaborate walkthrough by the folks at Eleuther: https://www.youtube.com/watch?v=IkbYu_poZVE
