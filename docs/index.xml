@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>Locating and Editing Factual Knowledge in GPTs</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-19-07-locating-and-editing-factual-associations-in-gpt/</link>
+      <pubDate>Tue, 19 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-19-07-locating-and-editing-factual-associations-in-gpt/</guid>
+      <description>This paper&amp;rsquo;s approach has been to develop a mechanism to identify the neuron activations that lead to a model&amp;rsquo;s factual predictions and possibly even edit existing facts.
+Key concepts and takeaways: What is a fact tuple? It is a special way to store knowledge in the form of a tuple which looks like the following:
+## (subject, relation, object) (&amp;#34;Edmunt Neupert&amp;#34;, &amp;#34;Plays the instrument&amp;#34;, &amp;#34;Piano&amp;#34;) It contains the subject (index 0), the object (index 2) and their relation (index 1).</description>
+    </item>
+    
+    <item>
       <title>Language Models (mostly) Know What they know</title>
       <link>https://mayukhdeb.github.io/notes/post/2022-14-07-lms-mostly-know-what-they-know/</link>
       <pubDate>Thu, 14 Jul 2022 00:00:00 +0000</pubDate>
