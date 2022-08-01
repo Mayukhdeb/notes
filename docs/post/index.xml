@@ -6,10 +6,20 @@
     <description>Recent content in Writing on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 19 Jul 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Aug 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mayukhdeb.github.io/notes/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The Third Wave (?)</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-08-01-the-third-wave/</link>
+      <pubDate>Mon, 01 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-08-01-the-third-wave/</guid>
+      <description>I will start by rambling a little about how learning language is harder than you think. Then I&amp;rsquo;ll move on to the main paper itself.
+Learning language is harder than you think An interesting point that was made in the article was that a language is learned not entirely through memorization. Sentences like I breaked the window are grammatically invalid, but they still manage to get the meaning accross. We manage to make a meaningful fact tuple i.</description>
+    </item>
     
     <item>
       <title>Locating and Editing Factual Knowledge in GPTs</title>
