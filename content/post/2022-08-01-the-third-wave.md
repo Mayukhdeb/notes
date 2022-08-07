@@ -40,3 +40,4 @@ Gary Marcus proposes that we should build a system that can acquire, represent, 
 In order to be actually smart, AGI would require a form of symbolic manipulation of variables in logic.
 
 (WIP)
+(WIP)

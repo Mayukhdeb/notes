@@ -60,6 +60,26 @@
 
       
         <article class="post-preview">
+  <a href="https://mayukhdeb.github.io/notes/post/2022-14-07-lms-mostly-know-what-they-know/">
+      <h2 class="post-title">Language Models (mostly) Know What they know</h2>
+  </a>
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Jul 14, 2022
+  
+</span>
+  </div>
+  <div class="post-entry">
+    
+      <p>Can we make LMs predict which questions they&rsquo;ll be able to answer correctly? It is important for LLMs to &ldquo;know&rdquo; what they know and what they do not know. The problem is that LMs are generally never trained to say &ldquo;I do not know&rdquo;. But it might be possible to quantify this ability post-training.
+This is how they approach the problem:
+ Finetune models with a value head to predict the probabiility that they can answer a given question correctly.</p>
+        <a href="https://mayukhdeb.github.io/notes/post/2022-14-07-lms-mostly-know-what-they-know/" class="post-read-more">Read More</a>
+    
+  </div>
+</article>
+      
+        <article class="post-preview">
   <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-attention_flow/">
       <h2 class="post-title">Attention Rollout</h2>
   </a>
@@ -93,25 +113,6 @@
   First, let us define an input image x_image and a list of input texts [a, b, c] where a, b and c can be any strings which can be tokenized and fed into the model.
 input_texts = [&#34;a bald man&#34;, &#34;a rocket in space&#34;, &#34;a man&#34;]   We do a forward pass with a tokenized image and text(s) on CLIP, and obtain logits_per_image and logits_per_text.</p>
         <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-generic_attention_model_explainability/" class="post-read-more">Read More</a>
-    
-  </div>
-</article>
-      
-        <article class="post-preview">
-  <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-interpreting-language-models-with-contrastive-explanations/">
-      <h2 class="post-title">Interpreting LMs with contrastive explanations</h2>
-  </a>
-  <div class="postmeta">
-    <span class="meta-post">
-  <i class="fa fa-calendar-alt"></i>Apr 16, 2022
-  
-</span>
-  </div>
-  <div class="post-entry">
-    
-      <p>Interpreting language models with contrastive explanations interpretability methods commonly used for other NLP tasks like text classification, such as gradient-based saliency maps are not as informative for LM predictions
-In general, language modeling has a large output space and a high complexity compared to other NLP tasks; at each time step, the LM chooses one word out of all vocabulary items. This contrasts with text classification (where the output space is smaller).</p>
-        <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-interpreting-language-models-with-contrastive-explanations/" class="post-read-more">Read More</a>
     
   </div>
 </article>

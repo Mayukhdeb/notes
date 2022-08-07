@@ -6,10 +6,20 @@
     <description>Recent content in paper on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 01 Aug 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Aug 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mayukhdeb.github.io/notes/tags/paper/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Parti - Scaling LLMs for Text to Image tasks</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-08-07-parti-image-generation/</link>
+      <pubDate>Sun, 07 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-08-07-parti-image-generation/</guid>
+      <description>Scaling Autoregressive Models for Content-Rich Text to Image Generation The architecture itself that&amp;rsquo;s used for parti (that&amp;rsquo;s what the authors call this model) is fairly simple. It&amp;rsquo;s a transformer encoder-decoder architecture paired with a ViT VQGAN in the end to tokenize/detokenize images.
+How do we tokenize images? For an autoregressive model to work, we basically have to convert everything to tokens. Tokenizing text is super easy. The problem in this case is that we also have to convert images into a sequence of tokens.</description>
+    </item>
     
     <item>
       <title>The Third Wave (?)</title>

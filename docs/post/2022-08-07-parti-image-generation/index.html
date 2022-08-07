@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>Parti - Scaling LLMs for Text to Image tasks - Notes</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>Parti - Scaling LLMs for Text to Image tasks</h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Aug 7, 2022
+  
+</span>
+      </div>
+      <br>
+      
+    <h1 id="scaling-autoregressive-models-for-content-rich-text-to-image-generation">Scaling Autoregressive Models for Content-Rich Text to Image Generation</h1>
+<p>The architecture itself that&rsquo;s used for parti (that&rsquo;s what the authors call this model) is fairly simple. It&rsquo;s a transformer encoder-decoder architecture paired with a ViT VQGAN in the end to tokenize/detokenize images.</p>
+<h2 id="how-do-we-tokenize-images">How do we tokenize images?</h2>
+<p>For an autoregressive model to work, we basically have to convert everything to tokens. Tokenizing text is super easy. The problem in this case is that we also have to convert images into a sequence of tokens.</p>
+<p>This tokenization of images is done by the VQGAN tokenizer. I have explained how this happens in one of my <a href="https://mayukhdeb.github.io/blog/post/an-image-is-worth-16-x-16-explained/#how-do-we-tokenize-images-">old blog posts</a>.</p>
+<p>The &ldquo;Q&rdquo; in VQGAN refers to quantized. The token space of the VQGAN is &ldquo;quantized&rdquo; to roughly 8k tokens. I think I should read the ViT VQGAN paper in case I ever have to work on image generation (which I hope might be soon).</p>
+<h2 id="how-do-we-train-such-a-model">How do we train such a model?</h2>
+<p>Essentially, we do the following for training:</p>
+<ol>
+<li>First, we assume that the input is a text, image pair <code>(T, I)</code>.</li>
+<li>We tokenize <code>I</code> using the ViT-VQGAN image tokenizer.</li>
+<li>We tokenize text and feed it into the transformer encoder.</li>
+<li>We feed the sequence of tokens of the image <code>[&lt;SoT&gt;, i1, i2, ..., iM]</code> (<code>M</code> image patches) into the transformer decoder (along with a start of sentence <code>&lt;SoT&gt;</code> token).</li>
+<li>We take the transformer-decoder&rsquo;s outputs and feed it to the image-detokenizer of the ViT-VQGAN.</li>
+<li>The image detokenizer re-constructs the image which was on the input. Let&rsquo;s call it <code>I_reconstructed</code>.</li>
+<li>The model basically gets trained as an image reconstruction model. Which later would be used for image generation somehow.</li>
+</ol>
+<p>Another thing to note, is that the paper mentions that they used an image upscaling model to resize the output image from 256x256 to 1024x1024.</p>
+<h2 id="inference">Inference</h2>
+<ol>
+<li>This time the input is just a piece of text i.e a &ldquo;prompt&rdquo;</li>
+<li>We feed the text into the transformer encoder, and feed the <code>&lt;SoT&gt;</code> token into the transformer decoder.</li>
+<li>The decoder then generates the first output image patch token <code>i1</code></li>
+<li>We then feed <code>[&lt;SoT&gt;, i1]</code> into the transformer decoder and obtain <code>i2</code>.</li>
+<li>We keep repeating steps 3 and 4 with inputs <code>[&lt;SoT&gt;, i1, i2, i3 ...]</code> until we reach <code>iM</code> where <code>M</code> is the number of image patches required to construct one image.</li>
+<li>Once we have a set of output image patch tokens <code>[i1, i2, i3, ...iM]</code>, we feed it into the ViT-VQGAN  image detokenizer and obtain the &ldquo;generated&rdquo; image.</li>
+</ol>
+<p>In a nutshell, we autoregressively generate image tokens with the decoder.</p>
+<h2 id="other-notes">Other notes</h2>
+<p>The largest possible model they trained was a 20B param model. Yannic was saying that complaining about not have the exact composition on the generated images is already like &ldquo;moving the goal post&rdquo; at this point, given how far we&rsquo;ve come from the 2018 styleGAN era.</p>
+<p>I am barely educated to make comments on how good parti or DALLE2 is, but what I understand is that words are a very lossy way to compress an idea of an image.</p>
+<p>You can compress a picture of a cat in a tree with &ldquo;cat in tree&rdquo;, the decompression just generates a picture of a cat in a tree, the loss is that it may be a different cat in a different tree.</p>
+<p>My opinion is that in order to solve the problem of compositionality, it makes sense to look into the model itself and it&rsquo;s mechanisms instead of just &ldquo;going bigger&rdquo;.</p>
+<p>Going big is what companies with deep pockets like openAI/Google can do. But to me it also sounds like a rather lazy solution, given how little effort people put into understanding these black-box-y systems.</p>
+<h2 id="resources">Resources</h2>
+<ol>
+<li>ViT + VQGAN paper: <a href="https://arxiv.org/abs/2110.04627">https://arxiv.org/abs/2110.04627</a></li>
+<li>Parti paper: <a href="https://arxiv.org/abs/2206.10789">https://arxiv.org/abs/2206.10789</a></li>
+</ol>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/notes//tags/paper/">paper</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/notes/about">Mayukh Deb</a>
+        &copy;
+        2022
+      </p>
+  </div>
+</footer></body>
+</html>
