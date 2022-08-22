@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8" />
 
-  <title>Transformer intrepretability beyond attention  - Notes</title>
+  <title>Transformer intrepretability beyond attention - Notes</title>
 
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -31,7 +31,7 @@
     <div class="container">
       <div class="post-heading">
         
-          <h1>Transformer intrepretability beyond attention </h1>
+          <h1>Transformer intrepretability beyond attention</h1>
           
         
       </div>
@@ -61,10 +61,50 @@
 </li>
 <li>
 <p>Considers the fact that transformers use non-linearities which have negative output values such as GeLU, where LRPs generally fail.</p>
+</li>
+<li>
+<p>Non-linearities other that ReLU, such as GELU, output both positive and negative values. To address this, LRP propagation can be modified by constructing a subset of indices we consider only the elements that have a positive weighed relevance.</p>
+</li>
+</ul>
+<h2 id="experiments">Experiments</h2>
+<p><strong>Models</strong>:</p>
+<ol>
+<li>linguistic classification task: BERT base model</li>
+<li>visual classification: ViT base model</li>
+</ol>
+<p><strong>Evals</strong>:</p>
+<ol>
+<li>Visual:
 <ul>
-<li>Non-linearities other that ReLU, such as GELU, output both positive and negative values. To address this, LRP propagation can be modified by constructing a subset of indices we consider only the elements that have a positive weighed relevance.</li>
+<li><a href="https://arxiv.org/abs/1806.10758">A benchmark for interpretability methods in deep neural networks</a> on validation set of ImageNet (ILSVRC) 2012, consisting of 50K images from 1000 classes</li>
+<li>ImageNet-Segmentation, containing 4,276 images from 445 categories</li>
 </ul>
 </li>
+<li>Linguistic
+<ul>
+<li>Movie reviews dataset from the <a href="https://www.eraserbenchmark.com/">ERASER</a> dataset. (Nite that the The BERT model is first fine-tuned on the training set of the Movie Reviews Dataset and the various evaluation methods are applied to its results on the test set.)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Metrics</strong>:</p>
+<ol>
+<li>Visual (segmentation)
+<ul>
+<li>pixel-accuracy, obtained after thresholding each visualization by the mean value</li>
+<li>mean-intersection-over-union (mIoU)</li>
+<li>mean-Average-Precision (mAP)</li>
+</ul>
+</li>
+<li>Linguistic:
+<ul>
+<li>they use the token-F1 score, which is best suited for pertoken explanation (in contrast to explanations that extract an
+excerpt)</li>
+</ul>
+</li>
+</ol>
+<p>Other notes from their evals:</p>
+<ul>
+<li>To best illustrate the performance of each method, they consider a token to be part of the “rationale” if it is part of the top-k tokens, and show results for k = 10 . . . 80 in steps of 10 tokens. This way, they do not employ thresholding that may benefit some methods over others.</li>
 </ul>
 
 
