@@ -43,7 +43,7 @@ Transformers apply activation functions other that ReLU, which result in both po
     -  they use the token-F1 score, which is best suited for pertoken explanation (in contrast to explanations that extract an
 excerpt)
 
-Other notes from their evals:
+Other notes:
 - To best illustrate the performance of each method, they consider a token to be part of the “rationale” if it is part of the top-k tokens, and show results for k = 10 . . . 80 in steps of 10 tokens. This way, they do not employ thresholding that may benefit some methods over others.
 
 
