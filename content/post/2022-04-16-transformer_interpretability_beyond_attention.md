@@ -5,8 +5,6 @@ author = "Mayukh Deb"
 tags = ["paper"]
 +++
 
-# Transformer intrepretability beyond attention 
-
 ## Disadvantages of attention rollout and LRP
 
 Irrelevant tokens often get highlighted

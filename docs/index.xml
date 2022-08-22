@@ -124,8 +124,8 @@ highest number of occurrences -&amp;gt; &amp;ldquo;self consistency&amp;rdquo;</
       <pubDate>Sat, 16 Apr 2022 00:00:00 +0000</pubDate>
       
       <guid>https://mayukhdeb.github.io/notes/post/2022-04-16-transformer_interpretability_beyond_attention/</guid>
-      <description>Transformer intrepretability beyond attention Disadvantages of attention rollout and LRP Irrelevant tokens often get highlighted
-The main challenge in assigning attributions based on attentions is that attentions are combining non-linearly from one layer to the next. The rollout method assumes that attentions are combined linearly and considers paths along the pairwise attention graph. We observe that this method often leads to an emphasis on irrelevant tokens since even average attention scores can be attenuated.</description>
+      <description>Disadvantages of attention rollout and LRP Irrelevant tokens often get highlighted
+The main challenge in assigning attributions based on attentions is that attentions are combining non-linearly from one layer to the next. The rollout method assumes that attentions are combined linearly and considers paths along the pairwise attention graph. We observe that this method often leads to an emphasis on irrelevant tokens since even average attention scores can be attenuated. The method also fails to distinguish between positive and negative contributions to the decision.</description>
     </item>
     
     <item>
