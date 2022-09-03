@@ -6,10 +6,20 @@
     <description>Recent content in Writing on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 07 Aug 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Sep 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mayukhdeb.github.io/notes/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Towards a New Science of Common Sense</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-09-03-new-science-of-common-sense/</link>
+      <pubDate>Sat, 03 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-09-03-new-science-of-common-sense/</guid>
+      <description>Intro Common sense, as we know it has not yet been achieved in machines by any means despite decades of research. Today&amp;rsquo;s large language models still struggle even the smallest of riddles or mental math questions. With LLMs, we have solved language, not logic/common sense.
+AI is still very narrow. There are models which are &amp;ldquo;experts&amp;rdquo; at certain tasks, but none posess any general capabilities. AI as we know it today us super good at narrow domains like video games and image captioning.</description>
+    </item>
     
     <item>
       <title>Parti - Scaling LLMs for Text to Image tasks</title>
