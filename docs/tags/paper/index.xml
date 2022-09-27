@@ -6,10 +6,20 @@
     <description>Recent content in paper on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 03 Sep 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Sep 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mayukhdeb.github.io/notes/tags/paper/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Watching artificial intelligence through the lens of CogSci</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-09-27-ai-through-lens-of-cogsci/</link>
+      <pubDate>Tue, 27 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-09-27-ai-through-lens-of-cogsci/</guid>
+      <description>The bias in humans interpreting functional mechanisms of a system A paper mentions a concept called the &amp;ldquo;theory-of-mind&amp;rdquo; (Baron-Cohen et al., 1985) which mentions the fact that humans can understand that other humans have mental states like that of themselves. Our minds make up assumptions about things that are going on inside other people&amp;rsquo;s minds (emotions etc).
+The problem is that this bias may also bleed into the way we look into the interpretations we make of a machine.</description>
+    </item>
     
     <item>
       <title>Towards a New Science of Common Sense</title>
