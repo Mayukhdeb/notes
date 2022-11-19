@@ -12,6 +12,29 @@
     
     
     <item>
+      <title>Brain to Text Communication via handwriting</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-11-19-brain-to-text-communication-via-handwriting/</link>
+      <pubDate>Sat, 19 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-11-19-brain-to-text-communication-via-handwriting/</guid>
+      <description>The original paper can be found here.
+The authors of this paper have made a BCI that decodes handwriting movements from neural activity and translates it to text using RNNs to decode signals.
+In one of the early experiments, they asked a paralysed subject to &amp;ldquo;attempt&amp;rdquo; to write as if his hand was not paralysed. These are the main insights from the experiment:
+ they recorded neural activity and then used PCA to extract the top 3 axes with the highest variance.</description>
+    </item>
+    
+    <item>
+      <title>CraftAssist - LLMs on minecraft (?)</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-10-31-craftassist/</link>
+      <pubDate>Sat, 19 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-10-31-craftassist/</guid>
+      <description>Craftassist is a cool project where the wuthors figured out a way to use natural language to communicate with a minecraft bot via chat. The even manage to give natural instructions to the robot to do certain tasks.
+The first version of the bot had 3 main components:
+ Parsing incoming text into logical form (&amp;ldquo;action dictionary&amp;rdquo;) This parsed data is then interpreted by a dialogue object (not sure what that is).</description>
+    </item>
+    
+    <item>
       <title>Watching artificial intelligence through the lens of CogSci</title>
       <link>https://mayukhdeb.github.io/notes/post/2022-09-27-ai-through-lens-of-cogsci/</link>
       <pubDate>Tue, 27 Sep 2022 00:00:00 +0000</pubDate>

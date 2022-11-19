@@ -47,6 +47,45 @@
 
       
         <article class="post-preview">
+  <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-generic_attention_model_explainability/">
+      <h2 class="post-title">Generic Attention-model Explainability</h2>
+  </a>
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Apr 16, 2022
+  
+</span>
+  </div>
+  <div class="post-entry">
+    
+      <p>Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers Can be used to explain models like CLIP. This is how it works:
+  First, let us define an input image x_image and a list of input texts [a, b, c] where a, b and c can be any strings which can be tokenized and fed into the model.
+input_texts = [&#34;a bald man&#34;, &#34;a rocket in space&#34;, &#34;a man&#34;]   We do a forward pass with a tokenized image and text(s) on CLIP, and obtain logits_per_image and logits_per_text.</p>
+        <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-generic_attention_model_explainability/" class="post-read-more">Read More</a>
+    
+  </div>
+</article>
+      
+        <article class="post-preview">
+  <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-interpreting-language-models-with-contrastive-explanations/">
+      <h2 class="post-title">Interpreting LMs with contrastive explanations</h2>
+  </a>
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Apr 16, 2022
+  
+</span>
+  </div>
+  <div class="post-entry">
+    
+      <p>Interpreting language models with contrastive explanations interpretability methods commonly used for other NLP tasks like text classification, such as gradient-based saliency maps are not as informative for LM predictions
+In general, language modeling has a large output space and a high complexity compared to other NLP tasks; at each time step, the LM chooses one word out of all vocabulary items. This contrasts with text classification (where the output space is smaller).</p>
+        <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-interpreting-language-models-with-contrastive-explanations/" class="post-read-more">Read More</a>
+    
+  </div>
+</article>
+      
+        <article class="post-preview">
   <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-knowledge_neurons/">
       <h2 class="post-title">Knowledge Neurons</h2>
   </a>
@@ -68,45 +107,6 @@ Procedure to find knowledge neurons   Produce n different and diverse prompts ex
   </div>
 </article>
       
-        <article class="post-preview">
-  <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-lost-unsupervised-object-detection/">
-      <h2 class="post-title">LOST - Localizing objects with self supervised transformers</h2>
-  </a>
-  <div class="postmeta">
-    <span class="meta-post">
-  <i class="fa fa-calendar-alt"></i>Apr 16, 2022
-  
-</span>
-  </div>
-  <div class="post-entry">
-    
-      <p>Lost - Localizing objects with self supervised transformers and no labels The core idea is to be able to use the hidden info within transformers to localize objects (&ldquo;subjects&rdquo;) within input images (much like a YOLO model but without further training).
-How does it work ?   First, we assume that there&rsquo;s at least one object to be found in the image.
-  it relies on a selection of patches that are likely to belong to an object.</p>
-        <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-lost-unsupervised-object-detection/" class="post-read-more">Read More</a>
-    
-  </div>
-</article>
-      
-        <article class="post-preview">
-  <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-transformer_interpretability_beyond_attention/">
-      <h2 class="post-title">Transformer intrepretability beyond attention</h2>
-  </a>
-  <div class="postmeta">
-    <span class="meta-post">
-  <i class="fa fa-calendar-alt"></i>Apr 16, 2022
-  
-</span>
-  </div>
-  <div class="post-entry">
-    
-      <p>Disadvantages of attention rollout and LRP Irrelevant tokens often get highlighted
-The main challenge in assigning attributions based on attentions is that attentions are combining non-linearly from one layer to the next. The rollout method assumes that attentions are combined linearly and considers paths along the pairwise attention graph. We observe that this method often leads to an emphasis on irrelevant tokens since even average attention scores can be attenuated. The method also fails to distinguish between positive and negative contributions to the decision.</p>
-        <a href="https://mayukhdeb.github.io/notes/post/2022-04-16-transformer_interpretability_beyond_attention/" class="post-read-more">Read More</a>
-    
-  </div>
-</article>
-      
       </div>
     
     <ul class="pager">
@@ -115,6 +115,10 @@ The main challenge in assigning attributions based on attentions is that attenti
           <a href="https://mayukhdeb.github.io/notes/tags/paper/page/3/">&larr; Newer</a>
         </li>
       
+      
+        <li class="next">
+          <a href="https://mayukhdeb.github.io/notes/tags/paper/page/5/">Older &rarr;</a>
+        </li>
       
     </ul>
   

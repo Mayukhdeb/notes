@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>CraftAssist - LLMs on minecraft (?) - Notes</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>CraftAssist - LLMs on minecraft (?)</h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Nov 19, 2022
+  
+</span>
+      </div>
+      <br>
+      
+    <p>Craftassist is a cool project where the wuthors figured out a way to use natural language to communicate with a minecraft bot via chat. The even manage to give natural instructions to the robot to do certain tasks.</p>
+<p>The first version of the bot had 3 main components:</p>
+<ol>
+<li>Parsing incoming text into logical form (&ldquo;action dictionary&rdquo;)</li>
+<li>This parsed data is then interpreted by a dialogue object (not sure what that is).</li>
+<li>This dialogue object thingy queries a memory module.</li>
+</ol>
+<p>I think the memory module is the special part. It is a symbolic representation of the both&rsquo;s awareness of the world around it.</p>
+<p>The bot has some low level actions like <code>MOVE</code>, <code>PUT BLOCK X</code> etc.</p>
+<p>Given below is an example of a parsed human command:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">## input: &#34;go to the blue house&#34;</span>
+<span style="color:#75715e">## output:</span>
+{
+    <span style="color:#e6db74">&#34;dialogue_type&#34;</span>: <span style="color:#e6db74">&#34;HUMAN_GIVE_COMMAND&#34;</span>,
+    <span style="color:#e6db74">&#34;action&#34;</span>: {
+        <span style="color:#e6db74">&#34;action_type&#34;</span>: <span style="color:#e6db74">&#34;MOVE&#34;</span>,
+        <span style="color:#e6db74">&#34;location&#34;</span>: {
+            <span style="color:#e6db74">&#34;location_type&#34;</span>: <span style="color:#e6db74">&#34;REFERENCE_OBJECT&#34;</span>,
+            <span style="color:#e6db74">&#34;reference_object&#34;</span>: {
+                <span style="color:#e6db74">&#34;has_colour&#34;</span>: [<span style="color:#ae81ff">0</span>, [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>]],
+                <span style="color:#e6db74">&#34;has_name&#34;</span>: [<span style="color:#ae81ff">0</span>, [<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">4</span>]]
+}}}}
+</code></pre></div><p>(WIP)</p>
+<!-- 
+steps I can take to better understand it:
+1. make notes on how the memory works in craftassist. It might be the key to storing dynamic world knowledge.
+2. understand how human input is parsed into low-level commands
+3. Is it necessary for the bot to reply to the human in my case?
+
+
+what can I build on top of this?
+1. possibly better language parsing with out LLMs (check the craftassist dataset)
+2. we can also have a visual interpreter/memory module. With MAGMA. (can store MAGMA embeddings of images)
+3. Asking the bot questions about it's latest journey when it went into the woods to get some wood for his master.
+
+What i want, is a natural language enabled skynet T1000 within minecraft :)
+
+We can ask the bot to: "bring me this animal" and show it a picture of a chicken.
+ --><blockquote>
+</blockquote>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/notes//tags/paper/">paper</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/notes/about">Mayukh Deb</a>
+        &copy;
+        2022
+      </p>
+  </div>
+</footer></body>
+</html>

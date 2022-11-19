@@ -1,3 +1,11 @@
++++
+title = "CraftAssist - LLMs on minecraft (?)"
+date = "2022-11-19"
+author = "Mayukh Deb"
+tags = ["paper"]
++++
+
+
 Craftassist is a cool project where the wuthors figured out a way to use natural language to communicate with a minecraft bot via chat. The even manage to give natural instructions to the robot to do certain tasks.
 
 The first version of the bot had 3 main components:
