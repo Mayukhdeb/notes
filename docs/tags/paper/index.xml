@@ -22,6 +22,17 @@ Text inputs are rendered on blank images, and are subsequently dealt with entire
     </item>
     
     <item>
+      <title>VPT: Video Pre-Training on Minecraft</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-11-20-clip-fields/</link>
+      <pubDate>Sun, 18 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-11-20-clip-fields/</guid>
+      <description>Pseudo labelling There are 4 main stages in the data collection stage:
+  First, they paid some contractors and obtained 2k hours of labelled minecraft gameplay data. This contained the video frames from within the game and the respective player action (key press, mouse movement). This in total gave them 2k hours of data.
+  Then they scrape minecraft videos from youtube and keep only the clean ones. Clean = does not contain the face of the streamer in the corner etc.</description>
+    </item>
+    
+    <item>
       <title>Brain to Text Communication via handwriting</title>
       <link>https://mayukhdeb.github.io/notes/post/2022-11-19-brain-to-text-communication-via-handwriting/</link>
       <pubDate>Sat, 19 Nov 2022 00:00:00 +0000</pubDate>

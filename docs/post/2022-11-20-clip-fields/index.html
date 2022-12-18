@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>VPT: Video Pre-Training on Minecraft - Notes</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>VPT: Video Pre-Training on Minecraft</h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Dec 18, 2022
+  
+</span>
+      </div>
+      <br>
+      
+    <h2 id="pseudo-labelling">Pseudo labelling</h2>
+<p>There are 4 main stages in the data collection stage:</p>
+<ol>
+<li>
+<p>First, they paid some contractors and obtained 2k hours of labelled minecraft gameplay data. This contained the video frames from within the game and the respective player action (key press, mouse movement). This in total gave them 2k hours of data.</p>
+</li>
+<li>
+<p>Then they scrape minecraft videos from youtube and keep only the clean ones. Clean = does not contain the face of the streamer in the corner etc.</p>
+</li>
+<li>
+<p>Take the data from stage 1 and train an &ldquo;Inverse Dynamics Model&rdquo; (IDM).</p>
+</li>
+<li>
+<p>Use the IDM to label the large unlabeled dataset.</p>
+</li>
+</ol>
+<h2 id="what-is-an-inverse-dynamics-model">What is an inverse dynamics model?</h2>
+<p>Just how Autoregressive models are next-token predictors, IDM models are mid-token predictors.</p>
+<p>In IDMs, the model can &ldquo;pay attention&rdquo; to both the past and the future tokens and predict the token in between. This seems to be a much easier task than that of predicting the next token.</p>
+<p>Given below is an example which further demonstrates the difference.</p>
+<ul>
+<li><code>{x}</code> = unknown token which is to be predicted.</li>
+<li>Dataset = <code>{He}{likes}{burgers}{and}{fries}</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Input</th>
+<th>Target Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Autoregressive</td>
+<td><code>{He}{likes}{Burgers}{and}</code></td>
+<td><code>{likes}{Burgers}{and}{fries}</code></td>
+</tr>
+<tr>
+<td>Inverse Dynamics</td>
+<td><code>{He}{likes}{x}{x}{fries}</code></td>
+<td><code>{He}{likes}{Burgers}{and}{fries}</code></td>
+</tr>
+<tr>
+<td>Inverse Dynamics</td>
+<td><code>{He}{x}{Burgers}</code></td>
+<td><code>{He}{likes}{Burgers}</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> As seen above in the table, I explained it with a text example, but in the paper it was player actions, not text.</p>
+<h2 id="training">Training</h2>
+<p>Once we have the synthetically labelled dataset, we then use the same architecture as the IDM but this time we make it causal (i.e like GPT) and train it on this dataset.</p>
+<p>Each forward pass involves the following:</p>
+<ol>
+<li>
+<p>Take 5 consecutive gameplay frames and run them over a 3D convolution. The pass it through some more stuff to obtain embeddings</p>
+</li>
+<li>
+<p>train a transformer decoder which predicts the &ldquo;next action&rdquo; to be taken</p>
+</li>
+</ol>
+<p>Once they obtain a powerful base model, they finetune it with RL on various kinds of tasks like making a picaxe etc.</p>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/notes//tags/paper/">paper</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/notes/about">Mayukh Deb</a>
+        &copy;
+        2022
+      </p>
+  </div>
+</footer></body>
+</html>
