@@ -33,5 +33,4 @@ Notes on training the transformer:
 6. Linear warm-up for 5 and 10% of total training steps (batches) for pre-training and fine-tuning
 7. The pre-training procedure largely follows that of [wav2vec 2.0](https://pytorch.org/tutorials/intermediate/speech_recognition_pipeline_tutorial.html)
 
-WIP
-
+The total number of parameters trained in the final model was over one billion parameters.

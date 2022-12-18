@@ -6,10 +6,20 @@
     <description>Recent content in paper on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 19 Nov 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Dec 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mayukhdeb.github.io/notes/tags/paper/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CLIPPO: Image and Language understanding from pixels only</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-12-18-clippo-image-and-language-understanding-from-text-only/</link>
+      <pubDate>Sun, 18 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-12-18-clippo-image-and-language-understanding-from-text-only/</guid>
+      <description>CLIP v/s CLIPPO  CLIP trains 2 seperate image and text encoders, each with it&amp;rsquo;s own preprocessing and embeddings. CLIPPO trains a single transformer where the images are sent in as images and the text is also rendered as a image before shoving it into the forward pass  How do they render text as an image?
+Text inputs are rendered on blank images, and are subsequently dealt with entirely as images.</description>
+    </item>
     
     <item>
       <title>Brain to Text Communication via handwriting</title>
