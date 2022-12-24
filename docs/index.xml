@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>CLIP-Fields: Weakly Supervised Semantic Fields for Robotic Memory</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-12-24-clip-fields/</link>
+      <pubDate>Sat, 24 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-12-24-clip-fields/</guid>
+      <description>What are they doing? They found a way to help a robot make a &amp;ldquo;map&amp;rdquo; of the world around it in terms of multimodal scene encodings. Then they store these multimodal scene encodings and their respective labels (&amp;ldquo;chair&amp;rdquo;) on a database which is differentiable and is also easily searchable.
+How are they doing it?  In order to collect data, they used an RGB-D from which the following data was collected:   RGB-D data bounding boxes from pre-trained object detector  the labels of the bounding boxes are fed into a BERT the bounding boxes on the image are used to crop it and feed each crop into CLIP and store the CLIP encoding   Spatial location (x, y, z)  They used an iphone 13 pro with a LiDAR sensor for depth image sequences.</description>
+    </item>
+    
+    <item>
       <title>CLIPPO: Image and Language understanding from pixels only</title>
       <link>https://mayukhdeb.github.io/notes/post/2022-12-18-clippo-image-and-language-understanding-from-text-only/</link>
       <pubDate>Sun, 18 Dec 2022 00:00:00 +0000</pubDate>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>CLIP-Fields: Weakly Supervised Semantic Fields for Robotic Memory - Notes</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>CLIP-Fields: Weakly Supervised Semantic Fields for Robotic Memory</h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Dec 24, 2022
+  
+</span>
+      </div>
+      <br>
+      
+    <h2 id="what-are-they-doing">What are they doing?</h2>
+<p>They found a way to help a robot make a &ldquo;map&rdquo; of the world around it in terms of multimodal scene encodings. Then they store these multimodal scene encodings and their respective labels (&ldquo;chair&rdquo;) on a database which is differentiable and is also easily searchable.</p>
+<h2 id="how-are-they-doing-it">How are they doing it?</h2>
+<ol>
+<li>In order to collect data, they used an RGB-D from which the following data was collected:</li>
+</ol>
+<ul>
+<li>RGB-D data</li>
+<li>bounding boxes from pre-trained object detector
+<ul>
+<li>the labels of the bounding boxes are fed into a BERT</li>
+<li>the bounding boxes on the image are used to crop it and feed each crop into CLIP and store the CLIP encoding</li>
+</ul>
+</li>
+<li>Spatial location (x, y, z)</li>
+</ul>
+<p>They used an iphone 13 pro with a LiDAR sensor for depth image sequences.</p>
+<ol start="2">
+<li>Robot execution pipeline <a href="https://github.com/notmahi/clip-fields/blob/main/demo/4%20-%20test%20model.ipynb">as seen here</a></li>
+</ol>
+<ul>
+<li>When the robot gets a new text query, first we feed it through the SBERT (sentence BERT) and then also through CLIP</li>
+<li>SBERT gives us the semantic part of the query</li>
+<li>CLIP gives us the vision-aligned encoding</li>
+</ul>
+<p>The robot then looks through it&rsquo;s database and finds which data-point is such that there is max similarity between the semantic representation and the visually aligned encoding.</p>
+<p>Let us walk through some part of the code that the author wrote. Read the comments given below along with the code:</p>
+<p>This is where they generate encodings from a given text query from the model.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calculate_clip_and_st_embeddings_for_queries</span>(queries):
+    <span style="color:#75715e">## queries is a string which first gets tokenized</span>
+    all_clip_queries <span style="color:#f92672">=</span> clip<span style="color:#f92672">.</span>tokenize(queries)
+    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+
+        <span style="color:#75715e">## encode text with CLIP to get &#34;visually aligned&#34; encoding</span>
+        all_clip_tokens <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>encode_text(all_clip_queries<span style="color:#f92672">.</span>to(DEVICE))<span style="color:#f92672">.</span>float()
+        <span style="color:#75715e">## normalize encodings, dont exactly know why. Maybe they just want the directional information, kinda like a unit vector.</span>
+        all_clip_tokens <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>normalize(all_clip_tokens, p<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+
+        <span style="color:#75715e">## encode text with SBERT to get a nice text encoding (idk semantic?)</span>
+        all_st_tokens <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>from_numpy(sentence_model<span style="color:#f92672">.</span>encode(queries))
+        <span style="color:#75715e">## normalize encodings, dont exactly know why. Maybe they just want the directional information, kinda like a unit vector.</span>
+        all_st_tokens <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>normalize(all_st_tokens, p<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>to(DEVICE)
+
+    <span style="color:#66d9ef">return</span> all_clip_tokens, all_st_tokens
+
+query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Warm up my lunch&#34;</span>
+clip_text_tokens, st_text_tokens <span style="color:#f92672">=</span> calculate_clip_and_st_embeddings_for_queries([query])
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;query =&#34;</span>, query)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;tokens shape =&#34;</span>, clip_text_tokens<span style="color:#f92672">.</span>shape)
+</code></pre></div><p>This is where they use the multimodal encodings from the query to perform a search in the robot&rsquo;s memory:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_alignment_over_model</span>(label_model, queries, dataloader, visual<span style="color:#f92672">=</span>False):
+    <span style="color:#75715e">## This is the fn that we just discussed about</span>
+    clip_text_tokens, st_text_tokens <span style="color:#f92672">=</span> calculate_clip_and_st_embeddings_for_queries(queries)
+
+    <span style="color:#75715e"># We give different weights to visual and semantic alignment </span>
+    <span style="color:#75715e"># for different types of queries</span>
+    <span style="color:#66d9ef">if</span> visual:
+        vision_weight <span style="color:#f92672">=</span> <span style="color:#ae81ff">10.0</span>
+        text_weight <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>
+    <span style="color:#66d9ef">else</span>:
+        vision_weight <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>
+        text_weight <span style="color:#f92672">=</span> <span style="color:#ae81ff">10.0</span>
+    point_opacity <span style="color:#f92672">=</span> []
+
+    <span style="color:#75715e">## iterate over the entire dataset (wow thats gonna be computationally expensive)</span>
+    <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
+        <span style="color:#66d9ef">for</span> data <span style="color:#f92672">in</span> tqdm<span style="color:#f92672">.</span>tqdm(dataloader, total<span style="color:#f92672">=</span>len(dataloader)):
+            <span style="color:#75715e"># Find alignmnents with the vectors</span>
+
+            <span style="color:#75715e">## for a single dataset instance, we generate the semantic and the visual encodings and normalise them</span>
+            predicted_label_latents, predicted_image_latents <span style="color:#f92672">=</span> label_model(data<span style="color:#f92672">.</span>to(DEVICE))
+            data_text_tokens <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>normalize(predicted_label_latents, p<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>to(DEVICE)
+            data_visual_tokens <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>normalize(predicted_image_latents, p<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>to(DEVICE)
+
+
+            <span style="color:#75715e">## note that similarity = dot product</span>
+            <span style="color:#75715e">## calculate similarity between query text encoding and dataset instance label encoding</span>
+            text_alignment <span style="color:#f92672">=</span> data_text_tokens <span style="color:#960050;background-color:#1e0010">@</span> st_text_tokens<span style="color:#f92672">.</span>T
+
+            <span style="color:#75715e">## calculate similarity between query visual encoding and dataset instance CLIP encoding </span>
+            visual_alignment <span style="color:#f92672">=</span> data_visual_tokens <span style="color:#960050;background-color:#1e0010">@</span> clip_text_tokens<span style="color:#f92672">.</span>T
+
+            <span style="color:#75715e">## some sort of a weighted sum to prioritize one over the other</span>
+            total_alignment <span style="color:#f92672">=</span> (text_weight <span style="color:#f92672">*</span> text_alignment) <span style="color:#f92672">+</span> (vision_weight <span style="color:#f92672">*</span> visual_alignment)
+            total_alignment <span style="color:#f92672">/=</span> (text_weight <span style="color:#f92672">+</span> vision_weight)
+
+            <span style="color:#75715e">## append all of these weighted similarity scores into a list</span>
+            point_opacity<span style="color:#f92672">.</span>append(total_alignment)
+
+    point_opacity <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat(point_opacity)<span style="color:#f92672">.</span>T
+    <span style="color:#66d9ef">print</span>(point_opacity<span style="color:#f92672">.</span>shape)
+    <span style="color:#66d9ef">return</span> point_opacity
+</code></pre></div><p>Dot product is the same as taking the cosine similarity between the query and the point embeddings.</p>
+<h2 id="my-opinionsfurther-discussion">My opinions/further discussion</h2>
+<ul>
+<li>
+<p>What do we do for super large spaces with lots of stuff? The dataset would become very large and then it would probably not be practical to run over the entire dataset in real-time. A possible solution (given that we have enough storage) is to pre-compute the dataset embeddings and then query them when required for calculating the similarity score. Problem is that even this will take up tons of storage. Probably makes sense to keep the big stuff &ldquo;on the cloud&rdquo; and send the queries from the humans via an API to the servers first and then return the results to the robot.</p>
+</li>
+<li>
+<p>Can we then also teach this robot to &ldquo;look for my car keys&rdquo;? Given that the car keys are beyond the &ldquo;dataset&rdquo; of the robot. We can ask it to keep searching for objects in the home and then when it gets a high similarity score for &ldquo;car keys&rdquo; for a given weighted query encoding then we return the result to the user saying that &ldquo;this might be what you&rsquo;re looking for.&rdquo;</p>
+</li>
+<li>
+<p>Okay so what&rsquo;s a cheap way to replicate this project? I think we can do this in minecraft. First we would need 3D data for navigations/spatial information. It might not be possible at first to also get a custom minecraft object detector model. So we can just set a constant bounding box and generate CLIP embeddings for that accordingly.</p>
+</li>
+<li>
+<p>Another thing that we can try in minecraft is that we can also get a list of objects like &ldquo;tree&rdquo; and &ldquo;chicken&rdquo; and then in order to search for a tree we just look for the query whose CLIP embedding had the cossim to &ldquo;tree&rdquo;. Might be a good idea to do this search in the multimodal embedding space of MAGMA</p>
+</li>
+</ul>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/notes//tags/paper/">paper</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/notes/about">Mayukh Deb</a>
+        &copy;
+        2022
+      </p>
+  </div>
+</footer></body>
+</html>
