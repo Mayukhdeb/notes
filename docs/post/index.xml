@@ -6,10 +6,22 @@
     <description>Recent content in Writing on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 24 Dec 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 25 Dec 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mayukhdeb.github.io/notes/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Order From Chaos: Diffusion for image synthesis</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion/</link>
+      <pubDate>Sun, 25 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion/</guid>
+      <description>Warning: This post is still being written and is not complete, I just uploaded a draft.
+Intro If you take and image and iteratively add very small amounts of noise to it, eventually the image would be unrecongnizable to the eye &amp;ndash; Now what if we could undo this process?
+Start from noise, and then iteratively remove the noise until you end up with the real image again.
+The Forward process Given an image \(X_0\), we would want to convert it to \(X_T\) by gradually adding noise to \(X_0\) in \(T\) time steps.</description>
+    </item>
     
     <item>
       <title>CLIP-Fields: Weakly Supervised Semantic Fields for Robotic Memory</title>
