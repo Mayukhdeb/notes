@@ -38,6 +38,3 @@ It is an alternative approach to build systems which not just classify/predict c
 Gary Marcus proposes that we should build a system that can acquire, represent, and manipulate abstract knowledge.
 
 In order to be actually smart, AGI would require a form of symbolic manipulation of variables in logic.
-
-(WIP)
-(WIP)
