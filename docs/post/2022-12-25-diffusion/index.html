@@ -53,7 +53,7 @@
 <h2 id="intro">Intro</h2>
 <p>If you take and image and iteratively add very small amounts of noise to it, eventually the image would be unrecongnizable to the eye &ndash; Now what if we could undo this process?</p>
 <p>Start from noise, and then iteratively remove the noise until you end up with the real image again.</p>
-<h2 id="the-forward-process">The Forward process</h2>
+<h2 id="the-forward-and-backward-processes">The Forward and backward processes</h2>
 
 
 Given an image \(X_0\), we would want to convert it to \(X_T\) by gradually adding noise to \(X_0\) in \(T\) time steps.
@@ -83,10 +83,34 @@ The step sizes are controlled by a variance schedule \(\beta_T\) which is genera
 
 </p>
 
-<p>(WIP)</p>
-<h2 id="the-backward-process">The Backward process</h2>
+<p>Different forward time steps are associated with different noise levels, and the model can learn to undo these individually.</p>
+
+<p>
+The backward process from \(X_T\) to \(X\) is also a markov chain where \(X_{T-n}\) depends on \(X_{T-(n-1)}\) and so on.
+</p>
+
+<h2 id="more-insight">More insight</h2>
+<p>What we saw so far is the following:</p>
+<ol>
+<li>
+<p>The Forward process is basically a way to iteratively push a sample off the overall data manifold (domain)</p>
+</li>
+<li>
+<p>The reverse process then produces a trajectory back into the manifold to create a &ldquo;real sample&rdquo;.</p>
+</li>
+</ol>
+
+<p>
+A diffusion model might mildly remind someone of the variational autoencoder. Where we first encoded an input variable \(X\) to become \(Z\) and then decoded it to obtains \(\tilde{X}\) which is supposed to a reconstruction of \(X\).
+</p>
+The image below shows the similarity very nicely.
+
+<img src = "https://user-images.githubusercontent.com/53133634/209469123-81d3fc54-151e-4398-9cec-e3a741bd26d7.png">
+<p>Image taken from Ari Seff&rsquo;s video[2] (<a href="https://youtu.be/fbLgFrlTnGU?t=406">this frame</a>) which I&rsquo;d highly recommend watching.</p>
+<p>But unlike VAEs, in diffusion models, the encoding part is not trained or is trainable. It is only the reverse decoding part that gets trained.</p>
 <h2 id="references">References:</h2>
-<p>[1] - <a href="https://deepai.org/machine-learning-glossary-and-terms/gaussian-distribution">https://deepai.org/machine-learning-glossary-and-terms/gaussian-distribution</a></p>
+<p>[1] - Gaussian distribution explained: <a href="https://deepai.org/machine-learning-glossary-and-terms/gaussian-distribution">https://deepai.org/machine-learning-glossary-and-terms/gaussian-distribution</a></p>
+<p>[2] - Ari Seff&rsquo;s video: <a href="https://www.youtube.com/watch?v=fbLgFrlTnGU">https://www.youtube.com/watch?v=fbLgFrlTnGU</a></p>
 
 
 
