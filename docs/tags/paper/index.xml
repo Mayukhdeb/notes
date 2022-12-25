@@ -24,6 +24,18 @@ The Forward and backward processes Given an image \(X_0\), we would want to conv
     </item>
     
     <item>
+      <title>Order From Chaos (Part 2): Diffusion for image synthesis explained in code</title>
+      <link>https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion-code/</link>
+      <pubDate>Sun, 25 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion-code/</guid>
+      <description>Warning: This post is still being written and is not complete, I just uploaded a draft.
+This post is basically what I learned while watching this video by DeepFindr.
+Diffusion models work by destroying an input gradually until it looks like noise and then recovering the input image from that. The forward process is hardcoded, and the reverse process is trainable.
+We need 3 things for training a diffusion model:</description>
+    </item>
+    
+    <item>
       <title>CLIP-Fields: Weakly Supervised Semantic Fields for Robotic Memory</title>
       <link>https://mayukhdeb.github.io/notes/post/2022-12-24-clip-fields/</link>
       <pubDate>Sat, 24 Dec 2022 00:00:00 +0000</pubDate>

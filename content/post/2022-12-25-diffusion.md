@@ -80,6 +80,8 @@ Image taken from Ari Seff's video[2] ([this frame](https://youtu.be/fbLgFrlTnGU?
 
 But unlike VAEs, in diffusion models, the encoding part is not trained or is trainable. It is only the reverse decoding part that gets trained.
 
+Another interesting thing to note about diffusion models is that unlike most of the other forms of generative modelling (VAEs, GANs, etc), here the shape of the latent vector is the same as that of the input image.
+
 ## References:
 
 [1] - Gaussian distribution explained: https://deepai.org/machine-learning-glossary-and-terms/gaussian-distribution
