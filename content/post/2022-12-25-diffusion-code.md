@@ -118,14 +118,30 @@ So increasing \(\beta\) would result in the distribution shifting to the left an
 Image taken from DeepFindr's video[1] at 9m28s.
 </center>
 
-Beta determines how fast we converge towards a mean of zero which is basically a standard gaussian distribution.
+Beta determines how fast we converge towards a mean of zero which is basically a standard gaussian distribution. Beta increases linearly with each time step (from like `0.0001` to `0.02` in 200 steps)
 
 ## Speeding things up
 
 {{< math.inline >}}
+<p>
 The neat thing about gaussians is that the sum of gaussians is also a gaussian. Which means it's pretty easy to pre-compute the noisy image at forward time-step \(t\)
+</p>
+
+<p>
+Now for convenience, we would make a new variable \(\alpha_t = 1 - \beta_t\). Since beta was being scaled up, alpha would be scaled down on each step. You can think of alpha as the variable which determines how much information is conserved from the previous image in each time step.
+</p>
+<p>
+The nice part is that we can just take the cumulative products of alpha (\(\bar{\alpha_t}\)) and then we can compute the image at a forward step \(t\) without having to calculate all the way until step \(t-1\) first. This way, we can re-define the noise sampling as follows:
+</p>
 {{< /math.inline >}}
 
+$$
+ q(x_t|x_{t_0}) = N(x_t;\sqrt{\bar{\alpha_t}}x_{0}, (1 - \bar{\alpha_t})I) 
+$$
+
+{{< math.inline >}}
+Notice how this function is dependend only on \(x_0\) and not on \(x_t\) but it computes the noisy pixel value at time step \(t\).
+{{< /math.inline >}}
 ## References
 
 [1] - [DeepFindr's video](https://www.youtube.com/watch?v=a4Yfz2FxXiY)

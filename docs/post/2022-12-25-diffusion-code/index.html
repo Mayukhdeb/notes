@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8" />
 
-  <title>Order From Chaos (Part 2): Diffusion for image synthesis explained in code - Notes</title>
+  <title>Order From Chaos (Part 2): Diffusion for image synthesis explained in code and a little bit of math - Notes</title>
 
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -31,7 +31,7 @@
     <div class="container">
       <div class="post-heading">
         
-          <h1>Order From Chaos (Part 2): Diffusion for image synthesis explained in code</h1>
+          <h1>Order From Chaos (Part 2): Diffusion for image synthesis explained in code and a little bit of math</h1>
           
         
       </div>
@@ -52,13 +52,128 @@
     <p><strong>Warning: This post is still being written and is not complete, I just uploaded a draft.</strong></p>
 <p>This post is basically what I learned while watching <a href="https://www.youtube.com/watch?v=a4Yfz2FxXiY">this video</a> by DeepFindr.</p>
 <p>Diffusion models work by destroying an input gradually until it looks like noise and then recovering the input image from that. The forward process is hardcoded, and the reverse process is trainable.</p>
+<p>In the reverse process, the task of the model is to predict the noise that was added in each step to the input image.</p>
 <p>We need 3 things for training a diffusion model:</p>
 <ol>
 <li>A Scheduler that sequentially adds noise</li>
 <li>A model that predicts the noise in an image (a U-Net)</li>
 <li>A time-step encoding component</li>
 </ol>
-<p>(WIP)</p>
+<h2 id="the-forward-process">The forward process</h2>
+
+<p>
+In simple words, we iteratively add noise into the image where the amount of noise added per step is dependent on a parameter \(\beta\)
+</p>
+
+<p>In fancy math terms, this is how we perform the markov process:</p>
+<p>$$
+q(x_{1:T}|x_0) = \prod_{t=1}^{t=T}q(x_t|x_{t-1})
+$$</p>
+
+<p>
+\(x_{1:T}\) =  set of samples where every subsequent item is noisier starting from the orignial image. \(x_1\) is the input image after adding some noise for the first time (i.e the first step) and \(x_T\) is the most noisy sample.
+</p>
+
+<p>
+\(\prod_{t=1}^{t=T}q(x_t|x_{t-1})\) is the product of the noise samples for all values of \(t\) starting from 1 to \(T\)
+</p>
+
+<p><strong>Diving deeper into each noise sample \(q(x_t|x_{t-1})\)</strong></p>
+<p>First, let&rsquo;s see how it&rsquo;s defined:</p>
+<p>$$
+q(x_t|x_{t-1}) = N(x_t;\sqrt{1-\beta_t}x_{t-1}, \beta_tI)
+$$</p>
+<ul>
+<li>
+
+<p>
+\(\beta_t\) determines the variance of the noise to be added in each step into the image. 
+</p>
+
+</li>
+<li>
+
+<p>
+\(x_{t-1}\) is the previous less noisy image. 
+</p>
+
+</li>
+<li>
+
+<p>
+\(\sqrt{1 - \beta_t}\) scales the mean of the noise to be added. Thus one can say that the mean of our distribution is \(\sqrt{1-\beta_t}\) multiplied by \(x_{t-1}\) (for each pixel).
+</p>
+
+</li>
+<li>
+
+<p>
+\(I\) is the Identity
+</p>
+
+</li>
+</ul>
+
+<p>
+The sequence of such betas \(\beta_1\), \(\beta_2\)... \(\beta_t\) is known as the variance schedule. They determine how much noise we'd want to add in each of the time steps.
+</p>
+
+<p><strong>Diving deeper into \(\beta\)</strong></p>
+<p>Let us imagine for a second that we have an image with a single pixel and then try to understand what then equation above means:</p>
+
+<p>
+\(q(x|x_{t-1})\) = the value of the next pixel (q of \(x\) given \(x_{t-1}\))
+</p>
+
+<center>
+<img src = 'https://user-images.githubusercontent.com/53133634/209522028-ad0081b5-c233-4039-8d80-8a399f94c7a3.png' width = "40%">
+Image taken from DeepFindr's video[1] at 8m47s.
+</center>
+<ul>
+<li>
+
+<p>
+\(\mu\) is the mean of the dstribution from which we would sample the next pixel
+</p>
+
+</li>
+<li>
+
+<p>
+\(\sigma\) is the variance.
+</p>
+
+</li>
+</ul>
+
+So increasing \(\beta\) would result in the distribution shifting to the left and also becoming more flattened (w i d e r). Kind of like the blue distribution shown below.
+
+<center>
+<img src = 'https://user-images.githubusercontent.com/53133634/209523096-53d22a91-6c9a-4af7-9c74-b683b39b9749.png' width = "40%">
+Image taken from DeepFindr's video[1] at 9m28s.
+</center>
+<p>Beta determines how fast we converge towards a mean of zero which is basically a standard gaussian distribution. Beta increases linearly with each time step (from like <code>0.0001</code> to <code>0.02</code> in 200 steps)</p>
+<h2 id="speeding-things-up">Speeding things up</h2>
+
+<p>
+The neat thing about gaussians is that the sum of gaussians is also a gaussian. Which means it's pretty easy to pre-compute the noisy image at forward time-step \(t\)
+</p>
+
+<p>
+Now for convenience, we would make a new variable \(\alpha_t = 1 - \beta_t\). Since beta was being scaled up, alpha would be scaled down on each step. You can think of alpha as the variable which determines how much information is conserved from the previous image in each time step.
+</p>
+<p>
+The nice part is that we can just take the cumulative products of alpha (\(\bar{\alpha_t}\)) and then we can compute the image at a forward step \(t\) without having to calculate all the way until step \(t-1\) first. This way, we can re-define the noise sampling as follows:
+</p>
+
+<p>$$
+q(x_t|x_{t_0}) = N(x_t;\sqrt{\bar{\alpha_t}}x_{0}, (1 - \bar{\alpha_t})I)
+$$</p>
+
+Notice how this function is dependend only on \(x_0\) and not on \(x_t\) but it computes the noisy pixel value at time step \(t\).
+
+<h2 id="references">References</h2>
+<p>[1] - <a href="https://www.youtube.com/watch?v=a4Yfz2FxXiY">DeepFindr&rsquo;s video</a></p>
 
 
 
