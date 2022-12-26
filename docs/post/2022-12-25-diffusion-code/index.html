@@ -153,7 +153,7 @@ So increasing \(\beta\) would result in the distribution shifting to the left an
 Image taken from DeepFindr's video[1] at 9m28s.
 </center>
 <p>Beta determines how fast we converge towards a mean of zero which is basically a standard gaussian distribution. Beta increases linearly with each time step (from like <code>0.0001</code> to <code>0.02</code> in 200 steps)</p>
-<h2 id="speeding-things-up">Speeding things up</h2>
+<h3 id="speeding-things-up">Speeding things up</h3>
 
 <p>
 The neat thing about gaussians is that the sum of gaussians is also a gaussian. Which means it's pretty easy to pre-compute the noisy image at forward time-step \(t\)
@@ -172,7 +172,54 @@ $$</p>
 
 Notice how this function is dependend only on \(x_0\) and not on \(x_t\) but it computes the noisy pixel value at time step \(t\).
 
-<h2 id="references">References</h2>
+<h3 id="finally-some-code">Finally, some code</h3>
+<p>I&rsquo;ll try to explain things line-by-line:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#f92672">as</span> F
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">linear_beta_schedule</span>(timesteps, start<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0001</span>, end<span style="color:#f92672">=</span><span style="color:#ae81ff">0.02</span>):
+
+    <span style="color:#75715e">## Interpolates between 2 values with a pre-defined number of timesteps. </span>
+    <span style="color:#75715e">## Returns a list of Betas</span>
+    <span style="color:#66d9ef">return</span> torch<span style="color:#f92672">.</span>linspace(start, end, timesteps)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_index_from_list</span>(vals, t, x_shape):
+    <span style="color:#e6db74">&#34;&#34;&#34; 
+</span><span style="color:#e6db74">    Returns a specific index t of a passed list of values vals
+</span><span style="color:#e6db74">    while considering the batch dimension.
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    batch_size <span style="color:#f92672">=</span> t<span style="color:#f92672">.</span>shape[<span style="color:#ae81ff">0</span>]
+    out <span style="color:#f92672">=</span> vals<span style="color:#f92672">.</span>gather(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, t<span style="color:#f92672">.</span>cpu())
+    <span style="color:#66d9ef">return</span> out<span style="color:#f92672">.</span>reshape(batch_size, <span style="color:#f92672">*</span>((<span style="color:#ae81ff">1</span>,) <span style="color:#f92672">*</span> (len(x_shape) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)))<span style="color:#f92672">.</span>to(t<span style="color:#f92672">.</span>device)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward_diffusion_sample</span>(x_0, t, device<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cpu&#34;</span>):
+    <span style="color:#75715e">## takes the input image and the timestep number t as input</span>
+    <span style="color:#75715e">## and returns it&#39;s noisy version at timestep t</span>
+    noise <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn_like(x_0)
+    sqrt_alphas_cumprod_t <span style="color:#f92672">=</span> get_index_from_list(sqrt_alphas_cumprod, t, x_0<span style="color:#f92672">.</span>shape)
+    sqrt_one_minus_alphas_cumprod_t <span style="color:#f92672">=</span> get_index_from_list(
+        sqrt_one_minus_alphas_cumprod, t, x_0<span style="color:#f92672">.</span>shape
+    )
+    <span style="color:#75715e"># mean + variance</span>
+    <span style="color:#66d9ef">return</span> sqrt_alphas_cumprod_t<span style="color:#f92672">.</span>to(device) <span style="color:#f92672">*</span> x_0<span style="color:#f92672">.</span>to(device) \
+    <span style="color:#f92672">+</span> sqrt_one_minus_alphas_cumprod_t<span style="color:#f92672">.</span>to(device) <span style="color:#f92672">*</span> noise<span style="color:#f92672">.</span>to(device), noise<span style="color:#f92672">.</span>to(device)
+
+</code></pre></div><p>The last line in the above snippet is equivalent to:</p>
+<p>$$
+x_t = \sqrt{\bar{\alpha_t}}x_0 + \sqrt{1-\bar{\alpha_t}}\epsilon
+$$</p>
+
+Where \(\epsilon\) is the noise added into the image.
+
+<p>Then, we pre-compute the variables for convenience:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">alphas <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span> betas
+alphas_cumprod <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cumprod(alphas, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+alphas_cumprod_prev <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>pad(alphas_cumprod[:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>), value<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span>)
+sqrt_recip_alphas <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> alphas)
+sqrt_alphas_cumprod <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sqrt(alphas_cumprod)
+sqrt_one_minus_alphas_cumprod <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span> alphas_cumprod)
+posterior_variance <span style="color:#f92672">=</span> betas <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span> alphas_cumprod_prev) <span style="color:#f92672">/</span> (<span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span> alphas_cumprod)
+</code></pre></div><h2 id="references">References</h2>
 <p>[1] - <a href="https://www.youtube.com/watch?v=a4Yfz2FxXiY">DeepFindr&rsquo;s video</a></p>
 
 

@@ -120,7 +120,7 @@ Image taken from DeepFindr's video[1] at 9m28s.
 
 Beta determines how fast we converge towards a mean of zero which is basically a standard gaussian distribution. Beta increases linearly with each time step (from like `0.0001` to `0.02` in 200 steps)
 
-## Speeding things up
+### Speeding things up
 
 {{< math.inline >}}
 <p>
@@ -142,6 +142,66 @@ $$
 {{< math.inline >}}
 Notice how this function is dependend only on \(x_0\) and not on \(x_t\) but it computes the noisy pixel value at time step \(t\).
 {{< /math.inline >}}
+
+### Finally, some code
+
+I'll try to explain things line-by-line:
+
+```python
+import torch
+import torch.nn.functional as F
+
+def linear_beta_schedule(timesteps, start=0.0001, end=0.02):
+
+    ## Interpolates between 2 values with a pre-defined number of timesteps. 
+    ## Returns a list of Betas
+    return torch.linspace(start, end, timesteps)
+
+def get_index_from_list(vals, t, x_shape):
+    """ 
+    Returns a specific index t of a passed list of values vals
+    while considering the batch dimension.
+    """
+    batch_size = t.shape[0]
+    out = vals.gather(-1, t.cpu())
+    return out.reshape(batch_size, *((1,) * (len(x_shape) - 1))).to(t.device)
+
+def forward_diffusion_sample(x_0, t, device="cpu"):
+    ## takes the input image and the timestep number t as input
+    ## and returns it's noisy version at timestep t
+    noise = torch.randn_like(x_0)
+    sqrt_alphas_cumprod_t = get_index_from_list(sqrt_alphas_cumprod, t, x_0.shape)
+    sqrt_one_minus_alphas_cumprod_t = get_index_from_list(
+        sqrt_one_minus_alphas_cumprod, t, x_0.shape
+    )
+    # mean + variance
+    return sqrt_alphas_cumprod_t.to(device) * x_0.to(device) \
+    + sqrt_one_minus_alphas_cumprod_t.to(device) * noise.to(device), noise.to(device)
+
+```
+
+The last line in the above snippet is equivalent to:
+
+$$
+ x_t = \sqrt{\bar{\alpha_t}}x_0 + \sqrt{1-\bar{\alpha_t}}\epsilon
+$$
+
+{{< math.inline >}}
+Where \(\epsilon\) is the noise added into the image.
+{{< /math.inline >}}
+
+Then, we pre-compute the variables for convenience:
+
+```python
+alphas = 1. - betas
+alphas_cumprod = torch.cumprod(alphas, axis=0)
+alphas_cumprod_prev = F.pad(alphas_cumprod[:-1], (1, 0), value=1.0)
+sqrt_recip_alphas = torch.sqrt(1.0 / alphas)
+sqrt_alphas_cumprod = torch.sqrt(alphas_cumprod)
+sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - alphas_cumprod)
+posterior_variance = betas * (1. - alphas_cumprod_prev) / (1. - alphas_cumprod)
+```
+
 ## References
 
 [1] - [DeepFindr's video](https://www.youtube.com/watch?v=a4Yfz2FxXiY)
