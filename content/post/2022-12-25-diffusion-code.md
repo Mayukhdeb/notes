@@ -251,11 +251,100 @@ But in real life, binary numbers take up lots of space. So instead we use the so
 
 In the figure above, you can see how the first column (left) oscillates the fastest and every column after that one oscillates slower and slower. These are sinusoidal positional embeddings with a depth of 128.
 
-## Implementation
+## Combining time-step encoding with image data
 
 I will not go into depth about the U-Net architecture itself, because it can be and has been replaced with other models for diffusion. You can just think of it as a model which takes an image as an input and is supposed to predict the noise in the input (which gets subtracted).
 
-Hello
+The important thing to note here is that we do not concatenate the time embeddings into the data, instead we add it right after passing the input through the first conv layer of a U-Net block.
+
+```python
+class Block(nn.Module):
+    """
+    A single building block from the U-Net
+    """
+    def __init__(self, in_ch, out_ch, time_emb_dim, up=False):
+        super().__init__()
+        self.time_mlp =  nn.Linear(time_emb_dim, out_ch)
+        if up:
+            self.conv1 = nn.Conv2d(2*in_ch, out_ch, 3, padding=1)
+            self.transform = nn.ConvTranspose2d(out_ch, out_ch, 4, 2, 1)
+        else:
+            self.conv1 = nn.Conv2d(in_ch, out_ch, 3, padding=1)
+            self.transform = nn.Conv2d(out_ch, out_ch, 4, 2, 1)
+        self.conv2 = nn.Conv2d(out_ch, out_ch, 3, padding=1)
+        self.bnorm1 = nn.BatchNorm2d(out_ch)
+        self.bnorm2 = nn.BatchNorm2d(out_ch)
+        self.relu  = nn.ReLU()
+        
+    def forward(self, x, t, ):
+        # First Conv
+        h = self.bnorm1(self.relu(self.conv1(x)))
+        # Time embedding
+        time_emb = self.relu(self.time_mlp(t))
+        # Extend last 2 dimensions
+        time_emb = time_emb[(..., ) + (None, ) * 2]
+        '''
+        This is where we add in the time embedding
+        combines time step and image information
+        '''
+        h = h + time_emb
+        # Second Conv
+        h = self.bnorm2(self.relu(self.conv2(h)))
+        # Down or Upsample
+        return self.transform(h)
+```
+
+## Loss function
+
+The loss function is basically the L1 loss on the predicted noise v/s the original noise:
+
+```python
+def get_loss(model, x_0, t):
+    """
+    model: U-Net model through which we pass the image
+    x_0: original input image
+    t: a specific time step
+
+    functions within:
+        * forward_diffusion_sample: returns the noisy version of the original image and the noise that was last added for the time step t
+        * model.__call__: takes as input the noisy image and the time step, tries to predict the noise that was last added for the time step t
+    """
+    x_noisy, noise = forward_diffusion_sample(x_0, t, device)
+    noise_pred = model(x_noisy, t)
+    return F.l1_loss(noise, noise_pred)
+```
+
+
+## Sampling
+
+TODO: explain this
+
+```python
+@torch.no_grad()
+def sample_timestep(x, t):
+    """
+    Calls the model to predict the noise in the image and returns 
+    the denoised image. 
+    Applies noise to this image, if we are not in the last step yet.
+    """
+    betas_t = get_index_from_list(betas, t, x.shape)
+    sqrt_one_minus_alphas_cumprod_t = get_index_from_list(
+        sqrt_one_minus_alphas_cumprod, t, x.shape
+    )
+    sqrt_recip_alphas_t = get_index_from_list(sqrt_recip_alphas, t, x.shape)
+    
+    # Call model (current image - noise prediction)
+    model_mean = sqrt_recip_alphas_t * (
+        x - betas_t * model(x, t) / sqrt_one_minus_alphas_cumprod_t
+    )
+    posterior_variance_t = get_index_from_list(posterior_variance, t, x.shape)
+    
+    if t == 0:
+        return model_mean
+    else:
+        noise = torch.randn_like(x)
+        return model_mean + torch.sqrt(posterior_variance_t) * noise 
+```
 
 ## References
 

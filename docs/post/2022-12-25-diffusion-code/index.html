@@ -219,6 +219,116 @@ sqrt_recip_alphas <span style="color:#f92672">=</span> torch<span style="color:#
 sqrt_alphas_cumprod <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sqrt(alphas_cumprod)
 sqrt_one_minus_alphas_cumprod <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span> alphas_cumprod)
 posterior_variance <span style="color:#f92672">=</span> betas <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span> alphas_cumprod_prev) <span style="color:#f92672">/</span> (<span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span> alphas_cumprod)
+</code></pre></div><h2 id="the-neural-network">The Neural network</h2>
+<p>The authors proposed to use a a U-Net, which is an image-to-image model. Here the input is the noisy image, and the output is the &ldquo;noise&rdquo; predicted by the model.</p>
+
+So if we have an input \(x_t = x0 + \epsilon\) then the model's output would ideally be \(\epsilon\) or something close to it.
+
+<h2 id="encoding-time-steps">Encoding time steps</h2>
+<p>Note that we also have to let the model know in which timestep the input image is, this is done with the help of positional embeddings.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SinusoidalPositionEmbeddings</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#66d9ef">def</span> __init__(self, dim):
+        super()<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>dim <span style="color:#f92672">=</span> dim
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, time):
+        device <span style="color:#f92672">=</span> time<span style="color:#f92672">.</span>device
+        half_dim <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>dim <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+        embeddings <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>log(<span style="color:#ae81ff">10000</span>) <span style="color:#f92672">/</span> (half_dim <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+        embeddings <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>exp(torch<span style="color:#f92672">.</span>arange(half_dim, device<span style="color:#f92672">=</span>device) <span style="color:#f92672">*</span> <span style="color:#f92672">-</span>embeddings)
+        embeddings <span style="color:#f92672">=</span> time[:, None] <span style="color:#f92672">*</span> embeddings[None, :]
+        embeddings <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat((embeddings<span style="color:#f92672">.</span>sin(), embeddings<span style="color:#f92672">.</span>cos()), dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> embeddings
+</code></pre></div><p><strong>Intuition behind <code>SinusoidalPositionEmbeddings</code></strong></p>
+<p>(btw this also applies to transformers in general)</p>
+<p>To understand this, first let&rsquo;s take a look at how binary numbers work. You might be able to notice here that the right-most bit (red) oscillates between 0 and 1 the fastest and the subsequent ones (blue, green, yellow) oscillate in slower and slower rates.</p>
+<center>
+<img src = "https://user-images.githubusercontent.com/53133634/209769905-70663f7f-aa2c-4ee6-9fd3-590f4245b089.png" width = "50%">
+</center>
+<p>Now if we use these values as positional encodings, the last 2 bits are good at giving fine-grained relative positions between 2 positions which are close to each other. While the larger bits are good at encoding the position at a larger scale. This way, the model would get both the overall location of each token but would also be able to distinguish between tokens which are very close to each other.</p>
+<p>But in real life, binary numbers take up lots of space. So instead we use the something fancier: Sinusoids.</p>
+<center>
+<img src = "https://user-images.githubusercontent.com/53133634/209771097-1e970289-bfbc-4624-bad6-639f98aac172.png" width = "100%">
+</center>
+<p>In the figure above, you can see how the first column (left) oscillates the fastest and every column after that one oscillates slower and slower. These are sinusoidal positional embeddings with a depth of 128.</p>
+<h2 id="combining-time-step-encoding-with-image-data">Combining time-step encoding with image data</h2>
+<p>I will not go into depth about the U-Net architecture itself, because it can be and has been replaced with other models for diffusion. You can just think of it as a model which takes an image as an input and is supposed to predict the noise in the input (which gets subtracted).</p>
+<p>The important thing to note here is that we do not concatenate the time embeddings into the data, instead we add it right after passing the input through the first conv layer of a U-Net block.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Block</span>(nn<span style="color:#f92672">.</span>Module):
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">    A single building block from the U-Net
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    <span style="color:#66d9ef">def</span> __init__(self, in_ch, out_ch, time_emb_dim, up<span style="color:#f92672">=</span>False):
+        super()<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>time_mlp <span style="color:#f92672">=</span>  nn<span style="color:#f92672">.</span>Linear(time_emb_dim, out_ch)
+        <span style="color:#66d9ef">if</span> up:
+            self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>in_ch, out_ch, <span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+            self<span style="color:#f92672">.</span>transform <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>ConvTranspose2d(out_ch, out_ch, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">else</span>:
+            self<span style="color:#f92672">.</span>conv1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(in_ch, out_ch, <span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+            self<span style="color:#f92672">.</span>transform <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(out_ch, out_ch, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+        self<span style="color:#f92672">.</span>conv2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(out_ch, out_ch, <span style="color:#ae81ff">3</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+        self<span style="color:#f92672">.</span>bnorm1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm2d(out_ch)
+        self<span style="color:#f92672">.</span>bnorm2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm2d(out_ch)
+        self<span style="color:#f92672">.</span>relu  <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>ReLU()
+        
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x, t, ):
+        <span style="color:#75715e"># First Conv</span>
+        h <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bnorm1(self<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv1(x)))
+        <span style="color:#75715e"># Time embedding</span>
+        time_emb <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>time_mlp(t))
+        <span style="color:#75715e"># Extend last 2 dimensions</span>
+        time_emb <span style="color:#f92672">=</span> time_emb[(<span style="color:#f92672">...</span>, ) <span style="color:#f92672">+</span> (None, ) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>]
+        <span style="color:#e6db74">&#39;&#39;&#39;
+</span><span style="color:#e6db74">        This is where we add in the time embedding
+</span><span style="color:#e6db74">        combines time step and image information
+</span><span style="color:#e6db74">        &#39;&#39;&#39;</span>
+        h <span style="color:#f92672">=</span> h <span style="color:#f92672">+</span> time_emb
+        <span style="color:#75715e"># Second Conv</span>
+        h <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bnorm2(self<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>conv2(h)))
+        <span style="color:#75715e"># Down or Upsample</span>
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>transform(h)
+</code></pre></div><h2 id="loss-function">Loss function</h2>
+<p>The loss function is basically the L1 loss on the predicted noise v/s the original noise:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_loss</span>(model, x_0, t):
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">    model: U-Net model through which we pass the image
+</span><span style="color:#e6db74">    x_0: original input image
+</span><span style="color:#e6db74">    t: a specific time step
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    functions within:
+</span><span style="color:#e6db74">        * forward_diffusion_sample: returns the noisy version of the original image and the noise that was last added for the time step t
+</span><span style="color:#e6db74">        * model.__call__: takes as input the noisy image and the time step, tries to predict the noise that was last added for the time step t
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    x_noisy, noise <span style="color:#f92672">=</span> forward_diffusion_sample(x_0, t, device)
+    noise_pred <span style="color:#f92672">=</span> model(x_noisy, t)
+    <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>l1_loss(noise, noise_pred)
+</code></pre></div><h2 id="sampling">Sampling</h2>
+<p>TODO: explain this</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@torch.no_grad</span>()
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sample_timestep</span>(x, t):
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">    Calls the model to predict the noise in the image and returns 
+</span><span style="color:#e6db74">    the denoised image. 
+</span><span style="color:#e6db74">    Applies noise to this image, if we are not in the last step yet.
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    betas_t <span style="color:#f92672">=</span> get_index_from_list(betas, t, x<span style="color:#f92672">.</span>shape)
+    sqrt_one_minus_alphas_cumprod_t <span style="color:#f92672">=</span> get_index_from_list(
+        sqrt_one_minus_alphas_cumprod, t, x<span style="color:#f92672">.</span>shape
+    )
+    sqrt_recip_alphas_t <span style="color:#f92672">=</span> get_index_from_list(sqrt_recip_alphas, t, x<span style="color:#f92672">.</span>shape)
+    
+    <span style="color:#75715e"># Call model (current image - noise prediction)</span>
+    model_mean <span style="color:#f92672">=</span> sqrt_recip_alphas_t <span style="color:#f92672">*</span> (
+        x <span style="color:#f92672">-</span> betas_t <span style="color:#f92672">*</span> model(x, t) <span style="color:#f92672">/</span> sqrt_one_minus_alphas_cumprod_t
+    )
+    posterior_variance_t <span style="color:#f92672">=</span> get_index_from_list(posterior_variance, t, x<span style="color:#f92672">.</span>shape)
+    
+    <span style="color:#66d9ef">if</span> t <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        <span style="color:#66d9ef">return</span> model_mean
+    <span style="color:#66d9ef">else</span>:
+        noise <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>randn_like(x)
+        <span style="color:#66d9ef">return</span> model_mean <span style="color:#f92672">+</span> torch<span style="color:#f92672">.</span>sqrt(posterior_variance_t) <span style="color:#f92672">*</span> noise 
 </code></pre></div><h2 id="references">References</h2>
 <p>[1] - <a href="https://www.youtube.com/watch?v=a4Yfz2FxXiY">DeepFindr&rsquo;s video</a></p>
 
