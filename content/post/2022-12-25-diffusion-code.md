@@ -202,6 +202,61 @@ sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - alphas_cumprod)
 posterior_variance = betas * (1. - alphas_cumprod_prev) / (1. - alphas_cumprod)
 ```
 
+## The Neural network
+
+The authors proposed to use a a U-Net, which is an image-to-image model. Here the input is the noisy image, and the output is the "noise" predicted by the model. 
+
+{{< math.inline >}}
+So if we have an input \(x_t = x0 + \epsilon\) then the model's output would ideally be \(\epsilon\) or something close to it.
+{{< /math.inline >}}
+
+## Encoding time steps
+
+Note that we also have to let the model know in which timestep the input image is, this is done with the help of positional embeddings.
+
+```python
+class SinusoidalPositionEmbeddings(nn.Module):
+    def __init__(self, dim):
+        super().__init__()
+        self.dim = dim
+
+    def forward(self, time):
+        device = time.device
+        half_dim = self.dim // 2
+        embeddings = math.log(10000) / (half_dim - 1)
+        embeddings = torch.exp(torch.arange(half_dim, device=device) * -embeddings)
+        embeddings = time[:, None] * embeddings[None, :]
+        embeddings = torch.cat((embeddings.sin(), embeddings.cos()), dim=-1)
+        return embeddings
+```
+
+**Intuition behind `SinusoidalPositionEmbeddings`**
+
+(btw this also applies to transformers in general)
+
+To understand this, first let's take a look at how binary numbers work. You might be able to notice here that the right-most bit (red) oscillates between 0 and 1 the fastest and the subsequent ones (blue, green, yellow) oscillate in slower and slower rates.
+
+<center>
+<img src = "https://user-images.githubusercontent.com/53133634/209769905-70663f7f-aa2c-4ee6-9fd3-590f4245b089.png" width = "50%">
+</center>
+
+Now if we use these values as positional encodings, the last 2 bits are good at giving fine-grained relative positions between 2 positions which are close to each other. While the larger bits are good at encoding the position at a larger scale. This way, the model would get both the overall location of each token but would also be able to distinguish between tokens which are very close to each other.
+
+
+But in real life, binary numbers take up lots of space. So instead we use the something fancier: Sinusoids.
+
+<center>
+<img src = "https://user-images.githubusercontent.com/53133634/209771097-1e970289-bfbc-4624-bad6-639f98aac172.png" width = "100%">
+</center>
+
+In the figure above, you can see how the first column (left) oscillates the fastest and every column after that one oscillates slower and slower. These are sinusoidal positional embeddings with a depth of 128.
+
+## Implementation
+
+I will not go into depth about the U-Net architecture itself, because it can be and has been replaced with other models for diffusion. You can just think of it as a model which takes an image as an input and is supposed to predict the noise in the input (which gets subtracted).
+
+Hello
+
 ## References
 
 [1] - [DeepFindr's video](https://www.youtube.com/watch?v=a4Yfz2FxXiY)
