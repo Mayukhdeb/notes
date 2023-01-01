@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>Neural Taskonomy - using encodings from vision models to understand the human brain</title>
+      <link>https://mayukhdeb.github.io/notes/post/2023-01-01-neural-taskonomy/</link>
+      <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2023-01-01-neural-taskonomy/</guid>
+      <description>Intro CNNs are not too bad at predicting brain activity. But using their intermediate encoding space seems to be not too effective as a way to understand the how the human brain works.
+So instead of using a single CNN as a source of visual features, the authors thought that it&amp;rsquo;s a good idea to build encoding models from multiple models which were trained for different vision tasks (segmentation, classification, etc).</description>
+    </item>
+    
+    <item>
       <title>Order From Chaos (Part 1): Diffusion for image synthesis explained in simple words</title>
       <link>https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion/</link>
       <pubDate>Sun, 25 Dec 2022 00:00:00 +0000</pubDate>
