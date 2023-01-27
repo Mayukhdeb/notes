@@ -6,10 +6,22 @@
     <description>Recent content in Writing on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 01 Jan 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Jan 2023 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mayukhdeb.github.io/notes/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Brain2Image: Converting Brain Signals into Images</title>
+      <link>https://mayukhdeb.github.io/notes/post/2023-01-25-brain2image-gan/</link>
+      <pubDate>Wed, 25 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2023-01-25-brain2image-gan/</guid>
+      <description>Can we encode useful visual information about images from the brain&amp;rsquo;s EEG signals?
+Yes. Image generation from a brain signal feature vector encoding information about visual classes is the main contribution of this paper
+ The authors built an LSTM based generative method which learns a more compact and noise free version of the EEG data and uses it to generate visual stimuli evoking specific brain responses.
+EEG contains patterns related to visual content which can be used to generate images which are effective at evoking visual stimuli.</description>
+    </item>
     
     <item>
       <title>Neural Taskonomy - using encodings from vision models to understand the human brain</title>

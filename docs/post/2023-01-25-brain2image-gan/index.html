@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>Brain2Image: Converting Brain Signals into Images - Notes</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>Brain2Image: Converting Brain Signals into Images</h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Jan 25, 2023
+  
+</span>
+      </div>
+      <br>
+      
+    <p><strong>Can we encode useful visual information about images from the brain&rsquo;s EEG signals?</strong></p>
+<p>Yes. Image generation from a brain signal feature vector encoding
+information about visual classes is the main contribution of
+this paper</p>
+<hr>
+<p>The authors built an LSTM based generative method which learns a more compact and noise free version of the EEG data and uses it to generate visual stimuli evoking specific brain responses.</p>
+<!-- 
+Can we replace the LSTM with an autoregressive transformer?
+ -->
+<p>EEG contains patterns related to visual content which can be used to generate images which are effective at evoking visual stimuli. Their primary objective in this paper was:</p>
+<p>Image (x) -&gt; human brain -&gt; EEG signals -&gt; Brain2Image -&gt; decoded image (y)</p>
+<p>There are 3 main steps to this:</p>
+<ol>
+<li><strong>data collection</strong>: human looks at images on a screen and his brain signals are recorded</li>
+<li><strong>feature extraction</strong>: recorded EEG signals are passed through an encoder which returns a feature vector containing class discriminative information.</li>
+<li><strong>training image generators</strong>: VAE decoders/GANs are trained on image-encoded signal pairs</li>
+</ol>
+<h2 id="learning-the-latent-space-using-lstms">Learning the Latent space using LSTMs</h2>
+<p>Given an image stimulus, they feed the EEG time-series data into an LSTM + encoder which is trained to return class-discriminative feature vectors. This gave them over 80% classification accuracy.</p>
+<p>I personally think that using a classification output would not be good for a latent vector since it was probably trained on a Cross Entropy-like loss where the outputs of 2 different classes (even if theyre visually similar) would have very low cosine similarity. This way, the vector space would be skewed quite a bit and hence not be suitable for latent vector interpolations etc.</p>
+<h2 id="leveraging-the-latent-space-to-generate-images">Leveraging the latent space to generate images</h2>
+<p>The authors tried 2 main approaches:</p>
+<ol>
+<li>VAEs</li>
+<li>GANs</li>
+</ol>
+<p>For the GAN training, they used 100 dimensional random noise (<code>z</code>) and 128 dimensional EEG features.</p>
+<p>Overall, the GAN approach seems to be a better performer in terms of inception scores and inception classification accuracy. Even to my eyes they seemed better.</p>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/notes//tags/paper/">paper</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/notes/about">Mayukh Deb</a>
+        &copy;
+        2023
+      </p>
+  </div>
+</footer></body>
+</html>
