@@ -6,10 +6,21 @@
     <description>Recent content in Writing on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 25 Jan 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Mar 2023 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mayukhdeb.github.io/notes/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Open Vocabulary EEG-To-Text Decoding</title>
+      <link>https://mayukhdeb.github.io/notes/post/2023-01-25-open-vocab-eeg-text-decoding/</link>
+      <pubDate>Thu, 09 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2023-01-25-open-vocab-eeg-text-decoding/</guid>
+      <description>The primary problem with most of the existing Brain-Signal to text pipelines is that they have a closed vocabulary.
+In this paper, they use pretrained language models for EEG-To-Text decoding and make a zeroshot pilpieline for sentiment classification from EEG. The interesting part is that it can can leverage data from various subjects and sources, i.e huge potential for EEG to text systems with enough data.
+Interesting quote from paper:</description>
+    </item>
     
     <item>
       <title>Brain2Image: Converting Brain Signals into Images</title>
