@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>THINGS: a multimodal dataset for investigating object representations in human brain - Notes</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>THINGS: a multimodal dataset for investigating object representations in human brain</h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Apr 4, 2023
+  
+</span>
+      </div>
+      <br>
+      
+    <p>It&rsquo;s actually a collection of 3 datasets. All of which can be found <a href="https://openneuro.org/datasets/ds004212/versions/2.0.0">here</a>. The images used can be found <a href="https://things-initiative.org/">here</a>.</p>
+<p>The 3 datasets are:</p>
+<ol>
+<li>FMRI scans from 3 participants. 8740 images.</li>
+<li>MEG scans. 4 participants. 22k images.</li>
+<li>12k participants. 4.7 million similarity judgements.</li>
+</ol>
+<p>The 2 main datasets I&rsquo;m interested in are the MEG scans and the similarity judgements. For the MEG scans, we can use <a href="https://github.com/ViCCo-Group/THINGS-data/tree/main/MEG">these scripts</a> as boilerplate.</p>
+<p>For now lets stick to MEG as planned.</p>
+<p>Notes on MEG data collection:</p>
+<ul>
+<li>Each session consisted of 10 runs (~5 min each).</li>
+<li>In each run, 185–186 object images were presented, as well as 20 test and 20 catch images</li>
+<li>Stimuli were presented for 500ms</li>
+<li>225–226 trials per run, 2,254 trials per session</li>
+<li>27,048 trials per participant</li>
+<li>Stimulus presentation was done with Psychtoolbox</li>
+</ul>
+<p>Metadata for a single MEG run for session 1 run 9:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">{
+    <span style="color:#e6db74">&#34;TaskName&#34;</span>: <span style="color:#e6db74">&#34;main&#34;</span>,
+    <span style="color:#e6db74">&#34;Manufacturer&#34;</span>: <span style="color:#e6db74">&#34;CTF&#34;</span>,
+    <span style="color:#e6db74">&#34;PowerLineFrequency&#34;</span>: <span style="color:#ae81ff">60</span>,
+    <span style="color:#e6db74">&#34;SamplingFrequency&#34;</span>: <span style="color:#ae81ff">1200.0</span>,
+    <span style="color:#e6db74">&#34;SoftwareFilters&#34;</span>: <span style="color:#e6db74">&#34;n/a&#34;</span>,
+    <span style="color:#e6db74">&#34;RecordingDuration&#34;</span>: <span style="color:#ae81ff">347.99916666666667</span>,
+    <span style="color:#e6db74">&#34;RecordingType&#34;</span>: <span style="color:#e6db74">&#34;continuous&#34;</span>,
+    <span style="color:#e6db74">&#34;DewarPosition&#34;</span>: <span style="color:#e6db74">&#34;n/a&#34;</span>,
+    <span style="color:#e6db74">&#34;DigitizedLandmarks&#34;</span>: false,
+    <span style="color:#e6db74">&#34;DigitizedHeadPoints&#34;</span>: false,
+    <span style="color:#e6db74">&#34;MEGChannelCount&#34;</span>: <span style="color:#ae81ff">272</span>,
+    <span style="color:#e6db74">&#34;MEGREFChannelCount&#34;</span>: <span style="color:#ae81ff">28</span>,
+    <span style="color:#e6db74">&#34;EEGChannelCount&#34;</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#e6db74">&#34;EOGChannelCount&#34;</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#e6db74">&#34;ECGChannelCount&#34;</span>:<span style="color:#f92672">+</span> <span style="color:#ae81ff">0</span>,
+    <span style="color:#e6db74">&#34;EMGChannelCount&#34;</span>: <span style="color:#ae81ff">0</span>,
+    <span style="color:#e6db74">&#34;MiscChannelCount&#34;</span>: <span style="color:#ae81ff">10</span>,
+    <span style="color:#e6db74">&#34;TriggerChannelCount&#34;</span>: <span style="color:#ae81ff">0</span>
+}
+</code></pre></div><p>I think <code>&quot;MEGChannelCount&quot;: 272</code> refers to the fact that we have 272 channels. So if we average along the time dimension, then for each instance, we get a tensor of shape <code>272</code>.</p>
+<p>Files like <a href="https://openneuro.org/datasets/ds004212/versions/2.0.0/file-display/sub-BIGMEG1:ses-11:meg:sub-BIGMEG1_ses-11_task-main_run-01_events.tsv">these</a> contain the index of the image used (most probably it&rsquo;s that)</p>
+<p><strong>Open questions:</strong></p>
+<ol>
+<li>what is <code>TRIAL_TYPE</code>? (values: <code>['exp', 'test', 'catch'...]</code>)</li>
+</ol>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/notes//tags/paper/">paper</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/notes/about">Mayukh Deb</a>
+        &copy;
+        2023
+      </p>
+  </div>
+</footer></body>
+</html>

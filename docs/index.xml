@@ -12,6 +12,17 @@
     
     
     <item>
+      <title>THINGS: a multimodal dataset for investigating object representations in human brain</title>
+      <link>https://mayukhdeb.github.io/notes/post/2023-04-04-things-meg-dataset/</link>
+      <pubDate>Tue, 04 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2023-04-04-things-meg-dataset/</guid>
+      <description>It&amp;rsquo;s actually a collection of 3 datasets. All of which can be found here. The images used can be found here.
+The 3 datasets are:
+ FMRI scans from 3 participants. 8740 images. MEG scans. 4 participants. 22k images. 12k participants. 4.7 million similarity judgements.  The 2 main datasets I&amp;rsquo;m interested in are the MEG scans and the similarity judgements. For the MEG scans, we can use these scripts as boilerplate.</description>
+    </item>
+    
+    <item>
       <title>Open Vocabulary EEG-To-Text Decoding</title>
       <link>https://mayukhdeb.github.io/notes/post/2023-01-25-open-vocab-eeg-text-decoding/</link>
       <pubDate>Thu, 09 Mar 2023 00:00:00 +0000</pubDate>

@@ -47,6 +47,25 @@
 
       
         <article class="post-preview">
+  <a href="https://mayukhdeb.github.io/notes/post/2022-12-24-clip-fields/">
+      <h2 class="post-title">CLIP-Fields: Weakly Supervised Semantic Fields for Robotic Memory</h2>
+  </a>
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Dec 24, 2022
+  
+</span>
+  </div>
+  <div class="post-entry">
+    
+      <p>What are they doing? They found a way to help a robot make a &ldquo;map&rdquo; of the world around it in terms of multimodal scene encodings. Then they store these multimodal scene encodings and their respective labels (&ldquo;chair&rdquo;) on a database which is differentiable and is also easily searchable.
+How are they doing it?  In order to collect data, they used an RGB-D from which the following data was collected:   RGB-D data bounding boxes from pre-trained object detector  the labels of the bounding boxes are fed into a BERT the bounding boxes on the image are used to crop it and feed each crop into CLIP and store the CLIP encoding   Spatial location (x, y, z)  They used an iphone 13 pro with a LiDAR sensor for depth image sequences.</p>
+        <a href="https://mayukhdeb.github.io/notes/post/2022-12-24-clip-fields/" class="post-read-more">Read More</a>
+    
+  </div>
+</article>
+      
+        <article class="post-preview">
   <a href="https://mayukhdeb.github.io/notes/post/2022-12-18-clippo-image-and-language-understanding-from-text-only/">
       <h2 class="post-title">CLIPPO: Image and Language understanding from pixels only</h2>
   </a>
@@ -81,27 +100,6 @@ Text inputs are rendered on blank images, and are subsequently dealt with entire
   First, they paid some contractors and obtained 2k hours of labelled minecraft gameplay data. This contained the video frames from within the game and the respective player action (key press, mouse movement). This in total gave them 2k hours of data.
   Then they scrape minecraft videos from youtube and keep only the clean ones. Clean = does not contain the face of the streamer in the corner etc.</p>
         <a href="https://mayukhdeb.github.io/notes/post/2022-11-20-clip-fields/" class="post-read-more">Read More</a>
-    
-  </div>
-</article>
-      
-        <article class="post-preview">
-  <a href="https://mayukhdeb.github.io/notes/post/2022-11-19-brain-to-text-communication-via-handwriting/">
-      <h2 class="post-title">Brain to Text Communication via handwriting</h2>
-  </a>
-  <div class="postmeta">
-    <span class="meta-post">
-  <i class="fa fa-calendar-alt"></i>Nov 19, 2022
-  
-</span>
-  </div>
-  <div class="post-entry">
-    
-      <p>The original paper can be found here.
-The authors of this paper have made a BCI that decodes handwriting movements from neural activity and translates it to text using RNNs to decode signals.
-In one of the early experiments, they asked a paralysed subject to &ldquo;attempt&rdquo; to write as if his hand was not paralysed. These are the main insights from the experiment:
- they recorded neural activity and then used PCA to extract the top 3 axes with the highest variance.</p>
-        <a href="https://mayukhdeb.github.io/notes/post/2022-11-19-brain-to-text-communication-via-handwriting/" class="post-read-more">Read More</a>
     
   </div>
 </article>
