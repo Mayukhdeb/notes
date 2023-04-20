@@ -1,5 +1,5 @@
 +++
-title = "THINGS: a multimodal dataset for investigating object representations in human brain"
+title = "THINGS: a multimodal dataset for investigating object representations in thehuman brain"
 date = "2023-04-04"
 author = "Mayukh Deb"
 tags = ["paper"]
