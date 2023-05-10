@@ -60,8 +60,49 @@
 
       
         <article class="post-preview">
+  <a href="https://mayukhdeb.github.io/notes/post/2023-05-10-brain-inspired-model-training/">
+      <h2 class="post-title">BIMT: Brain Inspired Modular Training</h2>
+  </a>
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>May 10, 2023
+  
+</span>
+  </div>
+  <div class="post-entry">
+    
+      <p>When compared to artificial neural networks, the human brain is a lot more modular. The authors believe that this is because the loss function of ANN regularizers like weight decay are not dependent on the permutations of neurons on each layer.
+The cost of connecting 2 biological neurons which are far apart is much more than when they&rsquo;re closer together. But this is not the case for ANNs.
+In order to impose a similar phenomenon to that of brains, the authors propose the following steps:</p>
+        <a href="https://mayukhdeb.github.io/notes/post/2023-05-10-brain-inspired-model-training/" class="post-read-more">Read More</a>
+    
+  </div>
+</article>
+      
+        <article class="post-preview">
+  <a href="https://mayukhdeb.github.io/notes/post/2023-04-20-audioclip/">
+      <h2 class="post-title">AudioCLIP: Extending CLIP to Image, Text and Audio</h2>
+  </a>
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Apr 20, 2023
+  
+</span>
+  </div>
+  <div class="post-entry">
+    
+      <p>They aim to train a tri-modal model which provides a common embedding space for 3 modalities: Images, text and Audio. The trick lies in adding in the 3rd modality (audio)
+The repo can be found here.
+There are 3 components to this model:
+ Image encoder Text encoder Audio Encoder (ESResNeXt)  The image and the text encoder were taken from the original pre-trained CLIP model. The Audio encoder was then first pre-trained on the AudioSet dataset until it achieved a reasonably high accuracy.</p>
+        <a href="https://mayukhdeb.github.io/notes/post/2023-04-20-audioclip/" class="post-read-more">Read More</a>
+    
+  </div>
+</article>
+      
+        <article class="post-preview">
   <a href="https://mayukhdeb.github.io/notes/post/2023-04-04-things-meg-dataset/">
-      <h2 class="post-title">THINGS: a multimodal dataset for investigating object representations in human brain</h2>
+      <h2 class="post-title">THINGS: a multimodal dataset for investigating object representations in thehuman brain</h2>
   </a>
   <div class="postmeta">
     <span class="meta-post">
@@ -75,47 +116,6 @@
 The 3 datasets are:
  FMRI scans from 3 participants. 8740 images. MEG scans. 4 participants. 22k images. 12k participants. 4.7 million similarity judgements.  The 2 main datasets I&rsquo;m interested in are the MEG scans and the similarity judgements. For the MEG scans, we can use these scripts as boilerplate.</p>
         <a href="https://mayukhdeb.github.io/notes/post/2023-04-04-things-meg-dataset/" class="post-read-more">Read More</a>
-    
-  </div>
-</article>
-      
-        <article class="post-preview">
-  <a href="https://mayukhdeb.github.io/notes/post/2023-01-25-open-vocab-eeg-text-decoding/">
-      <h2 class="post-title">Open Vocabulary EEG-To-Text Decoding</h2>
-  </a>
-  <div class="postmeta">
-    <span class="meta-post">
-  <i class="fa fa-calendar-alt"></i>Mar 9, 2023
-  
-</span>
-  </div>
-  <div class="post-entry">
-    
-      <p>The primary problem with most of the existing Brain-Signal to text pipelines is that they have a closed vocabulary.
-In this paper, they use pretrained language models for EEG-To-Text decoding and make a zeroshot pilpieline for sentiment classification from EEG. The interesting part is that it can can leverage data from various subjects and sources, i.e huge potential for EEG to text systems with enough data.
-Interesting quote from paper:</p>
-        <a href="https://mayukhdeb.github.io/notes/post/2023-01-25-open-vocab-eeg-text-decoding/" class="post-read-more">Read More</a>
-    
-  </div>
-</article>
-      
-        <article class="post-preview">
-  <a href="https://mayukhdeb.github.io/notes/post/2023-01-25-brain2image-gan/">
-      <h2 class="post-title">Brain2Image: Converting Brain Signals into Images</h2>
-  </a>
-  <div class="postmeta">
-    <span class="meta-post">
-  <i class="fa fa-calendar-alt"></i>Jan 25, 2023
-  
-</span>
-  </div>
-  <div class="post-entry">
-    
-      <p>Can we encode useful visual information about images from the brain&rsquo;s EEG signals?
-Yes. Image generation from a brain signal feature vector encoding information about visual classes is the main contribution of this paper
- The authors built an LSTM based generative method which learns a more compact and noise free version of the EEG data and uses it to generate visual stimuli evoking specific brain responses.
-EEG contains patterns related to visual content which can be used to generate images which are effective at evoking visual stimuli.</p>
-        <a href="https://mayukhdeb.github.io/notes/post/2023-01-25-brain2image-gan/" class="post-read-more">Read More</a>
     
   </div>
 </article>

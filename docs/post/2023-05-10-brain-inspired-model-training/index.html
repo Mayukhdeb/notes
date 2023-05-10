@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>BIMT: Brain Inspired Modular Training - Notes</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>BIMT: Brain Inspired Modular Training</h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>May 10, 2023
+  
+</span>
+      </div>
+      <br>
+      
+    <p>When compared to artificial neural networks, the human brain is a lot more modular. The authors believe that this is because the loss function of ANN regularizers like weight decay are not dependent on the permutations of neurons on each layer.</p>
+<p>The cost of connecting 2 biological neurons which are far apart is much more than when they&rsquo;re closer together. But this is not the case for ANNs.</p>
+<p>In order to impose a similar phenomenon to that of brains, the authors propose the following steps:</p>
+<ol>
+<li>Embed every neuron in a model into a 2D space where x = neuron index and y layer index</li>
+<li>Augment the loss function with a cost proportional to the length
+of each neuron connection times the absolute value of the connection weight</li>
+</ol>
+<p>Number 2 aims to keep neurons that need to communicate as close together as possible</p>
+<!-- 
+I think we can also apply this method to LLM training to see if we get simple circuits as a emergent behaviour during training.
+ -->
+<h3 id="weight-layers-vs-neuron-layers">Weight layers vs neuron layers</h3>
+<p>There is a difference between weight layers and neuron layers.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch.nn <span style="color:#f92672">as</span> nn
+
+model <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+    <span style="color:#75715e">## ...there can be more layers over here</span>
+    <span style="color:#75715e"># neuron layer with 10 neurons</span>
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">7</span>),              <span style="color:#75715e">## weight layer</span>
+    <span style="color:#75715e"># neuron layer with 7 neurons</span>
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">5</span>),               <span style="color:#75715e">## weight layer</span>
+    <span style="color:#75715e"># neuron layer with 5 neurons</span>
+    nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">3</span>)                 <span style="color:#75715e">## weight layer</span>
+    <span style="color:#75715e"># neuron layer with 3 neurons</span>
+)
+</code></pre></div><ul>
+<li>
+<p><strong>Weight layers</strong>: actual <code>nn.Linear</code> modules. Where <code>num_inputs</code> and <code>num_outputs</code> are the number of neurons incoming and outgoing from a single layer. A model with <code>L</code> linear layers -&gt; there are <code>L</code> weight layers</p>
+</li>
+<li>
+<p><strong>Neuron Layers</strong>: The neuron layers are basically the outputs of each layer.</p>
+</li>
+</ul>
+<h3 id="representing-weights-in-2d-space">Representing weights in 2D space</h3>
+<p>In order to represent distance in between each neuron in each layer. We arrange all neurons in a 2D plane such that <code>x</code> refers to the neuron index and <code>y</code> refers to the layer index.</p>
+<ul>
+<li>Every neuron in the same layer would have the same y co-ordinate, but different x co-ordinate. Neurons are seperated from each other uniformly horizontally.</li>
+<li>Layers in different neurons have different y co-ordinates.</li>
+</ul>
+<h2 id="defining-the-spatial-relation-in-between-neurons">Defining the spatial relation in between neurons</h2>
+<p>In between the neuron layers, lies a weight layer with weights <code>W</code>.</p>
+<p>This layer contains a matrix of size <code>(num_input_neurons, num_output_neurons)</code>.</p>
+<p>Let us imagine a simple pytorch model:</p>
+<p>The weight that connects neuron index 4 of first neuron layer to the neuron index 2 of the 2nd neuron layer is: <code>W[4, 2]</code></p>
+<p>Given 2 neurons <code>n1: (x1, y1)</code> and <code>n2: (x2, y2)</code> where <code>(x,y)</code> is the position of the neurons in 2D space, the distance between them can either be the L1 distance or the L2 Norm.</p>
+<ul>
+<li>L1: <code>abs(x1 - x2) + abs(y1 - y2)</code></li>
+<li>L2: <code>(x1 - x2)**2 + (y1 - y2)**2</code></li>
+</ul>
+<h2 id="localization-to-encourage-locality">Localization to encourage locality</h2>
+<p>WIP</p>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/notes//tags/paper/">paper</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/notes/about">Mayukh Deb</a>
+        &copy;
+        2023
+      </p>
+  </div>
+</footer></body>
+</html>
