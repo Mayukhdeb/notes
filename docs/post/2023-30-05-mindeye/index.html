@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>MindEye: fMRI-to-Image with Contrastive Learning  - Notes</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>MindEye: fMRI-to-Image with Contrastive Learning </h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>May 30, 2023
+  
+</span>
+      </div>
+      <br>
+      
+    <h2 id="what-are-they-doing">What are they doing?</h2>
+<p>The authors found a way to retrieve and reconstruct images from brain signals (FMRI). The 2 aspectes i.e retrieval and reconstruction are handled by 2 different modules.</p>
+<ol>
+<li>For retrieval, they use contrastive learning.</li>
+<li>For reconstruction, they use diffusion.</li>
+</ol>
+<p>Note that retrieval means mapping FMRI signals to a useful embedding space like that of CLIP image emebddings. Which can be used for similarity-search type tasks.</p>
+<p>Key insights:</p>
+<ol>
+<li>Using really big linear layers do not lead to overfitting, instead it directly improve the model&rsquo;s performance. (I believe this is for the retrieval part)</li>
+<li>A bidirectional version of mixup contrastive data augmentation improves model performance in a low-sample setting (like that of ours)</li>
+<li>CLIP embeddings are <em>not</em> good at holding perceptual information (like locations of objects, colors etc). This is because CLIP image encoders were trained to maximise similarity with text.</li>
+<li>To solve the problem that arises in (3), the authors also build a low-level pipeline which preserves low level perceptual information, which would be useful for reconstruction.</li>
+</ol>
+<p>Other important things</p>
+<ul>
+<li>All of their models are trained on a single A100 GPU with a batch size of 32</li>
+<li>They used the Natural Scenes dataset.</li>
+</ul>
+<p>Contrastive training</p>
+<ol>
+<li>They use CLIP-loss as their training objective.</li>
+<li>They use fancy techniques like:
+<ul>
+<li><a href="https://arxiv.org/abs/1710.09412">Mixup</a>: trains models on synthetic data created through convex combinations of two datapoint-label pairs</li>
+<li><a href="https://arxiv.org/pdf/2010.06300.pdf">MixCo</a>: mixup + InfoNCE Loss (this shows improved classification performance)</li>
+<li>They also modify the CLIP-loss to utilize MixCo</li>
+</ul>
+</li>
+</ol>
+<p>Things that I do not understand well:</p>
+<ul>
+<li>Mixup</li>
+<li>MixCo</li>
+<li><a href="https://proceedings.neurips.cc/paper_files/paper/2000/file/ba9a56ce0a9bfa26e8ed9e10b2cc8f46-Paper.pdf">Vicinal Risk minimization</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Structural_risk_minimization">Structural Risk Minimization</a></li>
+</ul>
+<h2 id="what-is-mixup">What is Mixup?</h2>
+<p>Traditional deep-learning trains a model F(x) to return a y such that it is as close to the label as possible.</p>
+<p>So if there&rsquo;s a dataset with 2 samples, say [(x1, l1) and (x2,l2)] then we train our models on only these 2 datapoints and nothing else.</p>
+<p>But in Mixup, we train not only on the 2 dataset samples that we have, but also on N datapoints which lie &ldquo;in between&rdquo; x1 and x2. We also interpolate the labels accordingly as we do this.</p>
+<h2 id="what-is-mixco">What is MixCo?</h2>
+<p>In contrastive learning, we train a model to embed the representations of differently augmented versions of the same image (positive pair) to be similar, while making them dissimilar if they came from different images (negative pair).</p>
+<p>MixCo extends the idea of mixup to the domain of contrastive training objectives.</p>
+<p>We &ldquo;mix&rdquo; images by generating <em>semi-positive</em> pairs since the images before mixing are originally negative pairs of each other.</p>
+<h2 id="useful-extra-links">Useful extra links:</h2>
+<ol>
+<li>Great video on Mixup: <a href="https://www.youtube.com/watch?v=hGAKHKqmXdY">https://www.youtube.com/watch?v=hGAKHKqmXdY</a></li>
+<li>Yannic&rsquo;s video on Mixup: <a href="https://www.youtube.com/watch?v=a-VQfQqIMrE">https://www.youtube.com/watch?v=a-VQfQqIMrE</a></li>
+<li>Blog post on InfoNCE: <a href="https://jxmo.io/posts/nce">https://jxmo.io/posts/nce</a></li>
+</ol>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/notes//tags/paper/">paper</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/notes/about">Mayukh Deb</a>
+        &copy;
+        2023
+      </p>
+  </div>
+</footer></body>
+</html>

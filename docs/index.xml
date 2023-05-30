@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>MindEye: fMRI-to-Image with Contrastive Learning </title>
+      <link>https://mayukhdeb.github.io/notes/post/2023-30-05-mindeye/</link>
+      <pubDate>Tue, 30 May 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2023-30-05-mindeye/</guid>
+      <description>What are they doing? The authors found a way to retrieve and reconstruct images from brain signals (FMRI). The 2 aspectes i.e retrieval and reconstruction are handled by 2 different modules.
+ For retrieval, they use contrastive learning. For reconstruction, they use diffusion.  Note that retrieval means mapping FMRI signals to a useful embedding space like that of CLIP image emebddings. Which can be used for similarity-search type tasks.</description>
+    </item>
+    
+    <item>
       <title>BIMT: Brain Inspired Modular Training</title>
       <link>https://mayukhdeb.github.io/notes/post/2023-05-10-brain-inspired-model-training/</link>
       <pubDate>Wed, 10 May 2023 00:00:00 +0000</pubDate>
