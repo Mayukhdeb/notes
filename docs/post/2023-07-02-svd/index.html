@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><meta charset="utf-8" />
 
-  <title>Matrices - Notes</title>
+  <title>Singular Value Decomposition - Notes</title>
 
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -31,7 +31,7 @@
     <div class="container">
       <div class="post-heading">
         
-          <h1>Matrices</h1>
+          <h1>Singular Value Decomposition</h1>
           
         
       </div>
@@ -49,66 +49,52 @@
       </div>
       <br>
       
-    <!-- 
-Layout:
-1. What is a matrix?
-2. What is a vector?
-3. A matrix as a transform to be applied on a vector
-4. Different types of matrices:
-    - Identity Matrix (do nothing)
-    - Diagonal matrix (scaling)
-    - Shear Matrix (bending)
-    - Orthogonal Matrix (rotating)
-    - Inverse of a Matrix (inverse transform)
-5. todo -->
-<p>I will first try to understand what a matrix is, and how it can be interpreted as a set of transforms that can be applied to a point in space. Then I&rsquo;ll look at different types of matrices and what makes them unique. Finally, I&rsquo;ll make an attempt at understanding the SVD on the next chapter.</p>
+    <p>I will first start with spectral decomposition and then move on to SVD.</p>
 <blockquote>
 <p><strong>Note:</strong> All the images used in the page are from the playlist by Visual Kernel[1]. Highly recommend that you check out his videos.</p>
 </blockquote>
-<h1 id="what-is-a-matrix">What is a Matrix?</h1>
-<p>I like to think of a matrix as a number box. It&rsquo;s like saying that a parrot is a green bird. Sure it tells me what it looks like, but it does not tell me what it does. Instead, one can think of a matrix as an operation that can be applied to a vector.</p>
-<p><em>When you move a point from one position to another, is there a function that mathematically defines that movement?</em></p>
-<h1 id="what-is-a-vector">What is a vector?</h1>
-<p>A vector can be thought of as a point in N dimensional space. It can be represented by the co-ordinates of the point like <code>p = [1, 3, -4]</code> is a 3 dimensional vector such that it represents the point <code>x=1, y=3, z=-4</code> in 3D space.</p>
-<h1 id="a-matrix-as-a-transform">A matrix as a transform</h1>
-<p>We can multiply a matrix to a vector, and that gives us another vector. For a better intuition, we will be visualizing a set of points and what a single matrix (read: transform) does to it. In this case, the set of points would be a rectangle.</p>
-<img src = 'https://user-images.githubusercontent.com/53133634/250339279-a500f8c5-229b-4092-8f18-29b5d68fd354.png' width = "50%">
-<h1 id="types-of-matrices">Types of matrices</h1>
-<h3 id="identity-matrix">Identity Matrix</h3>
-<img src = 'https://user-images.githubusercontent.com/53133634/250339004-004e9aea-e1db-497b-9daf-4fc3972d7669.png' width = "50%">
-<p>It&rsquo;s basically the do nothing transform. Kind of like multiplying something by 1 or adding 0 to it. Does nothing.</p>
-<h3 id="scalar-matrix">Scalar Matrix</h3>
-<p><em>Strech or squeeze uniformly along all axes.</em></p>
-<img src = 'https://user-images.githubusercontent.com/53133634/250339140-c889f537-e2df-492d-81eb-b564830c42d4.png' width = "50%">
-
-
-Now if \(k > 1\), then the rectangle gets bigger by a factor of \(k\). In a similar way, it also gets smaller if \(0 < k < 1\). Interestingly enough, the rectangle would flip both horizontally and vertically if \(k = -1\)
-
-<img src = 'https://user-images.githubusercontent.com/53133634/250339333-f48e66a6-f255-402b-b6c9-a8f5a80f9616.png' width = "50%">
-
-This is what happens when \(k = 2\), the rectangle just becomes 2x bigger.
-
-
-<h3 id="off-one-matrix">Off-One Matrix</h3>
-<p><em>Strech or squeeze along only one axis.</em></p>
-<img src = 'https://user-images.githubusercontent.com/53133634/250339721-f66259fd-3a21-4216-b175-f2ff03faa2ff.png' width = "50%">
-<p>Notice how only one of the diagonal elements are not 1. That is the axis along which we&rsquo;ll scale the vectors. Given below is an example of a where we strech the y axis by a factor of 3.</p>
-<img src = 'https://user-images.githubusercontent.com/53133634/250339989-7c0f28e6-0a59-467b-8780-43e3511a2a10.png' width = "50%">
-<p>If we scale only one axis by a factor of -1, then we basically get the reflection of that object along the corresponding axis.</p>
-<h2 id="diagonal-matrix">Diagonal Matrix</h2>
-<p><em>Strech or squeeze differently on different axes</em></p>
-<img src = 'https://user-images.githubusercontent.com/53133634/250340152-bbe55aab-bb37-4762-bb05-a5779f8e86fc.png' width = "50%">
-<p>Every diagonal matrix can be broken down into a series of off-one matrices. Given below is an example where we break down a single diagonal matrix (to the left) into a series of matrices which when sequentially applied would give us the same result.</p>
-<img src = 'https://user-images.githubusercontent.com/53133634/250340399-48c843e9-ccfe-4243-b031-a4e1d60f6875.png' width = "100%">
-<h2 id="shear-matrix">Shear Matrix</h2>
-<p><em>Slant along one or more axes</em></p>
-<img src = 'https://user-images.githubusercontent.com/53133634/250340769-29e8abbc-c04b-4491-8746-719f4a77c4da.png' width = "50%">
-<p>For example, a rectangle would slant into a parallelogram.</p>
-<p>In 2D, there are 4 directions in which we can apply the shear transform. You can see them below.</p>
-<img src = 'https://user-images.githubusercontent.com/53133634/250340604-a86064e0-f5b0-46ac-a9cf-489ccbdc193b.png' width = "100%">
-<h2 id="orthogonal-matrix">Orthogonal Matrix</h2>
-<p><em>Rotate while preserving shape</em></p>
-<p>WIP</p>
+<p>To truly understand this stuff, I&rsquo;d have to first understand the following:</p>
+<ol>
+<li>Symmetric matrix</li>
+<li>Matrix Decomposition</li>
+<li>Eigen Vectors</li>
+<li>Orthogonal eigen vectors.</li>
+</ol>
+<p>A <strong>symmetric matrix</strong> is where <code>a[i,j] = a[j,i]</code> where <code>i != j</code>. A rectangular matrix is never symmetrical.</p>
+<p>A <strong>transpose</strong> of a matrix gives us the same matrix but with the rows and columns interchanged. If <code>b</code> is the transpose of <code>a</code> then <code>a[i,j] = b[j, i]</code></p>
+<p>The interesting thing about symmetric matrices is that the <strong>transpose of a symmetric matrix is the same as the original one</strong>.</p>
+<p>Also, the <strong>transpose of an orthogonal matrix gives us its inverse</strong>.</p>
+<h1 id="eigen-vectors">Eigen Vectors</h1>
+<p>Given a matrix <code>A</code>, imagine it as a transformation. There exists a set of vectors upon which when we apply the transform, it just gets scaled and does not change direction. These special vectors whose directions from the origin do not get changed when A is applied on them are called eigen vectors. Every such vector also has an eigen value, the factor by which it was streched or squished during a transform.</p>
+<p>While every other vector deviates from its initial direction, the eigen vectors stay on their original line even after applying the transform.</p>
+<h1 id="the-eigen-vectors-symmetric-matrices">The Eigen vectors Symmetric matrices</h1>
+<p>The <strong>eigen vectors of symmetric matrices are orthogonal</strong>. i.e they form an angle of 90 degrees from each other.</p>
+<h1 id="spectral-decomposition">Spectral Decomposition</h1>
+<p>$$
+S = Q \lambda \mathbf{Q}^T
+$$</p>
+<p>A symmetric matrix S can be expressed as the product of 3 matrices Q, lambda and Q transposed. Where:</p>
+<ol>
+<li>Q is an orthogonal matrix (<em>rotation</em>)</li>
+<li>Lambda is a diagonal matrix (<em>streching</em>)</li>
+</ol>
+<img src = 'https://user-images.githubusercontent.com/53133634/250360251-aa8a18ec-0778-4a23-899f-c3d722718df0.png' width = "50%">
+<p>The equation holds when Q is a matrix comprising of the eigen vectors of S.</p>
+<ol>
+<li>Q rotates the vector to a basis made up of the eigen vectors of S</li>
+<li>lambda scales it</li>
+<li>Q transpose rotates it back to it&rsquo;s original basis i.e the usual x and y axis.</li>
+</ol>
+<p>The problem with spectral decomposition is that it works only for symmetric matrices.</p>
+<h2 id="rectangular-matrices">Rectangular Matrices</h2>
+<p>A matrix of shape <code>(m, n)</code> can be thought of as a transform from an <code>n</code> dimensional space to an <code>m</code> dimensional space.</p>
+<h2 id="the-dimension-eraser">The Dimension Eraser</h2>
+<p>It&rsquo;s a rectangular matrix which can be used to remove a specific dimension from a vector. In the example given below, we &ldquo;erase out&rdquo; the <code>z</code> axis i.e the last axis. Notice how the first 2 columns of the matrix is basically an identity matrix.</p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250362838-d3552a0b-4f80-4d00-9a06-965ba9ab0bcf.png' width = "50%">
+<p>It takes a 3d matrix as input and returns a 2d matrix with the <code>x</code> and the <code>y</code> value preserved.</p>
+<h2 id="the-dimension-adder">The Dimension Adder</h2>
+<img src = 'https://user-images.githubusercontent.com/53133634/250362998-f0ae2daf-e8c9-4e01-909a-4429efc15dcb.png' width = "30%">
+<p>It takes a 2d matrix as input and returns a 3d matrix with the <code>x</code> and the <code>y</code> value preserved with a new <code>z</code> axis where <code>z=0</code></p>
 <p><strong>Resources</strong></p>
 <p>1 - <a href="https://www.youtube.com/watch?v=7Gtxd-ew4lk&amp;list=PLWhu9osGd2dB9uMG5gKBARmk73oHUUQZS">Visual Kernel&rsquo;s video series on matrices</a></p>
 
