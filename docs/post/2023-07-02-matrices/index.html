@@ -117,14 +117,26 @@ This is what happens when \(k = 2\), the rectangle just becomes 2x bigger.
 </ol>
 <p>This is the kind of a transform we would apply to rotate our rectangle clockwise:</p>
 <img src = 'https://user-images.githubusercontent.com/53133634/250341517-d695497e-0c98-44cb-a91a-2b73d49e0f0e.png' width = "70%">
-<p>And here&rsquo;s some more example for you to develop an intuition:</p>
-<img src = 'https://user-images.githubusercontent.com/53133634/250341878-7f8afd98-50d3-41f4-8f4c-db877c375151.png' width = "100%">
 
 
 If I remember correctly, these strange numbers have something to do with \(\cos(\theta)\).
 
 Another interesting thing to note is that when we're rotating something in 2D space \((x, y)\), we're actually rotating along a third \(z\) axis. 
 
+<img src = 'https://user-images.githubusercontent.com/53133634/250349364-40eb929e-49bf-4e79-94bf-5904111bc0e7.png' width = "50%">
+<p>Notice that this is the same matrix as shown above, just that we add another z axis as an identity.</p>
+<p>And here&rsquo;s some more example for you to develop an intuition:</p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250341878-7f8afd98-50d3-41f4-8f4c-db877c375151.png' width = "100%">
+<h2 id="projection-matrix">Projection Matrix</h2>
+<p>In order to understand this, we first need to understand the concept of a subspace.</p>
+<ul>
+<li>In 2 dimensions, a subspace would be a line through the origin. This line is infinitely long.</li>
+<li>In 3 dimensions, a plane crossing through the origin. This plane has infinite area.</li>
+</ul>
+<p>For such subspaces, there exists a transformation (read: matrix) which would move every point outside the subspace onto the subspace. Every vector always moves to it&rsquo;s closest point on the subspace.</p>
+<h2 id="inverse-of-a-matrix">Inverse of a Matrix</h2>
+<p><em>Reverses an existing trasformation</em></p>
+<p>Note that a zero matrix and a projection matrix does not have an inverse. This is because when we squash a vector from a higher dimension to a lower dimension, there is a loss of information.</p>
 <p><strong>Resources</strong></p>
 <p>1 - <a href="https://www.youtube.com/watch?v=7Gtxd-ew4lk&amp;list=PLWhu9osGd2dB9uMG5gKBARmk73oHUUQZS">Visual Kernel&rsquo;s video series on matrices</a></p>
 
