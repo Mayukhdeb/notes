@@ -107,8 +107,24 @@ This is what happens when \(k = 2\), the rectangle just becomes 2x bigger.
 <p>In 2D, there are 4 directions in which we can apply the shear transform. You can see them below.</p>
 <img src = 'https://user-images.githubusercontent.com/53133634/250340604-a86064e0-f5b0-46ac-a9cf-489ccbdc193b.png' width = "100%">
 <h2 id="orthogonal-matrix">Orthogonal Matrix</h2>
-<p><em>Rotate while preserving shape</em></p>
-<p>WIP</p>
+<p><em>Pristine Rotation</em></p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250341180-be0e29e4-c38d-4415-a8fd-ea1f74a2c65c.png' width = "70%">
+<p>It has 3 important properties:</p>
+<ol>
+<li><strong>It is a square matrix</strong>: same size along all axes</li>
+<li><strong>All column vectors are unit vectors</strong>: If we take each column as a vector, then all of their distance from the origin should be 1.</li>
+<li><strong>All column vectors are orthogonal</strong>: The vector represented by column 1 is perpendicular to all other columns, which in this case is column 2.</li>
+</ol>
+<p>This is the kind of a transform we would apply to rotate our rectangle clockwise:</p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250341517-d695497e-0c98-44cb-a91a-2b73d49e0f0e.png' width = "70%">
+<p>And here&rsquo;s some more example for you to develop an intuition:</p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250341878-7f8afd98-50d3-41f4-8f4c-db877c375151.png' width = "100%">
+
+
+If I remember correctly, these strange numbers have something to do with \(\cos(\theta)\).
+
+Another interesting thing to note is that when we're rotating something in 2D space \((x, y)\), we're actually rotating along a third \(z\) axis. 
+
 <p><strong>Resources</strong></p>
 <p>1 - <a href="https://www.youtube.com/watch?v=7Gtxd-ew4lk&amp;list=PLWhu9osGd2dB9uMG5gKBARmk73oHUUQZS">Visual Kernel&rsquo;s video series on matrices</a></p>
 
