@@ -13,10 +13,10 @@
     
     <item>
       <title>Matrices</title>
-      <link>https://mayukhdeb.github.io/notes/post/2023-07-02-svd/</link>
+      <link>https://mayukhdeb.github.io/notes/post/2023-07-02-matrices/</link>
       <pubDate>Sun, 02 Jul 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/notes/post/2023-07-02-svd/</guid>
+      <guid>https://mayukhdeb.github.io/notes/post/2023-07-02-matrices/</guid>
       <description>I will first try to understand what a matrix is, and how it can be interpreted as a set of transforms that can be applied to a point in space. Then I&amp;rsquo;ll look at different types of matrices and what makes them unique. Finally, I&amp;rsquo;ll make an attempt at understanding the SVD on the next chapter.
  Note: All the images used in the page are from the playlist by Visual Kernel[1].</description>
     </item>
