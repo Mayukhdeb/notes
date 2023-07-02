@@ -6,17 +6,29 @@
     <description>Recent content in paper on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 30 May 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 27 Jun 2023 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://mayukhdeb.github.io/notes/tags/paper/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>DreamSim</title>
+      <link>https://mayukhdeb.github.io/notes/post/2023-06-27-dreamsim/</link>
+      <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2023-06-27-dreamsim/</guid>
+      <description>Everything related to this paper can be found here: : https://dreamsim-nights.github.io/
+A sense of sameness is the very keel and backbone of our thinking - William James, 1890
+Our understanding of the visual world depends crucially on our ability to perceive the similarities between different images.
+People in vision have tried to solve this problem by introducing metrics like PSNR, SSIM, LPIPS, DISTS etc. The primary weakness of such metrics is that they focus on pixel/patch level information and fail to capture high-level structure.</description>
+    </item>
+    
+    <item>
       <title>MindEye: fMRI-to-Image with Contrastive Learning </title>
-      <link>https://mayukhdeb.github.io/notes/post/2023-30-05-mindeye/</link>
+      <link>https://mayukhdeb.github.io/notes/post/2023-05-30-mindeye/</link>
       <pubDate>Tue, 30 May 2023 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/notes/post/2023-30-05-mindeye/</guid>
+      <guid>https://mayukhdeb.github.io/notes/post/2023-05-30-mindeye/</guid>
       <description>What are they doing? The authors found a way to retrieve and reconstruct images from brain signals (FMRI). The 2 aspectes i.e retrieval and reconstruction are handled by 2 different modules.
  For retrieval, they use contrastive learning. For reconstruction, they use diffusion.  Note that retrieval means mapping FMRI signals to a useful embedding space like that of CLIP image emebddings. Which can be used for similarity-search type tasks.</description>
     </item>

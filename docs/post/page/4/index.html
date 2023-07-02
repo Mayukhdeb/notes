@@ -47,6 +47,48 @@
 
       
         <article class="post-preview">
+  <a href="https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion/">
+      <h2 class="post-title">Order From Chaos (Part 1): Diffusion for image synthesis explained in simple words</h2>
+  </a>
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Dec 25, 2022
+  
+</span>
+  </div>
+  <div class="post-entry">
+    
+      <p>Warning: This post is still being written and is not complete, I just uploaded a draft.
+Intro If you take and image and iteratively add very small amounts of noise to it, eventually the image would be unrecongnizable to the eye &ndash; Now what if we could undo this process?
+Start from noise, and then iteratively remove the noise until you end up with the real image again.
+The Forward and backward processes Given an image \(X_0\), we would want to convert it to \(X_T\) by gradually adding noise to \(X_0\) in \(T\) time steps.</p>
+        <a href="https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion/" class="post-read-more">Read More</a>
+    
+  </div>
+</article>
+      
+        <article class="post-preview">
+  <a href="https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion-code/">
+      <h2 class="post-title">Order From Chaos (Part 2): Diffusion for image synthesis explained in code and a little bit of math</h2>
+  </a>
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Dec 25, 2022
+  
+</span>
+  </div>
+  <div class="post-entry">
+    
+      <p>Warning: This post is still being written and is not complete, I just uploaded a draft.
+This post is basically what I learned while watching this video by DeepFindr.
+Diffusion models work by destroying an input gradually until it looks like noise and then recovering the input image from that. The forward process is hardcoded, and the reverse process is trainable.
+In the reverse process, the task of the model is to predict the noise that was added in each step to the input image.</p>
+        <a href="https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion-code/" class="post-read-more">Read More</a>
+    
+  </div>
+</article>
+      
+        <article class="post-preview">
   <a href="https://mayukhdeb.github.io/notes/post/2022-12-24-clip-fields/">
       <h2 class="post-title">CLIP-Fields: Weakly Supervised Semantic Fields for Robotic Memory</h2>
   </a>
@@ -61,45 +103,6 @@
       <p>What are they doing? They found a way to help a robot make a &ldquo;map&rdquo; of the world around it in terms of multimodal scene encodings. Then they store these multimodal scene encodings and their respective labels (&ldquo;chair&rdquo;) on a database which is differentiable and is also easily searchable.
 How are they doing it?  In order to collect data, they used an RGB-D from which the following data was collected:   RGB-D data bounding boxes from pre-trained object detector  the labels of the bounding boxes are fed into a BERT the bounding boxes on the image are used to crop it and feed each crop into CLIP and store the CLIP encoding   Spatial location (x, y, z)  They used an iphone 13 pro with a LiDAR sensor for depth image sequences.</p>
         <a href="https://mayukhdeb.github.io/notes/post/2022-12-24-clip-fields/" class="post-read-more">Read More</a>
-    
-  </div>
-</article>
-      
-        <article class="post-preview">
-  <a href="https://mayukhdeb.github.io/notes/post/2022-12-18-clippo-image-and-language-understanding-from-text-only/">
-      <h2 class="post-title">CLIPPO: Image and Language understanding from pixels only</h2>
-  </a>
-  <div class="postmeta">
-    <span class="meta-post">
-  <i class="fa fa-calendar-alt"></i>Dec 18, 2022
-  
-</span>
-  </div>
-  <div class="post-entry">
-    
-      <p>CLIP v/s CLIPPO  CLIP trains 2 seperate image and text encoders, each with it&rsquo;s own preprocessing and embeddings. CLIPPO trains a single transformer where the images are sent in as images and the text is also rendered as a image before shoving it into the forward pass  How do they render text as an image?
-Text inputs are rendered on blank images, and are subsequently dealt with entirely as images.</p>
-        <a href="https://mayukhdeb.github.io/notes/post/2022-12-18-clippo-image-and-language-understanding-from-text-only/" class="post-read-more">Read More</a>
-    
-  </div>
-</article>
-      
-        <article class="post-preview">
-  <a href="https://mayukhdeb.github.io/notes/post/2022-11-20-clip-fields/">
-      <h2 class="post-title">VPT: Video Pre-Training on Minecraft</h2>
-  </a>
-  <div class="postmeta">
-    <span class="meta-post">
-  <i class="fa fa-calendar-alt"></i>Dec 18, 2022
-  
-</span>
-  </div>
-  <div class="post-entry">
-    
-      <p>Pseudo labelling There are 4 main stages in the data collection stage:
-  First, they paid some contractors and obtained 2k hours of labelled minecraft gameplay data. This contained the video frames from within the game and the respective player action (key press, mouse movement). This in total gave them 2k hours of data.
-  Then they scrape minecraft videos from youtube and keep only the clean ones. Clean = does not contain the face of the streamer in the corner etc.</p>
-        <a href="https://mayukhdeb.github.io/notes/post/2022-11-20-clip-fields/" class="post-read-more">Read More</a>
     
   </div>
 </article>
@@ -127,7 +130,7 @@ Text inputs are rendered on blank images, and are subsequently dealt with entire
       <p class="credits theme-by">
         Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
         <br>
-        <a href="https://mayukhdeb.github.io/notes/about">Mayukh Deb</a>
+        <a href="https://mayukhdeb.github.io/notes/about"></a>
         &copy;
         2023
       </p>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8" />
+
+  <title>Matrices - Notes</title>
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/latex.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
+<link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<meta name="generator" content="Hugo 0.68.3" /><body>
+
+
+
+
+
+
+<header>
+  <nav class="navbar">
+  <div class="nav">
+    
+
+    <ul class="nav-links">
+      
+    </ul>
+  </div>
+</nav>
+  <div class="intro-header">
+    <div class="container">
+      <div class="post-heading">
+        
+          <h1>Matrices</h1>
+          
+        
+      </div>
+    </div>
+  </div>
+</header>
+<div id="content">
+  <div class="container" role="main">
+    <article class="article" class="blog-post">
+      <div class="postmeta">
+        <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Jul 2, 2023
+  
+</span>
+      </div>
+      <br>
+      
+    <!-- 
+Layout:
+1. What is a matrix?
+2. What is a vector?
+3. A matrix as a transform to be applied on a vector
+4. Different types of matrices:
+    - Identity Matrix (do nothing)
+    - Diagonal matrix (scaling)
+    - Shear Matrix (bending)
+    - Orthogonal Matrix (rotating)
+    - Inverse of a Matrix (inverse transform)
+5. todo -->
+<p>I will first try to understand what a matrix is, and how it can be interpreted as a set of transforms that can be applied to a point in space. Then I&rsquo;ll look at different types of matrices and what makes them unique. Finally, I&rsquo;ll make an attempt at understanding the SVD on the next chapter.</p>
+<blockquote>
+<p><strong>Note:</strong> All the images used in the page are from the playlist by Visual Kernel[1]. Highly recommend that you check out his videos.</p>
+</blockquote>
+<h1 id="what-is-a-matrix">What is a Matrix?</h1>
+<p>I like to think of a matrix as a number box. It&rsquo;s like saying that a parrot is a green bird. Sure it tells me what it looks like, but it does not tell me what it does. Instead, one can think of a matrix as an operation that can be applied to a vector.</p>
+<p><em>When you move a point from one position to another, is there a function that mathematically defines that movement?</em></p>
+<h1 id="what-is-a-vector">What is a vector?</h1>
+<p>A vector can be thought of as a point in N dimensional space. It can be represented by the co-ordinates of the point like <code>p = [1, 3, -4]</code> is a 3 dimensional vector such that it represents the point <code>x=1, y=3, z=-4</code> in 3D space.</p>
+<h1 id="a-matrix-as-a-transform">A matrix as a transform</h1>
+<p>We can multiply a matrix to a vector, and that gives us another vector. For a better intuition, we will be visualizing a set of points and what a single matrix (read: transform) does to it. In this case, the set of points would be a rectangle.</p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250339279-a500f8c5-229b-4092-8f18-29b5d68fd354.png' width = "50%">
+<h1 id="types-of-matrices">Types of matrices</h1>
+<h3 id="identity-matrix">Identity Matrix</h3>
+<img src = 'https://user-images.githubusercontent.com/53133634/250339004-004e9aea-e1db-497b-9daf-4fc3972d7669.png' width = "50%">
+<p>It&rsquo;s basically the do nothing transform. Kind of like multiplying something by 1 or adding 0 to it. Does nothing.</p>
+<h3 id="scalar-matrix">Scalar Matrix</h3>
+<p><em>Strech or squeeze uniformly along all axes.</em></p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250339140-c889f537-e2df-492d-81eb-b564830c42d4.png' width = "50%">
+
+
+Now if \(k > 1\), then the rectangle gets bigger by a factor of \(k\). In a similar way, it also gets smaller if \(0 < k < 1\). Interestingly enough, the rectangle would flip both horizontally and vertically if \(k = -1\)
+
+<img src = 'https://user-images.githubusercontent.com/53133634/250339333-f48e66a6-f255-402b-b6c9-a8f5a80f9616.png' width = "50%">
+
+This is what happens when \(k = 2\), the rectangle just becomes 2x bigger.
+
+
+<h3 id="off-one-matrix">Off-One Matrix</h3>
+<p><em>Strech or squeeze along only one axis.</em></p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250339721-f66259fd-3a21-4216-b175-f2ff03faa2ff.png' width = "50%">
+<p>Notice how only one of the diagonal elements are not 1. That is the axis along which we&rsquo;ll scale the vectors. Given below is an example of a where we strech the y axis by a factor of 3.</p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250339989-7c0f28e6-0a59-467b-8780-43e3511a2a10.png' width = "50%">
+<p>If we scale only one axis by a factor of -1, then we basically get the reflection of that object along the corresponding axis.</p>
+<h2 id="diagonal-matrix">Diagonal Matrix</h2>
+<p><em>Strech or squeeze differently on different axes</em></p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250340152-bbe55aab-bb37-4762-bb05-a5779f8e86fc.png' width = "50%">
+<p>Every diagonal matrix can be broken down into a series of off-one matrices. Given below is an example where we break down a single diagonal matrix (to the left) into a series of matrices which when sequentially applied would give us the same result.</p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250340399-48c843e9-ccfe-4243-b031-a4e1d60f6875.png' width = "100%">
+<h2 id="shear-matrix">Shear Matrix</h2>
+<p><em>Slant along one or more axes</em></p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250340769-29e8abbc-c04b-4491-8746-719f4a77c4da.png' width = "50%">
+<p>For example, a rectangle would slant into a parallelogram.</p>
+<p>In 2D, there are 4 directions in which we can apply the shear transform. You can see them below.</p>
+<img src = 'https://user-images.githubusercontent.com/53133634/250340604-a86064e0-f5b0-46ac-a9cf-489ccbdc193b.png' width = "100%">
+<h2 id="orthogonal-matrix">Orthogonal Matrix</h2>
+<p><em>Rotate while preserving shape</em></p>
+<p>WIP</p>
+<p><strong>Resources</strong></p>
+<p>1 - <a href="https://www.youtube.com/watch?v=7Gtxd-ew4lk&amp;list=PLWhu9osGd2dB9uMG5gKBARmk73oHUUQZS">Visual Kernel&rsquo;s video series on matrices</a></p>
+
+
+
+      
+        <div class="blog-tags">
+          
+            <a href="https://mayukhdeb.github.io/notes//tags/math/">math</a>&nbsp;
+          
+        </div>
+      
+    </article>
+    
+  </div>
+
+        </div><footer>
+  <div class="container">
+    <p class="credits copyright">
+      <p class="credits theme-by">
+        Powered By <a href="https://gohugo.io">Hugo</a>&nbsp;/&nbsp;Theme&nbsp;<a href="https://github.com/HelloRusk/HugoTeX">HugoTeX</a>
+        <br>
+        <a href="https://mayukhdeb.github.io/notes/about"></a>
+        &copy;
+        2023
+      </p>
+  </div>
+</footer></body>
+</html>
