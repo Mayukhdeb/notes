@@ -38,6 +38,23 @@ One can imagine how a single batch of images would look like (without shuffling 
 }
 ```
 
+# Basics
+
+This is a tiny guide to how atent diffusion models are trained.
+
+![Diffusion Breakdown](https://github.com/Mayukhdeb/notes/blob/master/content/images/2024-01-16-direct-preference-optimization/difusion_training_objective.png?raw=true)
+
+{{< math.inline >}}
+Add noise \(\eta\) to the latent of the original image. The amount of noise is proportional to the timestep.
+{{< /math.inline >}}
+
+{{< math.inline >}}
+Feed the noisy latent into a model. The model tries to predict the noise, which gives us \(\eta_{pred}\)
+{{< /math.inline >}}
+
+Finally, the generated sample is the noisy sample minus the predicted noise.
+
+
 # Single Training Step
 
 1. First, we extract the all the latent vectors for each image in the batch using a pre-trained VAE. Let's call them `latents`
@@ -60,6 +77,12 @@ One can imagine how a single batch of images would look like (without shuffling 
 5. `model_losses` is divided into two chunks, one containing the losses for all winning samples (`model_losses_w`) and another containing the losses for all losing samples (`model_losses_l`).
 
 6. Then we calculate a term `model_diff = model_losses_w - model_losses_l`. Note that it if `model_diff` is minimized, we guide the model's denoising process towards generating winning samples and away from generating losing samples.
+
+
+The diagram shown below is a visualization of `model_losses_w` and `model_losses_l` {{< math.inline >}}
+ as \(loss_w\) and \(loss_l\) respectively and \(\eta\) as noise added to the image latents.{{< /math.inline >}}
+
+![Diffusion Breakdown](https://github.com/Mayukhdeb/notes/blob/master/content/images/2024-01-16-direct-preference-optimization/winning_and_losing_sample_losses.png?raw=true)
 
 7. We temporarily disable the LoRA adapters in the model and obtain the predicted noise from the original pre-trained model and calculate `ref_diff` which is equivalent to `model_diff` but for the original model.
 
