@@ -9,10 +9,10 @@
     <lastBuildDate>Tue, 16 Jan 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://mayukhdeb.github.io/notes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Direct Preference Optimization for Diffusion Models</title>
-      <link>https://mayukhdeb.github.io/notes/post/2024-01-16-direct-preference-optimization/</link>
+      <link>https://mayukhdeb.github.io/notes/post/2024-01-16-dpo-diffusion/</link>
       <pubDate>Tue, 16 Jan 2024 00:00:00 +0000</pubDate>
       
-      <guid>https://mayukhdeb.github.io/notes/post/2024-01-16-direct-preference-optimization/</guid>
+      <guid>https://mayukhdeb.github.io/notes/post/2024-01-16-dpo-diffusion/</guid>
       <description>DPO aims to overcome the primary drawbacks of RLHF, which are it&amp;rsquo;s unstable nature and the dependence on a reward model trained on human preference data.
 In this paper, they perform DPO on diffusion models by training the model to alter it&amp;rsquo;s denoising directions towards preferred images over non-preferred ones. For this objective, they use the pick-a-pic v2 dataset.
 I&amp;rsquo;ll be using this script as a reference. Note that in the aforementioned paper, they finetune the entire model but in the script we see that they&amp;rsquo;re fine-tuning a LoRA adapter on the model.</description>
