@@ -1,198 +1,123 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/tags/math/</loc>
-    <lastmod>2023-07-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2023-07-02-matrices/</loc>
-    <lastmod>2023-07-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2023-07-02-svd/</loc>
-    <lastmod>2023-07-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/tags/</loc>
-    <lastmod>2023-07-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/</loc>
-    <lastmod>2023-07-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2023-06-27-dreamsim/</loc>
-    <lastmod>2023-06-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/tags/paper/</loc>
-    <lastmod>2023-06-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2023-05-30-mindeye/</loc>
-    <lastmod>2023-05-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2023-05-10-brain-inspired-model-training/</loc>
-    <lastmod>2023-05-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2023-04-20-audioclip/</loc>
-    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2023-04-04-things-meg-dataset/</loc>
-    <lastmod>2023-04-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2023-01-25-open-vocab-eeg-text-decoding/</loc>
-    <lastmod>2023-03-09T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2023-01-25-brain2image-gan/</loc>
-    <lastmod>2023-01-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2023-01-01-neural-taskonomy/</loc>
-    <lastmod>2023-01-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion/</loc>
-    <lastmod>2022-12-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion-code/</loc>
-    <lastmod>2022-12-25T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-12-24-clip-fields/</loc>
-    <lastmod>2022-12-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-12-18-clippo-image-and-language-understanding-from-text-only/</loc>
-    <lastmod>2022-12-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-11-20-clip-fields/</loc>
-    <lastmod>2022-12-18T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-11-19-brain-to-text-communication-via-handwriting/</loc>
-    <lastmod>2022-11-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-10-31-craftassist/</loc>
-    <lastmod>2022-11-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-09-27-ai-through-lens-of-cogsci/</loc>
-    <lastmod>2022-09-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-09-03-new-science-of-common-sense/</loc>
-    <lastmod>2022-09-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-08-07-parti-image-generation/</loc>
-    <lastmod>2022-08-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-08-01-the-third-wave/</loc>
-    <lastmod>2022-08-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-19-07-locating-and-editing-factual-associations-in-gpt/</loc>
-    <lastmod>2022-07-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-14-07-lms-mostly-know-what-they-know/</loc>
-    <lastmod>2022-07-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-attention_flow/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-generic_attention_model_explainability/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/tags/index/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-interpreting-language-models-with-contrastive-explanations/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-knowledge_neurons/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-lost-unsupervised-object-detection/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-transformer_interpretability_beyond_attention/</loc>
-    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
-  </url>
-  
   <url>
     <loc>https://mayukhdeb.github.io/notes/</loc>
-    <lastmod>2021-10-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2024-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2024-01-16-direct-preference-optimization/</loc>
+    <lastmod>2024-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/tags/paper/</loc>
+    <lastmod>2024-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/tags/</loc>
+    <lastmod>2024-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/</loc>
+    <lastmod>2024-01-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/tags/math/</loc>
+    <lastmod>2023-07-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2023-07-02-matrices/</loc>
+    <lastmod>2023-07-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2023-07-02-svd/</loc>
+    <lastmod>2023-07-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2023-06-27-dreamsim/</loc>
+    <lastmod>2023-06-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2023-05-30-mindeye/</loc>
+    <lastmod>2023-05-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2023-05-10-brain-inspired-model-training/</loc>
+    <lastmod>2023-05-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2023-04-20-audioclip/</loc>
+    <lastmod>2023-04-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2023-04-04-things-meg-dataset/</loc>
+    <lastmod>2023-04-04T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2023-01-25-open-vocab-eeg-text-decoding/</loc>
+    <lastmod>2023-03-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2023-01-25-brain2image-gan/</loc>
+    <lastmod>2023-01-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2023-01-01-neural-taskonomy/</loc>
+    <lastmod>2023-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion/</loc>
+    <lastmod>2022-12-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion-code/</loc>
+    <lastmod>2022-12-25T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-12-24-clip-fields/</loc>
+    <lastmod>2022-12-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-12-18-clippo-image-and-language-understanding-from-text-only/</loc>
+    <lastmod>2022-12-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-11-20-clip-fields/</loc>
+    <lastmod>2022-12-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-11-19-brain-to-text-communication-via-handwriting/</loc>
+    <lastmod>2022-11-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-10-31-craftassist/</loc>
+    <lastmod>2022-11-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-09-27-ai-through-lens-of-cogsci/</loc>
+    <lastmod>2022-09-27T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-09-03-new-science-of-common-sense/</loc>
+    <lastmod>2022-09-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-08-07-parti-image-generation/</loc>
+    <lastmod>2022-08-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-08-01-the-third-wave/</loc>
+    <lastmod>2022-08-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-19-07-locating-and-editing-factual-associations-in-gpt/</loc>
+    <lastmod>2022-07-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-14-07-lms-mostly-know-what-they-know/</loc>
+    <lastmod>2022-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-attention_flow/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-generic_attention_model_explainability/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/tags/index/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-interpreting-language-models-with-contrastive-explanations/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-knowledge_neurons/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-lost-unsupervised-object-detection/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-self-consistency-imrpoves-chain-of-thought/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://mayukhdeb.github.io/notes/post/2022-04-16-transformer_interpretability_beyond_attention/</loc>
+    <lastmod>2022-04-16T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://mayukhdeb.github.io/notes/about/</loc>
     <lastmod>2021-10-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://mayukhdeb.github.io/notes/categories/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://mayukhdeb.github.io/notes/series/</loc>
   </url>
-  
 </urlset>

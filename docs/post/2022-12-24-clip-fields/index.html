@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<meta name="generator" content="Hugo 0.68.3" /><body>
+<meta name="generator" content="Hugo 0.92.2" /><body>
 
 
 
@@ -77,7 +77,7 @@
 <p>The robot then looks through it&rsquo;s database and finds which data-point is such that there is max similarity between the semantic representation and the visually aligned encoding.</p>
 <p>Let us walk through some part of the code that the author wrote. Read the comments given below along with the code:</p>
 <p>This is where they generate encodings from a given text query from the model.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calculate_clip_and_st_embeddings_for_queries</span>(queries):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calculate_clip_and_st_embeddings_for_queries</span>(queries):
     <span style="color:#75715e">## queries is a string which first gets tokenized</span>
     all_clip_queries <span style="color:#f92672">=</span> clip<span style="color:#f92672">.</span>tokenize(queries)
     <span style="color:#66d9ef">with</span> torch<span style="color:#f92672">.</span>no_grad():
@@ -96,10 +96,10 @@
 
 query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Warm up my lunch&#34;</span>
 clip_text_tokens, st_text_tokens <span style="color:#f92672">=</span> calculate_clip_and_st_embeddings_for_queries([query])
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;query =&#34;</span>, query)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;tokens shape =&#34;</span>, clip_text_tokens<span style="color:#f92672">.</span>shape)
+print(<span style="color:#e6db74">&#34;query =&#34;</span>, query)
+print(<span style="color:#e6db74">&#34;tokens shape =&#34;</span>, clip_text_tokens<span style="color:#f92672">.</span>shape)
 </code></pre></div><p>This is where they use the multimodal encodings from the query to perform a search in the robot&rsquo;s memory:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_alignment_over_model</span>(label_model, queries, dataloader, visual<span style="color:#f92672">=</span>False):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_alignment_over_model</span>(label_model, queries, dataloader, visual<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
     <span style="color:#75715e">## This is the fn that we just discussed about</span>
     clip_text_tokens, st_text_tokens <span style="color:#f92672">=</span> calculate_clip_and_st_embeddings_for_queries(queries)
 
@@ -126,10 +126,10 @@ clip_text_tokens, st_text_tokens <span style="color:#f92672">=</span> calculate_
 
             <span style="color:#75715e">## note that similarity = dot product</span>
             <span style="color:#75715e">## calculate similarity between query text encoding and dataset instance label encoding</span>
-            text_alignment <span style="color:#f92672">=</span> data_text_tokens <span style="color:#960050;background-color:#1e0010">@</span> st_text_tokens<span style="color:#f92672">.</span>T
+            text_alignment <span style="color:#f92672">=</span> data_text_tokens <span style="color:#f92672">@</span> st_text_tokens<span style="color:#f92672">.</span>T
 
             <span style="color:#75715e">## calculate similarity between query visual encoding and dataset instance CLIP encoding </span>
-            visual_alignment <span style="color:#f92672">=</span> data_visual_tokens <span style="color:#960050;background-color:#1e0010">@</span> clip_text_tokens<span style="color:#f92672">.</span>T
+            visual_alignment <span style="color:#f92672">=</span> data_visual_tokens <span style="color:#f92672">@</span> clip_text_tokens<span style="color:#f92672">.</span>T
 
             <span style="color:#75715e">## some sort of a weighted sum to prioritize one over the other</span>
             total_alignment <span style="color:#f92672">=</span> (text_weight <span style="color:#f92672">*</span> text_alignment) <span style="color:#f92672">+</span> (vision_weight <span style="color:#f92672">*</span> visual_alignment)
@@ -139,7 +139,7 @@ clip_text_tokens, st_text_tokens <span style="color:#f92672">=</span> calculate_
             point_opacity<span style="color:#f92672">.</span>append(total_alignment)
 
     point_opacity <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat(point_opacity)<span style="color:#f92672">.</span>T
-    <span style="color:#66d9ef">print</span>(point_opacity<span style="color:#f92672">.</span>shape)
+    print(point_opacity<span style="color:#f92672">.</span>shape)
     <span style="color:#66d9ef">return</span> point_opacity
 </code></pre></div><p>Dot product is the same as taking the cosine similarity between the query and the point embeddings.</p>
 <h2 id="my-opinionsfurther-discussion">My opinions/further discussion</h2>
@@ -179,7 +179,7 @@ clip_text_tokens, st_text_tokens <span style="color:#f92672">=</span> calculate_
         <br>
         <a href="https://mayukhdeb.github.io/notes/about"></a>
         &copy;
-        2023
+        2024
       </p>
   </div>
 </footer></body>

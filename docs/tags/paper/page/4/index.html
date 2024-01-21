@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<meta name="generator" content="Hugo 0.68.3" /><body>
+<meta name="generator" content="Hugo 0.92.2" /><body>
 
 
 
@@ -45,6 +45,27 @@
         
       
 
+      
+        <article class="post-preview">
+  <a href="https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion/">
+      <h2 class="post-title">Order From Chaos (Part 1): Diffusion for image synthesis explained in simple words</h2>
+  </a>
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Dec 25, 2022
+  
+</span>
+  </div>
+  <div class="post-entry">
+    
+      <p>Warning: This post is still being written and is not complete, I just uploaded a draft.
+Intro If you take and image and iteratively add very small amounts of noise to it, eventually the image would be unrecongnizable to the eye &ndash; Now what if we could undo this process?
+Start from noise, and then iteratively remove the noise until you end up with the real image again.
+The Forward and backward processes Given an image \(X_0\), we would want to convert it to \(X_T\) by gradually adding noise to \(X_0\) in \(T\) time steps.</p>
+        <a href="https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion/" class="post-read-more">Read More</a>
+    
+  </div>
+</article>
       
         <article class="post-preview">
   <a href="https://mayukhdeb.github.io/notes/post/2022-12-25-diffusion-code/">
@@ -86,25 +107,6 @@ How are they doing it?  In order to collect data, they used an RGB-D from which 
   </div>
 </article>
       
-        <article class="post-preview">
-  <a href="https://mayukhdeb.github.io/notes/post/2022-12-18-clippo-image-and-language-understanding-from-text-only/">
-      <h2 class="post-title">CLIPPO: Image and Language understanding from pixels only</h2>
-  </a>
-  <div class="postmeta">
-    <span class="meta-post">
-  <i class="fa fa-calendar-alt"></i>Dec 18, 2022
-  
-</span>
-  </div>
-  <div class="post-entry">
-    
-      <p>CLIP v/s CLIPPO  CLIP trains 2 seperate image and text encoders, each with it&rsquo;s own preprocessing and embeddings. CLIPPO trains a single transformer where the images are sent in as images and the text is also rendered as a image before shoving it into the forward pass  How do they render text as an image?
-Text inputs are rendered on blank images, and are subsequently dealt with entirely as images.</p>
-        <a href="https://mayukhdeb.github.io/notes/post/2022-12-18-clippo-image-and-language-understanding-from-text-only/" class="post-read-more">Read More</a>
-    
-  </div>
-</article>
-      
       </div>
     
     <ul class="pager">
@@ -130,7 +132,7 @@ Text inputs are rendered on blank images, and are subsequently dealt with entire
         <br>
         <a href="https://mayukhdeb.github.io/notes/about"></a>
         &copy;
-        2023
+        2024
       </p>
   </div>
 </footer></body>

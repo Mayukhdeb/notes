@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<meta name="generator" content="Hugo 0.68.3" /><body>
+<meta name="generator" content="Hugo 0.92.2" /><body>
 
 
 
@@ -75,7 +75,7 @@
 </ol>
 <p>The approach is surprisinglty simple, it&rsquo;s pretty much just prompt engineering:</p>
 <p>This is how the prompt looks like:</p>
-<pre><code>Question: Who was the first president of the United States?
+<pre tabindex="0"><code>Question: Who was the first president of the United States?
 Proposed Answer: George Washington
 Is the proposed answer:
 (A) True
@@ -86,10 +86,10 @@ The proposed answer is:
 </ol>
 <p>This is yet again done with prompt engineering in 2 stages:</p>
 <p>First, we sample an answer from the model:</p>
-<pre><code>Question: Who was the first president of the United States?
+<pre tabindex="0"><code>Question: Who was the first president of the United States?
 Answer:
 </code></pre><p>Then, we ask the model about it&rsquo;s own answer:</p>
-<pre><code>Question: Who was the first president of the United States?
+<pre tabindex="0"><code>Question: Who was the first president of the United States?
 Proposed Answer: George Washington was the first president.
 Is the proposed answer:
 (A) True
@@ -99,14 +99,14 @@ The proposed answer is:
 <li><strong>On &ldquo;hard questions&rdquo;, LMs are far more confident about the &ldquo;correctness&rdquo; of their answer if we provide contextual information</strong></li>
 </ol>
 <p>For example, let us consider an obscure question which is very likely to not be contained in the model&rsquo;s world knowledge:</p>
-<pre><code>What state’s rodeo hall of fame was established in 2013?
+<pre tabindex="0"><code>What state’s rodeo hall of fame was established in 2013?
 </code></pre><p>The <code>P(IK)</code> for this question is 18%, which is pretty low. However, if we prepend a wikipedia article on the Idaho Rodeo Hall of Fame on the prompt, then the <code>P(IK)</code> jumps to 78%. In simple words, the model is far more confident that it can answer an unseen question correctly if we provide it some context.</p>
-<pre><code>Wikipedia: The Idaho Rodeo Hall of Fame was established as a 501 (c)(3) nonprofit organization on May 6, 2013. Lonnie and Charmy LeaVell are thefounders of the organization. The actual charitable nonprofit status was...
+<pre tabindex="0"><code>Wikipedia: The Idaho Rodeo Hall of Fame was established as a 501 (c)(3) nonprofit organization on May 6, 2013. Lonnie and Charmy LeaVell are thefounders of the organization. The actual charitable nonprofit status was...
 &lt;CROPPED&gt;
 What state’s rodeo hall of fame was established in 2013?
 </code></pre><h1 id="closing-comments">Closing comments</h1>
 <p>All of us are trying to understand and validate the factual accuracy of the answers we obtain from LLMs. It is indeed an interesting approach to use the model itself to try and validate it&rsquo;s own answers, but I&rsquo;m still skeptical. It&rsquo;s like asking &ldquo;are you sure?&rdquo; to a guy you already don&rsquo;t trust as a mechanism to get reliable answers.</p>
-<p>Kind of reminds me of the &ldquo;Let&rsquo;s think step by step&rdquo; trick, but now it&rsquo;s more like &ldquo;Is the given answer correct?&quot;.</p>
+<p>Kind of reminds me of the &ldquo;Let&rsquo;s think step by step&rdquo; trick, but now it&rsquo;s more like &ldquo;Is the given answer correct?&rdquo;.</p>
 
 
 
@@ -129,7 +129,7 @@ What state’s rodeo hall of fame was established in 2013?
         <br>
         <a href="https://mayukhdeb.github.io/notes/about"></a>
         &copy;
-        2023
+        2024
       </p>
   </div>
 </footer></body>

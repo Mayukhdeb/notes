@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<meta name="generator" content="Hugo 0.68.3" /><body>
+<meta name="generator" content="Hugo 0.92.2" /><body>
 
 
   
@@ -60,6 +60,26 @@
 
       
         <article class="post-preview">
+  <a href="https://mayukhdeb.github.io/notes/post/2024-01-16-direct-preference-optimization/">
+      <h2 class="post-title">Direct Preference Optimization for Diffusion Models</h2>
+  </a>
+  <div class="postmeta">
+    <span class="meta-post">
+  <i class="fa fa-calendar-alt"></i>Jan 16, 2024
+  
+</span>
+  </div>
+  <div class="post-entry">
+    
+      <p>DPO aims to overcome the primary drawbacks of RLHF, which are it&rsquo;s unstable nature and the dependence on a reward model trained on human preference data.
+In this paper, they perform DPO on diffusion models by training the model to alter it&rsquo;s denoising directions towards preferred images over non-preferred ones. For this objective, they use the pick-a-pic v2 dataset.
+I&rsquo;ll be using this script as a reference. Note that in the aforementioned paper, they finetune the entire model but in the script we see that they&rsquo;re fine-tuning a LoRA adapter on the model.</p>
+        <a href="https://mayukhdeb.github.io/notes/post/2024-01-16-direct-preference-optimization/" class="post-read-more">Read More</a>
+    
+  </div>
+</article>
+      
+        <article class="post-preview">
   <a href="https://mayukhdeb.github.io/notes/post/2023-07-02-matrices/">
       <h2 class="post-title">Matrices</h2>
   </a>
@@ -99,27 +119,6 @@
   </div>
 </article>
       
-        <article class="post-preview">
-  <a href="https://mayukhdeb.github.io/notes/post/2023-06-27-dreamsim/">
-      <h2 class="post-title">DreamSim</h2>
-  </a>
-  <div class="postmeta">
-    <span class="meta-post">
-  <i class="fa fa-calendar-alt"></i>Jun 27, 2023
-  
-</span>
-  </div>
-  <div class="post-entry">
-    
-      <p>Everything related to this paper can be found here: : https://dreamsim-nights.github.io/
-A sense of sameness is the very keel and backbone of our thinking - William James, 1890
-Our understanding of the visual world depends crucially on our ability to perceive the similarities between different images.
-People in vision have tried to solve this problem by introducing metrics like PSNR, SSIM, LPIPS, DISTS etc. The primary weakness of such metrics is that they focus on pixel/patch level information and fail to capture high-level structure.</p>
-        <a href="https://mayukhdeb.github.io/notes/post/2023-06-27-dreamsim/" class="post-read-more">Read More</a>
-    
-  </div>
-</article>
-      
       </div>
     
     <ul class="pager">
@@ -141,7 +140,7 @@ People in vision have tried to solve this problem by introducing metrics like PS
         <br>
         <a href="https://mayukhdeb.github.io/notes/about"></a>
         &copy;
-        2023
+        2024
       </p>
   </div>
 </footer></body>

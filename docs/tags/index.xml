@@ -6,10 +6,15 @@
     <description>Recent content in Tags on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 02 Jul 2023 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://mayukhdeb.github.io/notes/tags/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Tue, 16 Jan 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://mayukhdeb.github.io/notes/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>paper</title>
+      <link>https://mayukhdeb.github.io/notes/tags/paper/</link>
+      <pubDate>Tue, 16 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/tags/paper/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>math</title>
@@ -17,15 +22,6 @@
       <pubDate>Sun, 02 Jul 2023 00:00:00 +0000</pubDate>
       
       <guid>https://mayukhdeb.github.io/notes/tags/math/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>paper</title>
-      <link>https://mayukhdeb.github.io/notes/tags/paper/</link>
-      <pubDate>Tue, 27 Jun 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://mayukhdeb.github.io/notes/tags/paper/</guid>
       <description></description>
     </item>
     

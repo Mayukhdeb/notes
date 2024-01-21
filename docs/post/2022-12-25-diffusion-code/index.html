@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<meta name="generator" content="Hugo 0.68.3" /><body>
+<meta name="generator" content="Hugo 0.92.2" /><body>
 
 
 
@@ -174,8 +174,8 @@ Notice how this function is dependend only on \(x_0\) and not on \(x_t\) but it 
 
 <h3 id="finally-some-code">Finally, some code</h3>
 <p>I&rsquo;ll try to explain things line-by-line:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
-<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#f92672">as</span> F
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+<span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">linear_beta_schedule</span>(timesteps, start<span style="color:#f92672">=</span><span style="color:#ae81ff">0.0001</span>, end<span style="color:#f92672">=</span><span style="color:#ae81ff">0.02</span>):
 
@@ -212,7 +212,7 @@ $$</p>
 Where \(\epsilon\) is the noise added into the image.
 
 <p>Then, we pre-compute the variables for convenience:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">alphas <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span> betas
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">alphas <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.</span> <span style="color:#f92672">-</span> betas
 alphas_cumprod <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cumprod(alphas, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
 alphas_cumprod_prev <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>pad(alphas_cumprod[:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>), value<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span>)
 sqrt_recip_alphas <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>sqrt(<span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> alphas)
@@ -226,7 +226,7 @@ So if we have an input \(x_t = x0 + \epsilon\) then the model's output would ide
 
 <h2 id="encoding-time-steps">Encoding time steps</h2>
 <p>Note that we also have to let the model know in which timestep the input image is, this is done with the help of positional embeddings.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SinusoidalPositionEmbeddings</span>(nn<span style="color:#f92672">.</span>Module):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SinusoidalPositionEmbeddings</span>(nn<span style="color:#f92672">.</span>Module):
     <span style="color:#66d9ef">def</span> __init__(self, dim):
         super()<span style="color:#f92672">.</span>__init__()
         self<span style="color:#f92672">.</span>dim <span style="color:#f92672">=</span> dim
@@ -236,7 +236,7 @@ So if we have an input \(x_t = x0 + \epsilon\) then the model's output would ide
         half_dim <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>dim <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
         embeddings <span style="color:#f92672">=</span> math<span style="color:#f92672">.</span>log(<span style="color:#ae81ff">10000</span>) <span style="color:#f92672">/</span> (half_dim <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
         embeddings <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>exp(torch<span style="color:#f92672">.</span>arange(half_dim, device<span style="color:#f92672">=</span>device) <span style="color:#f92672">*</span> <span style="color:#f92672">-</span>embeddings)
-        embeddings <span style="color:#f92672">=</span> time[:, None] <span style="color:#f92672">*</span> embeddings[None, :]
+        embeddings <span style="color:#f92672">=</span> time[:, <span style="color:#66d9ef">None</span>] <span style="color:#f92672">*</span> embeddings[<span style="color:#66d9ef">None</span>, :]
         embeddings <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>cat((embeddings<span style="color:#f92672">.</span>sin(), embeddings<span style="color:#f92672">.</span>cos()), dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
         <span style="color:#66d9ef">return</span> embeddings
 </code></pre></div><p><strong>Intuition behind <code>SinusoidalPositionEmbeddings</code></strong></p>
@@ -254,11 +254,11 @@ So if we have an input \(x_t = x0 + \epsilon\) then the model's output would ide
 <h2 id="combining-time-step-encoding-with-image-data">Combining time-step encoding with image data</h2>
 <p>I will not go into depth about the U-Net architecture itself, because it can be and has been replaced with other models for diffusion. You can just think of it as a model which takes an image as an input and is supposed to predict the noise in the input (which gets subtracted).</p>
 <p>The important thing to note here is that we do not concatenate the time embeddings into the data, instead we add it right after passing the input through the first conv layer of a U-Net block.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Block</span>(nn<span style="color:#f92672">.</span>Module):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Block</span>(nn<span style="color:#f92672">.</span>Module):
     <span style="color:#e6db74">&#34;&#34;&#34;
 </span><span style="color:#e6db74">    A single building block from the U-Net
 </span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
-    <span style="color:#66d9ef">def</span> __init__(self, in_ch, out_ch, time_emb_dim, up<span style="color:#f92672">=</span>False):
+    <span style="color:#66d9ef">def</span> __init__(self, in_ch, out_ch, time_emb_dim, up<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
         super()<span style="color:#f92672">.</span>__init__()
         self<span style="color:#f92672">.</span>time_mlp <span style="color:#f92672">=</span>  nn<span style="color:#f92672">.</span>Linear(time_emb_dim, out_ch)
         <span style="color:#66d9ef">if</span> up:
@@ -278,7 +278,7 @@ So if we have an input \(x_t = x0 + \epsilon\) then the model's output would ide
         <span style="color:#75715e"># Time embedding</span>
         time_emb <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>relu(self<span style="color:#f92672">.</span>time_mlp(t))
         <span style="color:#75715e"># Extend last 2 dimensions</span>
-        time_emb <span style="color:#f92672">=</span> time_emb[(<span style="color:#f92672">...</span>, ) <span style="color:#f92672">+</span> (None, ) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>]
+        time_emb <span style="color:#f92672">=</span> time_emb[(<span style="color:#f92672">...</span>, ) <span style="color:#f92672">+</span> (<span style="color:#66d9ef">None</span>, ) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>]
         <span style="color:#e6db74">&#39;&#39;&#39;
 </span><span style="color:#e6db74">        This is where we add in the time embedding
 </span><span style="color:#e6db74">        combines time step and image information
@@ -290,7 +290,7 @@ So if we have an input \(x_t = x0 + \epsilon\) then the model's output would ide
         <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>transform(h)
 </code></pre></div><h2 id="loss-function">Loss function</h2>
 <p>The loss function is basically the L1 loss on the predicted noise v/s the original noise:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_loss</span>(model, x_0, t):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_loss</span>(model, x_0, t):
     <span style="color:#e6db74">&#34;&#34;&#34;
 </span><span style="color:#e6db74">    model: U-Net model through which we pass the image
 </span><span style="color:#e6db74">    x_0: original input image
@@ -305,7 +305,7 @@ So if we have an input \(x_t = x0 + \epsilon\) then the model's output would ide
     <span style="color:#66d9ef">return</span> F<span style="color:#f92672">.</span>l1_loss(noise, noise_pred)
 </code></pre></div><h2 id="sampling">Sampling</h2>
 <p>TODO: explain this</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@torch.no_grad</span>()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@torch</span><span style="color:#f92672">.</span>no_grad()
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sample_timestep</span>(x, t):
     <span style="color:#e6db74">&#34;&#34;&#34;
 </span><span style="color:#e6db74">    Calls the model to predict the noise in the image and returns 
@@ -353,7 +353,7 @@ So if we have an input \(x_t = x0 + \epsilon\) then the model's output would ide
         <br>
         <a href="https://mayukhdeb.github.io/notes/about"></a>
         &copy;
-        2023
+        2024
       </p>
   </div>
 </footer></body>

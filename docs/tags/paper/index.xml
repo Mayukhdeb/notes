@@ -6,10 +6,17 @@
     <description>Recent content in paper on Notes</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 27 Jun 2023 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://mayukhdeb.github.io/notes/tags/paper/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Tue, 16 Jan 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://mayukhdeb.github.io/notes/tags/paper/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Direct Preference Optimization for Diffusion Models</title>
+      <link>https://mayukhdeb.github.io/notes/post/2024-01-16-direct-preference-optimization/</link>
+      <pubDate>Tue, 16 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>https://mayukhdeb.github.io/notes/post/2024-01-16-direct-preference-optimization/</guid>
+      <description>DPO aims to overcome the primary drawbacks of RLHF, which are it&amp;rsquo;s unstable nature and the dependence on a reward model trained on human preference data.
+In this paper, they perform DPO on diffusion models by training the model to alter it&amp;rsquo;s denoising directions towards preferred images over non-preferred ones. For this objective, they use the pick-a-pic v2 dataset.
+I&amp;rsquo;ll be using this script as a reference. Note that in the aforementioned paper, they finetune the entire model but in the script we see that they&amp;rsquo;re fine-tuning a LoRA adapter on the model.</description>
+    </item>
     
     <item>
       <title>DreamSim</title>
@@ -278,7 +285,7 @@ In general, language modeling has a large output space and a high complexity com
       <guid>https://mayukhdeb.github.io/notes/post/2022-04-16-knowledge_neurons/</guid>
       <description>Knowledge Neurons The knowledge neurons paper asks the following question:
 Given an output y from an intermediate layer, how can we determine the neurons which contributed the most/least to the prediction ?
-The neurons which contribute the most to the &amp;ldquo;fact&amp;rdquo; mentioned by the model are generally tagged as the &amp;ldquo;knowledge neurons&amp;quot;.
+The neurons which contribute the most to the &amp;ldquo;fact&amp;rdquo; mentioned by the model are generally tagged as the &amp;ldquo;knowledge neurons&amp;rdquo;.
 Procedure to find knowledge neurons   Produce n different and diverse prompts expressing this fact
   For each prompt, calculate the attribution score of each intermediate neurons</description>
     </item>

@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/main.css" />
 <link rel="stylesheet" href="https://mayukhdeb.github.io/notes/css/darkmode.css" />
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<meta name="generator" content="Hugo 0.68.3" /><body>
+<meta name="generator" content="Hugo 0.92.2" /><body>
 
 
 
@@ -53,7 +53,7 @@
 <h2 id="key-concepts-and-takeaways">Key concepts and takeaways:</h2>
 <h3 id="what-is-a-fact-tuple"><strong>What is a fact tuple?</strong></h3>
 <p>It is a special way to store knowledge in the form of  a tuple which looks like the following:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">## (subject, relation, object)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">## (subject, relation, object)</span>
 (<span style="color:#e6db74">&#34;Edmunt Neupert&#34;</span>, <span style="color:#e6db74">&#34;Plays the instrument&#34;</span>, <span style="color:#e6db74">&#34;Piano&#34;</span>)
 </code></pre></div><p>It contains the subject (index 0), the object (index 2) and their relation (index 1).</p>
 <h3 id="knowing-differs-from-saying"><strong>Knowing differs from saying</strong></h3>
@@ -64,7 +64,7 @@
 <p>It is fair to assume that a certain fact stored within the model is  evenly distributed among all of the computations being performed during the forward pass, but that is generally not the case. It turns out that when we corrupt the embeddings of certain input tokens, the probability of the original output changes drastically.</p>
 <p>The question is, which part of the model and the prompt was responsible for this decisive change?</p>
 <p>Let&rsquo;s try to understand this with an example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Miles Davis plays the&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Miles Davis plays the&#34;</span>
 </code></pre></div><p>Now on a normal GPT2-XL, the completion would be <code>piano</code> because Miles Davis was indeed a famous piano player.</p>
 <p>The catch is, now when we &ldquo;corrupt&rdquo; the embeddings of the subject i.e <code>Miles</code> and <code>Davis</code>, then the output gets corrupted as well (i.e the probability of <code>piano</code> decreases)</p>
 <p><strong>Side note: What do we mean by corrupting an input subject?</strong></p>
@@ -99,7 +99,7 @@
         <br>
         <a href="https://mayukhdeb.github.io/notes/about"></a>
         &copy;
-        2023
+        2024
       </p>
   </div>
 </footer></body>
