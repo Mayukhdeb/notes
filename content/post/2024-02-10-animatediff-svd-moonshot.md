@@ -52,4 +52,6 @@ The paper does not explicitly mention what is the exact shape of the motion modu
 2. Merging spatial dims with batch dim might lead to bad spatial consistency.
 
 I'll be trying to answer the following questions:
-1. 
+1. how come Moonshot and SVD can do img2vid natively, but aDiff requires an rgb-encoder (see SparseCtrl) to hack it into the model?
+2. what are the training objectives used by these papers?
+3. what is the framerate of these models? can we train these models on a lower framerate and use frame interpolation models like RIFE?
