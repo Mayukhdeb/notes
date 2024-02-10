@@ -39,9 +39,17 @@ The T2I model usually deals with 4D data `(batch, channels, height, width)`. But
 
 This way, when the internal feature maps go through the image layers, the time dependent axis i.e `frames` is ignored.
 
+The input of the motion module is the image feature map reshaped as: `b c h w -> (b h w) c` i.e the spatial dimensions are merged into the batch axis.
+
+The paper does not explicitly mention what is the exact shape of the motion module transformer inputs.
+
 **Advantages**
+1. Can build on top of existing T2I models.
+2. Code is available [here](https://github.com/guoyww/AnimateDiff/blob/main/train.py)
 
 **Disadvantages**
+1. Have to train 2 models. A domain adapter and a motion module.
+2. ???
 
 I'll be trying to answer the following questions:
 1. 
