@@ -51,6 +51,26 @@ The paper does not explicitly mention what is the exact shape of the motion modu
 1. Have to train 2 models. More models = more chances of things going wrong.
 2. Merging spatial dims with batch dim might lead to bad spatial consistency.
 
+# SparseCtrl
+
+They enhance the controllability of existing text to video (T2V) models with signals that are sparse across time. They leave the original T2V model untouched.
+
+We know how ControlNet can be used to successfully add structure control on pre-trained image generation models. They do something similar, but for videos.
+
+Using a controlnet to do frame-by-frame guidance did not work well for temporally sparse conditioninig. It was seen that only the conditioned frames were valid, and there were abrupt content changes between the conditioned and the unconditioned frames.
+
+This inconsistency is occurring because the T2V model finds it difficult to infer the intermediate frame conditions from the sparse conditions.
+
+The authors solve this problem by integrating a temporal layers (attention across time?) to the sparse condition encoders. This would allow the condition signal to propagate across time. This helps in propagating information from the conditioned frames to the unconditioned ones.
+
+**Advantages**
+1. Compatible with pre-trained T2V models
+2. Supports conditioning in multiple modalities like sketch and depthmaps
+3. Source code is [available](https://github.com/guoyww/AnimateDiff#202312-animatediff-v3-and-sparsectrl)
+
+**Disadvantages**
+1. Have to train a temporal conditioning encoder which converts sparse control signals to dense 
+
 I'll be trying to answer the following questions:
 1. how come Moonshot and SVD can do img2vid natively, but aDiff requires an rgb-encoder (see SparseCtrl) to hack it into the model?
 2. what are the training objectives used by these papers?
