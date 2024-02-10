@@ -48,8 +48,8 @@ The paper does not explicitly mention what is the exact shape of the motion modu
 2. Code is available [here](https://github.com/guoyww/AnimateDiff/blob/main/train.py)
 
 **Disadvantages**
-1. Have to train 2 models. A domain adapter and a motion module.
-2. ???
+1. Have to train 2 models. More models = more chances of things going wrong.
+2. Merging spatial dims with batch dim might lead to bad spatial consistency.
 
 I'll be trying to answer the following questions:
 1. 
