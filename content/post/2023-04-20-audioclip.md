@@ -1,10 +1,3 @@
-+++
-title = "AudioCLIP: Extending CLIP to Image, Text and Audio"
-date = "2023-04-20"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 They aim to train a tri-modal model which provides a common embedding space for 3 modalities: Images, text and Audio. The trick lies in adding in the 3rd modality (audio)
 
 The repo can be found [here](https://github.com/AndreyGuzhov/AudioCLIP).

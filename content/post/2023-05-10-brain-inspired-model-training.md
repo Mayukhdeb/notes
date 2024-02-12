@@ -1,10 +1,3 @@
-+++
-title = "BIMT: Brain Inspired Modular Training"
-date = "2023-05-10"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 When compared to artificial neural networks, the human brain is a lot more modular. The authors believe that this is because the loss function of ANN regularizers like weight decay are not dependent on the permutations of neurons on each layer.
 
 The cost of connecting 2 biological neurons which are far apart is much more than when they're closer together. But this is not the case for ANNs.

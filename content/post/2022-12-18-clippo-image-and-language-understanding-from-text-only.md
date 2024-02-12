@@ -1,10 +1,3 @@
-+++
-title = "CLIPPO: Image and Language understanding from pixels only"
-date = "2022-12-18"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 ## CLIP v/s CLIPPO
 
 - CLIP trains 2 seperate image and text encoders, each with it's own preprocessing and embeddings. 

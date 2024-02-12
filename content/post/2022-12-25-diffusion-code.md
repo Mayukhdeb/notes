@@ -1,11 +1,3 @@
-+++
-title = "Order From Chaos (Part 2): Diffusion for image synthesis explained in code and a little bit of math"
-date = "2022-12-25"
-author = "Mayukh Deb"
-tags = ["paper"]
-math= true
-+++
-
 **Warning: This post is still being written and is not complete, I just uploaded a draft.**
 
 This post is basically what I learned while watching [this video](https://www.youtube.com/watch?v=a4Yfz2FxXiY) by DeepFindr.

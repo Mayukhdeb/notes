@@ -1,10 +1,3 @@
-+++ 
-title = "Attention Rollout"
-author = "Mayukh Deb"
-tags = ["paper"]
-date = "2022-04-16"
-+++
-
 ## How is it better than just viewing raw attention maps ? 
 
 Viewing raw attention maps as a way to explain transformers does not take into account the fact that we also have residual connections in the model. When we only use attention weights to approximate the flow of information in Transformers, we ignore the residual connections. But these connections play a significant role in tying corresponding positions in different layers.

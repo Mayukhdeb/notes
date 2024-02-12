@@ -1,10 +1,3 @@
-+++
-title = "Watching artificial intelligence through the lens of CogSci"
-date = "2022-09-27"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 ## The bias in humans interpreting functional mechanisms of a system
 
 A paper mentions a concept called the "theory-of-mind" (Baron-Cohen et al., 1985) which mentions the fact that humans can understand that other humans have mental states like that of themselves. Our minds make up assumptions about things that are going on inside other people's minds (emotions etc).

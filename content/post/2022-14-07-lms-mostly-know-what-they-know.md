@@ -1,10 +1,3 @@
-+++
-title = "Language Models (mostly) Know What they know"
-date = "2022-07-14"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 # Can we make LMs predict which questions they'll be able to answer correctly?
 
 It is important for LLMs to "know" what they know and what they do not know. The problem is that LMs are generally never trained to say "I do not know". But it might be possible to quantify this ability post-training.

@@ -1,11 +1,3 @@
-+++
-title = "Order From Chaos (Part 1): Diffusion for image synthesis explained in simple words"
-date = "2022-12-25"
-author = "Mayukh Deb"
-tags = ["paper"]
-math= true
-+++
-
 **Warning: This post is still being written and is not complete, I just uploaded a draft.**
 
 ## Intro

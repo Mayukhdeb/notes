@@ -1,11 +1,3 @@
-+++
-title = "Neural Taskonomy - using encodings from vision models to understand the human brain"
-date = "2023-01-01"
-author = "Mayukh Deb"
-tags = ["paper"]
-math= true
-+++
-
 ## Intro
 
 CNNs are not too bad at predicting brain activity. But using their intermediate encoding space seems to be not too effective as a way to understand the how the human brain works.

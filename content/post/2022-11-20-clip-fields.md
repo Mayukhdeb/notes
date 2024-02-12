@@ -1,10 +1,3 @@
-+++
-title = "VPT: Video Pre-Training on Minecraft"
-date = "2022-12-18"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 ## Pseudo labelling
 
 There are 4 main stages in the data collection stage:

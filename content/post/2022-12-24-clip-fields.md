@@ -1,10 +1,3 @@
-+++
-title = "CLIP-Fields: Weakly Supervised Semantic Fields for Robotic Memory"
-date = "2022-12-24"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 ## What are they doing?
 
 They found a way to help a robot make a "map" of the world around it in terms of multimodal scene encodings. Then they store these multimodal scene encodings and their respective labels ("chair") on a database which is differentiable and is also easily searchable.

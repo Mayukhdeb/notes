@@ -1,10 +1,3 @@
-+++
-title = "Brain to Text Communication via handwriting"
-date = "2022-11-19"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 The original paper can be found [here](https://www.nature.com/articles/s41586-021-03506-2).
 
 The authors of this paper have made a BCI that decodes handwriting movements from neural activity and translates it to text using RNNs to decode signals. 

@@ -1,11 +1,3 @@
-+++
-title = "LOST - Localizing objects with self supervised transformers"
-author = "Mayukh Deb"
-tags = ["paper"]
-date = "2022-04-16"
-+++
-
-
 # Lost - Localizing objects with self supervised transformers and no labels
 
 The core idea is to be able to use the hidden info within transformers to localize objects ("subjects") within input images (much like a YOLO model but without further training). 

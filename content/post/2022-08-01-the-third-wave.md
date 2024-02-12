@@ -1,10 +1,3 @@
-+++
-title = "The Third Wave (?)"
-date = "2022-08-01"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 I will start by rambling a little about how [learning language is harder than you think](https://garymarcus.substack.com/p/learning-language-is-harder-than). Then I'll move on to the main paper itself.
 
 ## Learning language is harder than you think

@@ -1,11 +1,3 @@
-+++
-title = "Knowledge Neurons"
-author = "Mayukh Deb"
-tags = ["paper"]
-date = "2022-04-16"
-+++
-
-
 # Knowledge Neurons
 
 The knowledge neurons paper asks the following question: 

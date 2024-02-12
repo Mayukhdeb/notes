@@ -1,11 +1,3 @@
-+++
-title = "Interpreting LMs with contrastive explanations"
-author = "Mayukh Deb"
-tags = ["paper"]
-date = "2022-04-16"
-+++
-
-
 ## Interpreting language models with contrastive explanations
 
 interpretability methods commonly used for other NLP tasks like text classification, such as gradient-based saliency maps are not as informative for LM predictions

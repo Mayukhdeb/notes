@@ -1,10 +1,3 @@
-+++
-title = "THINGS: a multimodal dataset for investigating object representations in thehuman brain"
-date = "2023-04-04"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 It's actually a collection of 3 datasets. All of which can be found [here](https://openneuro.org/datasets/ds004212/versions/2.0.0). The images used can be found [here](https://things-initiative.org/).
 
 The 3 datasets are:

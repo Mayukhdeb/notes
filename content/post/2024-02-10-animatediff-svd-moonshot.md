@@ -1,10 +1,3 @@
-+++ 
-title = "Video Generation Models"
-author = "Mayukh Deb"
-tags = ["paper"]
-date = "2024-02-10"
-+++
-
 We'll explore the following 3 papers:
 1. [AnimateDiff](https://arxiv.org/abs/2307.04725)
 2. [SparseCtrl](https://arxiv.org/abs/2311.16933)

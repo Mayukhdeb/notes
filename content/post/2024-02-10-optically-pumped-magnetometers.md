@@ -1,10 +1,3 @@
-+++ 
-title = "Optically Pumped Magnetometers"
-author = "Mayukh Deb"
-tags = ["paper"]
-date = "2024-02-10"
-+++
-
 Todos:
 1. Basics of magnetism. Thumb rule
 2. Inducing macro alignment of magnets

@@ -1,10 +1,3 @@
-+++
-title = "Parti - Scaling LLMs for Text to Image tasks"
-date = "2022-08-07"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 # Scaling Autoregressive Models for Content-Rich Text to Image Generation
 
 The architecture itself that's used for parti (that's what the authors call this model) is fairly simple. It's a transformer encoder-decoder architecture paired with a ViT VQGAN in the end to tokenize/detokenize images.

@@ -1,10 +1,3 @@
-+++
-title = "Open Vocabulary EEG-To-Text Decoding"
-date = "2023-03-09"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 The primary problem with most of the existing Brain-Signal to text pipelines is that they have a closed vocabulary. 
 
 In this paper, they use pretrained language models for

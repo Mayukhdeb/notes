@@ -1,11 +1,3 @@
-+++
-title = "Generic Attention-model Explainability"
-author = "Mayukh Deb"
-tags = ["paper"]
-date = "2022-04-16"
-+++
-
-
 ## Generic Attention-model Explainability for Interpreting Bi-Modal and Encoder-Decoder Transformers
 
 Can be used to explain models like CLIP. This is how it works:

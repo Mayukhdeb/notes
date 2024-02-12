@@ -1,10 +1,3 @@
-+++
-title = "Towards a New Science of Common Sense"
-date = "2022-09-03"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 ## Intro
 
 Common sense, as we know it has not yet been achieved in machines by any means despite decades of research. Today's large language models still struggle even the smallest of riddles or mental math questions. With LLMs, we have solved language, not logic/common sense.

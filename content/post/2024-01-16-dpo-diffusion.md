@@ -1,10 +1,3 @@
-+++ 
-title = "Direct Preference Optimization for Diffusion Models"
-author = "Mayukh Deb"
-tags = ["paper"]
-date = "2024-01-16"
-+++
-
 DPO aims to overcome the primary drawbacks of RLHF, which are it's unstable nature and the dependence on a reward model trained on human preference data.
 
 In [this paper](https://arxiv.org/abs/2311.12908), they perform DPO on diffusion models by training the model to alter it's denoising directions towards preferred images over non-preferred ones. For this objective, they use the [pick-a-pic v2](https://huggingface.co/datasets/yuvalkirstain/pickapic_v2/viewer/default/train) dataset.

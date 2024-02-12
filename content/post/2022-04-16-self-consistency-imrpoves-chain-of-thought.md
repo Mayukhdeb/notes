@@ -1,11 +1,3 @@
-+++
-title = "Self-Consistency Improves Chain of Thought Reasoning in LMs"
-author = "Mayukh Deb"
-tags = ["index"]
-date = "2022-04-16"
-+++
-
-
 # Self-Consistency Improves Chain of Thought Reasoning in Language Models
 
 One issue with large language models has been to find a way to understand and leverage the concept of "chain of thought" (i.e reasoning).

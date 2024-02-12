@@ -1,10 +1,3 @@
-+++
-title = "Transformer intrepretability beyond attention"
-date = "2022-04-16"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 ## Disadvantages of attention rollout and LRP
 
 Irrelevant tokens often get highlighted

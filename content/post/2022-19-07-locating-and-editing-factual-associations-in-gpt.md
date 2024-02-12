@@ -1,10 +1,3 @@
-+++
-title = "Locating and Editing Factual Knowledge in GPTs"
-date = "2022-07-19"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 This paper's approach has been to develop a mechanism to identify the neuron activations that lead to a model's factual predictions and possibly even edit existing facts.
 
 ## Key concepts and takeaways:

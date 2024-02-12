@@ -1,10 +1,3 @@
-+++
-title = "Brain2Image: Converting Brain Signals into Images"
-date = "2023-01-25"
-author = "Mayukh Deb"
-tags = ["paper"]
-+++
-
 **Can we encode useful visual information about images from the brain's EEG signals?**
 
 Yes. Image generation from a brain signal feature vector encoding
