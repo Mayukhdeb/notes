@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Order From Chaos (Part 1): Diffusion for image synthesis explained in simple words</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Order From Chaos (Part 1): Diffusion for image synthesis explained in simple words</h1>
+</header>
+<p>+++ title = “Order From Chaos (Part 1): Diffusion for image synthesis explained in simple words” date = “2022-12-25” author = “Mayukh Deb” tags = [“paper”] math= true +++</p>
+<p><strong>Warning: This post is still being written and is not complete, I just uploaded a draft.</strong></p>
+<h2 id="intro">Intro</h2>
+<p>If you take and image and iteratively add very small amounts of noise to it, eventually the image would be unrecongnizable to the eye – Now what if we could undo this process?</p>
+<p>Start from noise, and then iteratively remove the noise until you end up with the real image again.</p>
+<h2 id="the-forward-and-backward-processes">The Forward and backward processes</h2>
+<p>{{&lt; math.inline &gt;}}</p>
+<p>Given an image (X_0), we would want to convert it to (X_T) by gradually adding noise to (X_0) in (T) time steps.</p>
+<p>{{&lt;/ math.inline &gt;}}</p>
+<p><br /><span class="math display"><em>X</em> → <em>X</em><sub><em>T</em></sub></span><br /></p>
+{{&lt; math.inline &gt;}}
+<p>
+We do this by adding a small amount of noise (let’s call this a “step”). The forward process is basically a markov chain, where the output of step (n) only depends on the sample from the (n-1)th step.
+</p>
+<p>{{&lt;/ math.inline &gt;}}</p>
+{{&lt; math.inline &gt;}}
+<p>
+<p>We would formulate this forward process such that when (T) approaches (), (X_T) would approach a gaussian distribution[1] with center at 0, and would lose all information from the original image.</p>
+<p>In real life, (T) is generally in the order of 1000.</p>
+</p>
+<p>{{&lt;/ math.inline &gt;}}</p>
+{{&lt; math.inline &gt;}}
+<p>
+<p>The step sizes are controlled by a variance schedule (_T) which is generally chosen to be super small, making sure that only a small amount of noise is added in each forward step. This is so that it is not too hard for the model to remove the noise in each step in the reverse process.</p>
+</p>
+<p>{{&lt;/ math.inline &gt;}}</p>
+<p>Different forward time steps are associated with different noise levels, and the model can learn to undo these individually.</p>
+{{&lt; math.inline &gt;}}
+<p>
+The backward process from (X_T) to (X) is also a markov chain where (X_{T-n}) depends on (X_{T-(n-1)}) and so on.
+</p>
+<p>{{&lt;/ math.inline &gt;}}</p>
+<h2 id="more-insight">More insight</h2>
+<p>What we saw so far is the following:</p>
+<ol type="1">
+<li><p>The Forward process is basically a way to iteratively push a sample off the overall data manifold (domain)</p></li>
+<li><p>The reverse process then produces a trajectory back into the manifold to create a “real sample”.</p></li>
+</ol>
+{{&lt; math.inline &gt;}}
+<p>
+A diffusion model might mildly remind someone of the variational autoencoder. Where we first encoded an input variable (X) to become (Z) and then decoded it to obtains () which is supposed to a reconstruction of (X).
+</p>
+<p>The image below shows the similarity very nicely. {{&lt;/ math.inline &gt;}}</p>
+<p><img src = "https://user-images.githubusercontent.com/53133634/209469123-81d3fc54-151e-4398-9cec-e3a741bd26d7.png"></p>
+<p>Image taken from Ari Seff’s video[2] (<a href="https://youtu.be/fbLgFrlTnGU?t=406">this frame</a>) which I’d highly recommend watching.</p>
+<p>But unlike VAEs, in diffusion models, the encoding part is not trained or is trainable. It is only the reverse decoding part that gets trained.</p>
+<p>Another interesting thing to note about diffusion models is that unlike most of the other forms of generative modelling (VAEs, GANs, etc), here the shape of the latent vector is the same as that of the input image.</p>
+<h2 id="references">References:</h2>
+<p>[1] - Gaussian distribution explained: https://deepai.org/machine-learning-glossary-and-terms/gaussian-distribution</p>
+<p>[2] - Ari Seff’s video: https://www.youtube.com/watch?v=fbLgFrlTnGU</p>
+</body>
+</html>

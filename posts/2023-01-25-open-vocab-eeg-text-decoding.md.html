@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Open Vocabulary EEG-To-Text Decoding</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Open Vocabulary EEG-To-Text Decoding</h1>
+</header>
+<p>+++ title = “Open Vocabulary EEG-To-Text Decoding” date = “2023-03-09” author = “Mayukh Deb” tags = [“paper”] +++</p>
+<p>The primary problem with most of the existing Brain-Signal to text pipelines is that they have a closed vocabulary.</p>
+<p>In this paper, they use pretrained language models for EEG-To-Text decoding and make a zeroshot pilpieline for sentiment classification from EEG. The interesting part is that it can can leverage data from various subjects and sources, i.e huge potential for EEG to text systems with enough data.</p>
+<p>Interesting quote from paper:</p>
+<p><em>The high-level idea is that we assume the human brain to be a special kind of encoder, which functions similar to a language model that encodes a sequence of English tokens into contextualized embeddings</em></p>
+<p>I am primarily interested in the seq2seq model they managed to build from EEG data.</p>
+<p>Important components that they used: - word-level EEG features. (can be considered EEG “tokens”?) - A multi layer transformer encoder to encode EEG features - a pre-trained encoder-decoder BART model</p>
+<p>They were able to successfully train a model for sentence reconstruction with cross entropy loss. The results are not amazing, but its proves that this direction of research is definitely worth pursuing.</p>
+</body>
+</html>

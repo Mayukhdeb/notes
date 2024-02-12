@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Transformer intrepretability beyond attention</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Transformer intrepretability beyond attention</h1>
+</header>
+<p>+++ title = “Transformer intrepretability beyond attention” date = “2022-04-16” author = “Mayukh Deb” tags = [“paper”] +++</p>
+<h2 id="disadvantages-of-attention-rollout-and-lrp">Disadvantages of attention rollout and LRP</h2>
+<p>Irrelevant tokens often get highlighted</p>
+<p>The main challenge in assigning attributions based on attentions is that attentions are combining non-linearly from one layer to the next. The rollout method assumes that attentions are combined linearly and considers paths along the pairwise attention graph. We observe that this method often leads to an emphasis on irrelevant tokens since even average attention scores can be attenuated. The method also fails to distinguish between positive and negative contributions to the decision.</p>
+<p>Transformers apply activation functions other that ReLU, which result in both positive and negative features. Because of the non-positive values, skip connections lead, if not carefully handled, to numerical instabilities. Methods such as LRP for example, tend to fail in such cases.</p>
+<h2 id="how-does-this-method-beat-the-methods-mentioned-above-then">How does this method beat the methods mentioned above then ?</h2>
+<ul>
+<li><p>Filters out negative contributions to the decision (unlike attention rollout)</p></li>
+<li><p>Considers the fact that transformers use non-linearities which have negative output values such as GeLU, where LRPs generally fail.</p></li>
+<li><p>Non-linearities other that ReLU, such as GELU, output both positive and negative values. To address this, LRP propagation can be modified by constructing a subset of indices we consider only the elements that have a positive weighed relevance.</p></li>
+</ul>
+<h2 id="experiments">Experiments</h2>
+<p><strong>Models</strong>: 1. linguistic classification task: BERT base model 2. visual classification: ViT base model</p>
+<p><strong>Evals</strong>: 1. Visual: - <a href="https://arxiv.org/abs/1806.10758">A benchmark for interpretability methods in deep neural networks</a> on validation set of ImageNet (ILSVRC) 2012, consisting of 50K images from 1000 classes - ImageNet-Segmentation, containing 4,276 images from 445 categories 2. Linguistic - Movie reviews dataset from the <a href="https://www.eraserbenchmark.com/">ERASER</a> dataset. (Nite that the The BERT model is first fine-tuned on the training set of the Movie Reviews Dataset and the various evaluation methods are applied to its results on the test set.)</p>
+<p><strong>Metrics</strong>: 1. Visual (segmentation) - pixel-accuracy, obtained after thresholding each visualization by the mean value - mean-intersection-over-union (mIoU) - mean-Average-Precision (mAP) 2. Linguistic: - they use the token-F1 score, which is best suited for pertoken explanation (in contrast to explanations that extract an excerpt)</p>
+<p>Other notes: - To best illustrate the performance of each method, they consider a token to be part of the “rationale” if it is part of the top-k tokens, and show results for k = 10 . . . 80 in steps of 10 tokens. This way, they do not employ thresholding that may benefit some methods over others.</p>
+</body>
+</html>

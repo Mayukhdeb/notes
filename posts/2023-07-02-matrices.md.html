@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Matrices</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Matrices</h1>
+</header>
+<p>+++ title = “Matrices” author = “Mayukh Deb” tags = [“math”] date = “2023-07-02” +++</p>
+<!-- 
+Layout:
+1. What is a matrix?
+2. What is a vector?
+3. A matrix as a transform to be applied on a vector
+4. Different types of matrices:
+    - Identity Matrix (do nothing)
+    - Diagonal matrix (scaling)
+    - Shear Matrix (bending)
+    - Orthogonal Matrix (rotating)
+    - Inverse of a Matrix (inverse transform)
+5. todo -->
+<p>I will first try to understand what a matrix is, and how it can be interpreted as a set of transforms that can be applied to a point in space. Then I’ll look at different types of matrices and what makes them unique. Finally, I’ll make an attempt at understanding the SVD on the next chapter.</p>
+<blockquote>
+<p><strong>Note:</strong> All the images used in the page are from the playlist by Visual Kernel[1]. Highly recommend that you check out his videos.</p>
+</blockquote>
+<h1 id="what-is-a-matrix">What is a Matrix?</h1>
+<p>I like to think of a matrix as a number box. It’s like saying that a parrot is a green bird. Sure it tells me what it looks like, but it does not tell me what it does. Instead, one can think of a matrix as an operation that can be applied to a vector.</p>
+<p><em>When you move a point from one position to another, is there a function that mathematically defines that movement?</em></p>
+<h1 id="what-is-a-vector">What is a vector?</h1>
+<p>A vector can be thought of as a point in N dimensional space. It can be represented by the co-ordinates of the point like <code>p = [1, 3, -4]</code> is a 3 dimensional vector such that it represents the point <code>x=1, y=3, z=-4</code> in 3D space.</p>
+<h1 id="a-matrix-as-a-transform">A matrix as a transform</h1>
+<p>We can multiply a matrix to a vector, and that gives us another vector. For a better intuition, we will be visualizing a set of points and what a single matrix (read: transform) does to it. In this case, the set of points would be a rectangle.</p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250339279-a500f8c5-229b-4092-8f18-29b5d68fd354.png' width = "50%"></p>
+<h1 id="types-of-matrices">Types of matrices</h1>
+<h3 id="identity-matrix">Identity Matrix</h3>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250339004-004e9aea-e1db-497b-9daf-4fc3972d7669.png' width = "50%"></p>
+<p>It’s basically the do nothing transform. Kind of like multiplying something by 1 or adding 0 to it. Does nothing.</p>
+<h3 id="scalar-matrix">Scalar Matrix</h3>
+<p><em>Strech or squeeze uniformly along all axes.</em></p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250339140-c889f537-e2df-492d-81eb-b564830c42d4.png' width = "50%"></p>
+<p>{{&lt; math.inline &gt;}}</p>
+<p>Now if (k &gt; 1), then the rectangle gets bigger by a factor of (k). In a similar way, it also gets smaller if (0 &lt; k &lt; 1). Interestingly enough, the rectangle would flip both horizontally and vertically if (k = -1)</p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250339333-f48e66a6-f255-402b-b6c9-a8f5a80f9616.png' width = "50%"></p>
+<p>This is what happens when (k = 2), the rectangle just becomes 2x bigger.</p>
+<p>{{&lt;/ math.inline &gt;}}</p>
+<h3 id="off-one-matrix">Off-One Matrix</h3>
+<p><em>Strech or squeeze along only one axis.</em></p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250339721-f66259fd-3a21-4216-b175-f2ff03faa2ff.png' width = "50%"></p>
+<p>Notice how only one of the diagonal elements are not 1. That is the axis along which we’ll scale the vectors. Given below is an example of a where we strech the y axis by a factor of 3.</p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250339989-7c0f28e6-0a59-467b-8780-43e3511a2a10.png' width = "50%"></p>
+<p>If we scale only one axis by a factor of -1, then we basically get the reflection of that object along the corresponding axis.</p>
+<h2 id="diagonal-matrix">Diagonal Matrix</h2>
+<p><em>Strech or squeeze differently on different axes</em></p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250340152-bbe55aab-bb37-4762-bb05-a5779f8e86fc.png' width = "50%"></p>
+<p>Every diagonal matrix can be broken down into a series of off-one matrices. Given below is an example where we break down a single diagonal matrix (to the left) into a series of matrices which when sequentially applied would give us the same result.</p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250340399-48c843e9-ccfe-4243-b031-a4e1d60f6875.png' width = "100%"></p>
+<h2 id="shear-matrix">Shear Matrix</h2>
+<p><em>Slant along one or more axes</em></p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250340769-29e8abbc-c04b-4491-8746-719f4a77c4da.png' width = "50%"></p>
+<p>For example, a rectangle would slant into a parallelogram.</p>
+<p>In 2D, there are 4 directions in which we can apply the shear transform. You can see them below.</p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250340604-a86064e0-f5b0-46ac-a9cf-489ccbdc193b.png' width = "100%"></p>
+<h2 id="orthogonal-matrix">Orthogonal Matrix</h2>
+<p><em>Pristine Rotation</em></p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250341180-be0e29e4-c38d-4415-a8fd-ea1f74a2c65c.png' width = "70%"></p>
+<p>It has 3 important properties: 1. <strong>It is a square matrix</strong>: same size along all axes 2. <strong>All column vectors are unit vectors</strong>: If we take each column as a vector, then all of their distance from the origin should be 1. 3. <strong>All column vectors are orthogonal</strong>: The vector represented by column 1 is perpendicular to all other columns, which in this case is column 2.</p>
+<p>This is the kind of a transform we would apply to rotate our rectangle clockwise:</p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250341517-d695497e-0c98-44cb-a91a-2b73d49e0f0e.png' width = "70%"></p>
+<p>{{&lt;math.inline &gt;}}</p>
+<p>If I remember correctly, these strange numbers have something to do with (()).</p>
+<p>Another interesting thing to note is that when we’re rotating something in 2D space ((x, y)), we’re actually rotating along a third (z) axis. {{&lt;/ math.inline &gt;}}</p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250349364-40eb929e-49bf-4e79-94bf-5904111bc0e7.png' width = "50%"></p>
+<p>Notice that this is the same matrix as shown above, just that we add another z axis as an identity.</p>
+<p>And here’s some more example for you to develop an intuition:</p>
+<p><img src = 'https://user-images.githubusercontent.com/53133634/250341878-7f8afd98-50d3-41f4-8f4c-db877c375151.png' width = "100%"></p>
+<h2 id="projection-matrix">Projection Matrix</h2>
+<p>In order to understand this, we first need to understand the concept of a subspace.</p>
+<ul>
+<li>In 2 dimensions, a subspace would be a line through the origin. This line is infinitely long.</li>
+<li>In 3 dimensions, a plane crossing through the origin. This plane has infinite area.</li>
+</ul>
+<p>For such subspaces, there exists a transformation (read: matrix) which would move every point outside the subspace onto the subspace. Every vector always moves to it’s closest point on the subspace.</p>
+<h2 id="inverse-of-a-matrix">Inverse of a Matrix</h2>
+<p><em>Reverses an existing trasformation</em></p>
+<p>Note that a zero matrix and a projection matrix does not have an inverse. This is because when we squash a vector from a higher dimension to a lower dimension, there is a loss of information.</p>
+<p><strong>Resources</strong></p>
+<p>1 - <a href="https://www.youtube.com/watch?v=7Gtxd-ew4lk&amp;list=PLWhu9osGd2dB9uMG5gKBARmk73oHUUQZS">Visual Kernel’s video series on matrices</a></p>
+</body>
+</html>

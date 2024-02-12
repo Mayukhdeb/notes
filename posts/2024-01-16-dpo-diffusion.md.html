@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Direct Preference Optimization for Diffusion Models</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Direct Preference Optimization for Diffusion Models</h1>
+</header>
+<p>+++ title = “Direct Preference Optimization for Diffusion Models” author = “Mayukh Deb” tags = [“paper”] date = “2024-01-16” +++</p>
+<p>DPO aims to overcome the primary drawbacks of RLHF, which are it’s unstable nature and the dependence on a reward model trained on human preference data.</p>
+<p>In <a href="https://arxiv.org/abs/2311.12908">this paper</a>, they perform DPO on diffusion models by training the model to alter it’s denoising directions towards preferred images over non-preferred ones. For this objective, they use the <a href="https://huggingface.co/datasets/yuvalkirstain/pickapic_v2/viewer/default/train">pick-a-pic v2</a> dataset.</p>
+<p>I’ll be using <a href="https://github.com/huggingface/diffusers/blob/main/examples/research_projects/diffusion_dpo/train_diffusion_dpo_sdxl.py">this script</a> as a reference. Note that in the aforementioned paper, they finetune the entire model but in the script we see that they’re fine-tuning a LoRA adapter on the model.</p>
+<h1 id="dataset">Dataset</h1>
+<p>The <a href="https://huggingface.co/datasets/yuvalkirstain/pickapic_v2/viewer/default/train">pick-a-pic v2</a> was collected by showing users 2 images and then asking them to pick the better one (with an optional neutral response). The image that’s not better is eliminated and is replaced by another image generated by the same prompt. The user also got an option to switch to a different prompt and start afresh.</p>
+<p>It has the following relevant columns:</p>
+<ol type="1">
+<li><code>caption</code>: prompt that was used to generate the image</li>
+<li><code>jpg_0</code>: first image shown to the user</li>
+<li><code>jpg_1</code>: second image shown to the user</li>
+<li><code>label_0</code>: is <code>1</code> if the user picked this image to be the better one</li>
+<li><code>label_1</code>: is <code>1</code> if the user picked this image to be the better one</li>
+</ol>
+<p>One can imagine how a single batch of images would look like (without shuffling the dataset):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    <span class="dt">&quot;images&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>        <span class="er">&lt;caption_</span><span class="dv">0</span><span class="er">_jpg_</span><span class="dv">0</span><span class="er">&gt;</span><span class="ot">,</span>   <span class="er">//</span> <span class="er">winning</span> <span class="er">image</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>        <span class="er">&lt;caption_</span><span class="dv">1</span><span class="er">_jpg_</span><span class="dv">0</span><span class="er">&gt;</span><span class="ot">,</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>        <span class="er">&lt;caption_</span><span class="dv">0</span><span class="er">_jpg_</span><span class="dv">1</span><span class="er">&gt;</span><span class="ot">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        <span class="er">&lt;caption_</span><span class="dv">1</span><span class="er">_jpg_</span><span class="dv">1</span><span class="er">&gt;</span>   <span class="er">//</span> <span class="er">winning</span> <span class="er">image</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a>    <span class="dt">&quot;labels&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">1</span><span class="ot">,</span><span class="dv">0</span><span class="ot">,</span><span class="dv">0</span><span class="ot">,</span><span class="dv">1</span><span class="ot">]</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="fu">}</span></span></code></pre></div>
+<h1 id="basics">Basics</h1>
+<p>This is a tiny guide to how atent diffusion models are trained.</p>
+<figure>
+<img src="https://github.com/Mayukhdeb/notes/blob/master/content/images/2024-01-16-direct-preference-optimization/difusion_training_objective.png?raw=true" alt="" /><figcaption>Diffusion Breakdown</figcaption>
+</figure>
+<p>{{&lt; math.inline &gt;}} Add noise () to the latent of the original image. The amount of noise is proportional to the timestep. {{&lt; /math.inline &gt;}}</p>
+<p>{{&lt; math.inline &gt;}} Feed the noisy latent into a model. The model tries to predict the noise, which gives us (_{pred}) {{&lt; /math.inline &gt;}}</p>
+<p>Finally, the generated sample is the noisy sample minus the predicted noise.</p>
+<h1 id="single-training-step">Single Training Step</h1>
+<ol type="1">
+<li><p>First, we extract the all the latent vectors for each image in the batch using a pre-trained VAE. Let’s call them <code>latents</code></p></li>
+<li><p>Then we add some noise to the latents.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>noise <span class="op">=</span> torch.randn_like(latents).chunk(<span class="dv">2</span>)[<span class="dv">0</span>].repeat(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span></code></pre></div>
+<p>Something interesting is going on here. Let’s take a deeper look into each part.</p>
+<ul>
+<li><code>.chunk(2)[0]</code>: divides the tensor into 2 chunks (along dim 0) and then select the first one (see appendix: 1).</li>
+<li><code>.repeat(2, 1, 1, 1)</code>: repeats the tensor 2 times along dim <code>0</code> and no repeats along every other dim.</li>
+</ul>
+<p>This would make sure that images generated by the same caption have the same noise added to the latents.</p></li>
+<li><p>The model takes the noisy latents and the prompt embeddings as input and predicts the noise present in the latents.</p></li>
+<li><p>MSE loss (<code>model_losses</code>) is computed between the predicted noise and the actual noise without any reduction. We get a tensor of shape <code>batch_size</code> containing the MSE loss corresponding to each batch item.</p></li>
+<li><p><code>model_losses</code> is divided into two chunks, one containing the losses for all winning samples (<code>model_losses_w</code>) and another containing the losses for all losing samples (<code>model_losses_l</code>).</p></li>
+<li><p>Then we calculate a term <code>model_diff = model_losses_w - model_losses_l</code>. Note that it <strong>if <code>model_diff</code> is minimized, we guide the model’s denoising process towards generating winning samples and away from generating losing samples</strong>.</p></li>
+</ol>
+<p>The diagram shown below is a visualization of <code>model_losses_w</code> and <code>model_losses_l</code> {{&lt; math.inline &gt;}} as (loss_w) and (loss_l) respectively and () as noise added to the image latents.{{&lt; /math.inline &gt;}}</p>
+<figure>
+<img src="https://github.com/Mayukhdeb/notes/blob/master/content/images/2024-01-16-direct-preference-optimization/winning_and_losing_sample_losses.png?raw=true" alt="" /><figcaption>Diffusion Breakdown</figcaption>
+</figure>
+<ol start="7" type="1">
+<li><p>We temporarily disable the LoRA adapters in the model and obtain the predicted noise from the original pre-trained model and calculate <code>ref_diff</code> which is equivalent to <code>model_diff</code> but for the original model.</p></li>
+<li><p>The final loss that is to be minimized is calculated as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>inside_term <span class="op">=</span> scale_term <span class="op">*</span> (ref_diff <span class="op">-</span> model_diff)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>loss <span class="op">=</span> <span class="op">-</span><span class="dv">1</span> <span class="op">*</span> F.logsigmoid(inside_term.mean())</span></code></pre></div>
+<p><br /><span class="math display"><em>l</em><em>e</em><em>t</em>, <em>f</em>(<em>x</em>) =  − <em>l</em><em>o</em><em>g</em>(<em>s</em><em>i</em><em>g</em><em>m</em><em>o</em><em>i</em><em>d</em>(<em>x</em>))</span><br /></p>
+<p><br /><span class="math display">lim<sub><em>x</em> → ( − ∞)</sub><em>f</em>(<em>x</em>) =  + ∞</span><br /></p>
+<p><br /><span class="math display">lim<sub><em>x</em> → ( + ∞)</sub><em>f</em>(<em>x</em>) = 0</span><br /></p>
+<p>Hence in order to mimimize the <code>loss</code>, we have to maximize the <code>inside_term</code> (for a visualization, see appendix: 2). This can be done by:</p>
+<ol type="1">
+<li>Maximizing <code>ref_diff</code> (but that is not possible since the original model is frozen)</li>
+<li>Minimizing <code>model_diff</code> i.e steer the model’s denoising process towards the winning samples and away from losing samples</li>
+</ol></li>
+</ol>
+<figure>
+<img src="https://github.com/Mayukhdeb/notes/blob/master/content/images/2024-01-16-direct-preference-optimization/summary.png?raw=true" alt="" /><figcaption>Diffusion Breakdown</figcaption>
+</figure>
+<h2 id="appendix">Appendix</h2>
+<ol type="1">
+<li><p>Let’s imagine <code>x</code> to be a 1d tensor: <code>[4, 5, 6, 7]</code>, then the operation <code>x.chunk(2)[0].repeat(2)</code> would give us the following:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ex">x</span> = torch.tensor([4, 5, 6, 7])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ex">x.chunk</span>(2)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="kw">(</span><span class="ex">tensor</span>([4, 5]<span class="kw">)</span>, <span class="ex">tensor</span>([6, 7]))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ex">x.chunk</span>(2)[<span class="ex">0</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="ex">tensor</span>([4, 5])</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="op">&gt;&gt;&gt;</span> <span class="ex">x.chunk</span>(2)[<span class="ex">0</span>].repeat(2)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="ex">tensor</span>([4, 5, 4, 5])</span></code></pre></div></li>
+<li><p>This is how {{&lt; math.inline &gt;}} -log(sigmoid(x)) {{&lt; /math.inline &gt;}} looks like:</p>
+<p><img src = "https://github.com/Mayukhdeb/notes/blob/master/content/images/2024-01-16-direct-preference-optimization/minus_log_sigmoid.png?raw=true" width = "50%"></p></li>
+</ol>
+</body>
+</html>

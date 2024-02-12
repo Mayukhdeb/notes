@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Neural Taskonomy - using encodings from vision models to understand the human brain</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Neural Taskonomy - using encodings from vision models to understand the human brain</h1>
+</header>
+<p>+++ title = “Neural Taskonomy - using encodings from vision models to understand the human brain” date = “2023-01-01” author = “Mayukh Deb” tags = [“paper”] math= true +++</p>
+<h2 id="intro">Intro</h2>
+<p>CNNs are not too bad at predicting brain activity. But using their intermediate encoding space seems to be not too effective as a way to understand the how the human brain works.</p>
+<p>So instead of using a single CNN as a source of visual features, the authors thought that it’s a good idea to build encoding models from multiple models which were trained for different vision tasks (segmentation, classification, etc).</p>
+<p>They extracted the features describing each of the stimulus images and used them to train a model to predict brain responses. Their reasoning being:</p>
+<p>Given a model <code>M</code> that was trained for a task <code>T</code> (where <code>T</code> could be: segmentation, depth estimation, object detection, etc). We can infer that if an encoding from a model <code>M</code> is a good predictor of a specific brain region, information about that task <code>T</code> is likely encoded in that region.</p>
+<h2 id="method">Method</h2>
+<p>The authors fed the image into the network and extracted an intermediate layer activation from the models. These values are used as regressors in a ridge regression model to predict brain responses to that image.</p>
+<p>The outputs of these models are then analysed and they are basically then able to make a “matrix” of tasks, where they show that the brain-signal predictions of certain tasks are correlated, while others are not.</p>
+<!-- ## Personal notes
+
+- Can we use a combination of these encoders to build a model which can be finetuned to make embeddings for an LLM? -->
+</body>
+</html>

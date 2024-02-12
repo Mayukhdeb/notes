@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>LOST - Localizing objects with self supervised transformers</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">LOST - Localizing objects with self supervised transformers</h1>
+</header>
+<p>+++ title = “LOST - Localizing objects with self supervised transformers” author = “Mayukh Deb” tags = [“paper”] date = “2022-04-16” +++</p>
+<h1 id="lost---localizing-objects-with-self-supervised-transformers-and-no-labels">Lost - Localizing objects with self supervised transformers and no labels</h1>
+<p>The core idea is to be able to use the hidden info within transformers to localize objects (“subjects”) within input images (much like a YOLO model but without further training).</p>
+<h2 id="how-does-it-work">How does it work ?</h2>
+<ol type="1">
+<li><p>First, we assume that there’s at least one object to be found in the image.</p></li>
+<li><p>it relies on a selection of patches that are likely to belong to an object. We call these patches “seeds.</p></li>
+</ol>
+<p><strong>What are these seeds ?</strong></p>
+<p>We select a seed based on the assumptions that: * regions/patches within objects correlate more with each other than with background patches * an individual object covers less area than the background</p>
+<p>We should also know that patches in an object correlate positively with each other but negatively to the background patches.</p>
+<ol start="3" type="1">
+<li><p>We pick the first seed by picking the patch with the smallest number of positive correlations with the other patches.</p></li>
+<li><p>We then build a patch similarity matrix which says how similar each patch is to every other patch.</p></li>
+<li><p>The next step is to find the next patches which are also likely to fall into the object. We do this by relying on the fact that pixels within an object tend to be positively related.</p></li>
+<li><p>We keep expanding using this rule for as long as there are patches which are positively correlated to the seed patch.</p></li>
+<li><p>Finally, we draw a bounding box around the final patch.</p></li>
+</ol>
+<h2 id="cad">CAD</h2>
+<ul>
+<li>CAD (Class Agnostic Detection): Localizes objects in an image regardless of its semantic category. Basically there would be 2 categories, foreground and background.</li>
+</ul>
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li>Cannot seperate same classes instances which overlap.</li>
+<li>Does not work well when the object covers a large portion of the image.</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<p>The implementation can be found <a href="https://github.com/valeoai/LOST">here</a>.</p>
+</body>
+</html>

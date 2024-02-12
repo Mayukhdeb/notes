@@ -1,0 +1,37 @@
+/* latex-style.css */
+body {
+    font-family: "Roman";
+    line-height: 1.6;
+    margin: 2em auto; /* Keep the top and bottom margin as 2em and set left and right margin to auto */
+    background-color: #f4f0e8;
+    max-width: 600px; /* Set your desired maximum width */
+}
+.title {
+    text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333; /* Adjust color if needed */
+}
+
+/* GitHub-like code highlighting */
+pre {
+    background-color: #2d2d2d; /* Darker background color for code */
+    border: 1px solid #444; /* Border color */
+    border-radius: 6px;
+    overflow: auto;
+    padding: 16px;
+    max-width: 600px; /* Set your desired maximum width */
+    margin: 0 auto; /* Center the code block */
+}
+
+/* Syntax highlighting colors for VSCode dark theme */
+pre code {
+    display: block;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 14px;
+    color: #abb2bf; /* Adjusted light text color for code */
+    span.va { color: #c678dd; }; /* Variable */
+    span.im { color: #d19a66; }; /* Import */
+    span.fu { color: #61afef; } /* Function */
+}

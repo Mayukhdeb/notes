@@ -1,3 +1,0 @@
-+++
-author = "Mayukh Deb"
-+++

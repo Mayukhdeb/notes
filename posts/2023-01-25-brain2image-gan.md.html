@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Brain2Image: Converting Brain Signals into Images</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Brain2Image: Converting Brain Signals into Images</h1>
+</header>
+<p>+++ title = “Brain2Image: Converting Brain Signals into Images” date = “2023-01-25” author = “Mayukh Deb” tags = [“paper”] +++</p>
+<p><strong>Can we encode useful visual information about images from the brain’s EEG signals?</strong></p>
+<p>Yes. Image generation from a brain signal feature vector encoding information about visual classes is the main contribution of this paper</p>
+<hr />
+<p>The authors built an LSTM based generative method which learns a more compact and noise free version of the EEG data and uses it to generate visual stimuli evoking specific brain responses.</p>
+<!-- 
+Can we replace the LSTM with an autoregressive transformer?
+ -->
+<p>EEG contains patterns related to visual content which can be used to generate images which are effective at evoking visual stimuli. Their primary objective in this paper was:</p>
+<p>Image (x) -&gt; human brain -&gt; EEG signals -&gt; Brain2Image -&gt; decoded image (y)</p>
+<p>There are 3 main steps to this:</p>
+<ol type="1">
+<li><strong>data collection</strong>: human looks at images on a screen and his brain signals are recorded</li>
+<li><strong>feature extraction</strong>: recorded EEG signals are passed through an encoder which returns a feature vector containing class discriminative information.</li>
+<li><strong>training image generators</strong>: VAE decoders/GANs are trained on image-encoded signal pairs</li>
+</ol>
+<h2 id="learning-the-latent-space-using-lstms">Learning the Latent space using LSTMs</h2>
+<p>Given an image stimulus, they feed the EEG time-series data into an LSTM + encoder which is trained to return class-discriminative feature vectors. This gave them over 80% classification accuracy.</p>
+<p>I personally think that using a classification output would not be good for a latent vector since it was probably trained on a Cross Entropy-like loss where the outputs of 2 different classes (even if theyre visually similar) would have very low cosine similarity. This way, the vector space would be skewed quite a bit and hence not be suitable for latent vector interpolations etc.</p>
+<h2 id="leveraging-the-latent-space-to-generate-images">Leveraging the latent space to generate images</h2>
+<p>The authors tried 2 main approaches: 1. VAEs 2. GANs</p>
+<p>For the GAN training, they used 100 dimensional random noise (<code>z</code>) and 128 dimensional EEG features.</p>
+<p>Overall, the GAN approach seems to be a better performer in terms of inception scores and inception classification accuracy. Even to my eyes they seemed better.</p>
+</body>
+</html>

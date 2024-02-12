@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Attention Rollout</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Attention Rollout</h1>
+</header>
+<p>+++ title = “Attention Rollout” author = “Mayukh Deb” tags = [“paper”] date = “2022-04-16” +++</p>
+<h2 id="how-is-it-better-than-just-viewing-raw-attention-maps">How is it better than just viewing raw attention maps ?</h2>
+<p>Viewing raw attention maps as a way to explain transformers does not take into account the fact that we also have residual connections in the model. When we only use attention weights to approximate the flow of information in Transformers, we ignore the residual connections. But these connections play a significant role in tying corresponding positions in different layers.</p>
+<h2 id="refined-method">Refined method</h2>
+<p>One drawback of the original attention rollout method was that it was focused primarily on tasks which involved predicting only the “next” token/any process which involved only one forward pass (like predicting pronouns).</p>
+<p>In order to make this method work in our use-case i.e generative LM’s, we can iteratively keep track of the attention rollout values while generating <code>n</code> tokens. This would enable us to understand how much each generated token is “correlated” to the original prompt.</p>
+<p>On a lower level, the process does the following:</p>
+<ol type="1">
+<li><p>Given <code>m</code> input tokens, we generate <code>n</code> more tokens i.e <code>n</code> forward passes</p></li>
+<li><p>On each step, we register the attention rollout values. For the <code>i</code>th step, the size of the attention rollout matrix would be: <code>[m + i, l]</code> where <code>l</code> = number of layers with attention outputs in the model.</p></li>
+<li><p>Slice every obtained attention matrix along the last dim as <code>[:m, :]</code> (only include values corresponding to the input tokens).</p></li>
+<li><p>Concatenate all of the obtained sliced matrices along dim 0. Thus giving us a matrix <code>M</code> of shape: <code>[n, m, l]</code> where:</p>
+<ul>
+<li><code>n</code> = number of generated tokens</li>
+<li><code>l</code> = number of layers with attention outputs in the model</li>
+<li><code>m</code> = number of tokens in original prompt</li>
+</ul></li>
+<li><p>Then in order to analyse all the input tokens w.r.t a generated token, we can slice the matrix as <code>M[index_of_generated_token, :, :]</code>.</p></li>
+</ol>
+<h2 id="drawbacks">Drawbacks</h2>
+<p>A higher attention rollout value does not necessarily infer to the token being “important” for a prediction. This method in it’s raw form tends to be biased towards common english words and punctuations (<code>[",", ".", "\n", "is", ":". "and"]</code>), which might lead to skewed or non-intuitive results. This makes it necessary for the user to filter out these tokens in order to make sense out of the values.</p>
+<h2 id="resourceslinks">Resources/links</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2005.00928">Original paper</a></li>
+</ul>
+</body>
+</html>

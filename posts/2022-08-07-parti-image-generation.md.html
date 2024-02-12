@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Parti - Scaling LLMs for Text to Image tasks</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Parti - Scaling LLMs for Text to Image tasks</h1>
+</header>
+<p>+++ title = “Parti - Scaling LLMs for Text to Image tasks” date = “2022-08-07” author = “Mayukh Deb” tags = [“paper”] +++</p>
+<h1 id="scaling-autoregressive-models-for-content-rich-text-to-image-generation">Scaling Autoregressive Models for Content-Rich Text to Image Generation</h1>
+<p>The architecture itself that’s used for parti (that’s what the authors call this model) is fairly simple. It’s a transformer encoder-decoder architecture paired with a ViT VQGAN in the end to tokenize/detokenize images.</p>
+<h2 id="how-do-we-tokenize-images">How do we tokenize images?</h2>
+<p>For an autoregressive model to work, we basically have to convert everything to tokens. Tokenizing text is super easy. The problem in this case is that we also have to convert images into a sequence of tokens.</p>
+<p>This tokenization of images is done by the VQGAN tokenizer. I have explained how this happens in one of my <a href="https://mayukhdeb.github.io/blog/post/an-image-is-worth-16-x-16-explained/#how-do-we-tokenize-images-">old blog posts</a>.</p>
+<p>The “Q” in VQGAN refers to quantized. The token space of the VQGAN is “quantized” to roughly 8k tokens. I think I should read the ViT VQGAN paper in case I ever have to work on image generation (which I hope might be soon).</p>
+<h2 id="how-do-we-train-such-a-model">How do we train such a model?</h2>
+<p>Essentially, we do the following for training:</p>
+<ol type="1">
+<li>First, we assume that the input is a text, image pair <code>(T, I)</code>.</li>
+<li>We tokenize <code>I</code> using the ViT-VQGAN image tokenizer.</li>
+<li>We tokenize text and feed it into the transformer encoder.</li>
+<li>We feed the sequence of tokens of the image <code>[&lt;SoT&gt;, i1, i2, ..., iM]</code> (<code>M</code> image patches) into the transformer decoder (along with a start of sentence <code>&lt;SoT&gt;</code> token).</li>
+<li>We take the transformer-decoder’s outputs and feed it to the image-detokenizer of the ViT-VQGAN.</li>
+<li>The image detokenizer re-constructs the image which was on the input. Let’s call it <code>I_reconstructed</code>.</li>
+<li>The model basically gets trained as an image reconstruction model. Which later would be used for image generation somehow.</li>
+</ol>
+<p>Another thing to note, is that the paper mentions that they used an image upscaling model to resize the output image from 256x256 to 1024x1024.</p>
+<h2 id="inference">Inference</h2>
+<ol type="1">
+<li>This time the input is just a piece of text i.e a “prompt”</li>
+<li>We feed the text into the transformer encoder, and feed the <code>&lt;SoT&gt;</code> token into the transformer decoder.</li>
+<li>The decoder then generates the first output image patch token <code>i1</code></li>
+<li>We then feed <code>[&lt;SoT&gt;, i1]</code> into the transformer decoder and obtain <code>i2</code>.</li>
+<li>We keep repeating steps 3 and 4 with inputs <code>[&lt;SoT&gt;, i1, i2, i3 ...]</code> until we reach <code>iM</code> where <code>M</code> is the number of image patches required to construct one image.</li>
+<li>Once we have a set of output image patch tokens <code>[i1, i2, i3, ...iM]</code>, we feed it into the ViT-VQGAN image detokenizer and obtain the “generated” image.</li>
+</ol>
+<p>In a nutshell, we autoregressively generate image tokens with the decoder.</p>
+<h2 id="other-notes">Other notes</h2>
+<p>The largest possible model they trained was a 20B param model. Yannic was saying that complaining about not have the exact composition on the generated images is already like “moving the goal post” at this point, given how far we’ve come from the 2018 styleGAN era.</p>
+<p>I am barely educated to make comments on how good parti or DALLE2 is, but what I understand is that words are a very lossy way to compress an idea of an image.</p>
+<p>You can compress a picture of a cat in a tree with “cat in tree”, the decompression just generates a picture of a cat in a tree, the loss is that it may be a different cat in a different tree.</p>
+<p>My opinion is that in order to solve the problem of compositionality, it makes sense to look into the model itself and it’s mechanisms instead of just “going bigger”.</p>
+<p>Going big is what companies with deep pockets like openAI/Google can do. But to me it also sounds like a rather lazy solution, given how little effort people put into understanding these black-box-y systems.</p>
+<h2 id="resources">Resources</h2>
+<ol type="1">
+<li>ViT + VQGAN paper: https://arxiv.org/abs/2110.04627</li>
+<li>Parti paper: https://arxiv.org/abs/2206.10789</li>
+</ol>
+</body>
+</html>

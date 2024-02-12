@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>DreamSim</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">DreamSim</h1>
+</header>
+<p>+++ title = “DreamSim” author = “Mayukh Deb” tags = [“paper”] date = “2023-06-27” +++</p>
+<p>Everything related to this paper can be found here: : https://dreamsim-nights.github.io/</p>
+<p><em>A sense of sameness is the very keel and backbone of our thinking</em> - William James, 1890</p>
+<p>Our understanding of the visual world depends crucially on our ability to perceive the similarities between different images.</p>
+<p>People in vision have tried to solve this problem by introducing metrics like PSNR, SSIM, LPIPS, DISTS etc. The primary weakness of such metrics is that they focus on pixel/patch level information and fail to capture high-level structure.</p>
+<p>This problem of not being able to encode high-level information from images has been partially solved by DINO, CLIP. But the authors find out that although these models are good for measuring image-to-image distances, they are not necessarily well aligned to human perception.</p>
+<p>In order to train a model whose embeddings are more aligned to human perception, the authors decided to build a dataset.</p>
+<h2 id="human-aligned-dataset">Human-aligned dataset</h2>
+<p>In order to gather data, they applied something called <strong>Two alternative forced choice (2AFC)</strong>. The idea was simple:</p>
+<ol type="1">
+<li>Show a participant 3 images: <code>[x, x1, x2]</code> where x1 and x2 are distortions of x.</li>
+<li>Ask participant to select the image which is more similar to x.</li>
+</ol>
+<p>The final dataset that was collected contained 20k such triplets with 7 unanimous votes for each on average.</p>
+<h2 id="training-a-model">Training a model</h2>
+<p>They finetuned existing image encoders first by adding an mlp head and then with LoRA. The latter outperformed the former. Ensembling some of the top-performing models gave them the best possible human-alignment score (2AFC score).</p>
+</body>
+</html>

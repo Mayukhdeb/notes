@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Self-Consistency Improves Chain of Thought Reasoning in LMs</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Self-Consistency Improves Chain of Thought Reasoning in LMs</h1>
+</header>
+<p>+++ title = “Self-Consistency Improves Chain of Thought Reasoning in LMs” author = “Mayukh Deb” tags = [“index”] date = “2022-04-16” +++</p>
+<h1 id="self-consistency-improves-chain-of-thought-reasoning-in-language-models">Self-Consistency Improves Chain of Thought Reasoning in Language Models</h1>
+<p>One issue with large language models has been to find a way to understand and leverage the concept of “chain of thought” (i.e reasoning).</p>
+<p>The idea behind this paper is to make the LLM generate multiple completions (i.e chains of thought) and then select the result with the most highest number of occurrences among the samples.</p>
+<p>highest number of occurrences -&gt; “self consistency”</p>
+<h2 id="how-does-it-work">How does it work ?</h2>
+<p>It’s all mostly prompt and completion engineering:</p>
+<ol type="1">
+<li>We prepare a few-shot prompt which would contain at least one example of the kind of “chain of thought” we’re looking for.</li>
+</ol>
+<pre><code>Q: If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot?
+A: There are 3 cars in the parking lot already. 2 more arrive. Now there are 3 + 2 = 5 cars. The answer is 5.
+
+Q: Janet’s ducks lay 16 eggs per day. She eats three for breakfast every morning and bakes muffins for her friends every day with four. She sells the remainder for $2 per egg. How much does she make every day?
+A:</code></pre>
+<ol start="2" type="1">
+<li><p>Then, we feed this prompt into the model and collect a large set of possible completions via sampling.</p></li>
+<li><p>From this sampled set of completions, we pick out the most consistent answer using a majority vote.</p></li>
+</ol>
+<p>If the possible final verdicts (for the given prompt) are <code>[18, 14, 18]</code>, then we pick 18. It’s that simple.</p>
+<h2 id="resources">Resources:</h2>
+<ul>
+<li>A nice dataset of binary questions and their reasons: https://github.com/google/BIG-bench/blob/main/bigbench/benchmark_tasks/strategyqa/task.json</li>
+</ul>
+</body>
+</html>

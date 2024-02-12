@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Interpreting LMs with contrastive explanations</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Interpreting LMs with contrastive explanations</h1>
+</header>
+<p>+++ title = “Interpreting LMs with contrastive explanations” author = “Mayukh Deb” tags = [“paper”] date = “2022-04-16” +++</p>
+<h2 id="interpreting-language-models-with-contrastive-explanations">Interpreting language models with contrastive explanations</h2>
+<p>interpretability methods commonly used for other NLP tasks like text classification, such as gradient-based saliency maps are not as informative for LM predictions</p>
+<p>In general, language modeling has a large output space and a high complexity compared to other NLP tasks; at each time step, the LM chooses one word out of all vocabulary items. This contrasts with text classification (where the output space is smaller).</p>
+<p>Contrastive explanations aim to identify causal factors that lead the model to produce one output instead of another output</p>
+<p>Contrastive explanations attempt to explain why given an input x the model predicts a target yt instead of a foil yf</p>
+<p>Erasure-based methods measure how erasing different parts of the input affects the model output (Li et al., 2016b). This can be done by taking the difference between the model output with the full input x and with the input where xi has been zeroed out.</p>
+<p>Gradient Norm and Contrastive Gradient Norm do not provide information on directionality</p>
+</body>
+</html>
