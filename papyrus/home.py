@@ -18,6 +18,9 @@ class Post:
         )
         os.system(command=command)
 
+    def __repr__(self):
+        return f'Post(filename="{self.filename}", slug="{self.slug}", title="{self.title}")'
+
 class PapyrusHome:
     def __init__(
         self,
