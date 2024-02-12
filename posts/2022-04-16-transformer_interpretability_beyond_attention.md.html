@@ -19,7 +19,6 @@
 <header id="title-block-header">
 <h1 class="title">Transformer intrepretability beyond attention</h1>
 </header>
-<p>+++ title = “Transformer intrepretability beyond attention” date = “2022-04-16” author = “Mayukh Deb” tags = [“paper”] +++</p>
 <h2 id="disadvantages-of-attention-rollout-and-lrp">Disadvantages of attention rollout and LRP</h2>
 <p>Irrelevant tokens often get highlighted</p>
 <p>The main challenge in assigning attributions based on attentions is that attentions are combining non-linearly from one layer to the next. The rollout method assumes that attentions are combined linearly and considers paths along the pairwise attention graph. We observe that this method often leads to an emphasis on irrelevant tokens since even average attention scores can be attenuated. The method also fails to distinguish between positive and negative contributions to the decision.</p>
