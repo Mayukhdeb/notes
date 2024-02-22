@@ -71,20 +71,26 @@ The authors solve this problem by integrating a temporal layers (attention acros
 
 # Questions
 
-1. How come Moonshot and SVD can do img2vid natively, but aDiff requires an rgb-encoder (see SparseCtrl) to hack it into the model?
+**1. How come Moonshot and SVD can do img2vid natively, but aDiff requires an rgb-encoder (see SparseCtrl) to hack it into the model?**
 
-    **Answer**: Animatediff itself does not require an RGB encoder. It can be seen in their validation code (in [`train.py`](https://github.com/guoyww/AnimateDiff/blob/main/train.py)) how there's nothing extra required on top of the usual components.
+**Answer**: AnimateDiff itself does not require an RGB encoder. It can be seen in their validation code (in [`train.py`](https://github.com/guoyww/AnimateDiff/blob/main/train.py)) how there's nothing extra required on top of the usual components.
 
-   This is the definition of their validation pipeline.
-   ![image](https://github.com/Mayukhdeb/notes/assets/53133634/bb1f8f46-dd1d-45c4-9135-1b9324237c8f)
+This is the definition of their validation pipeline.
 
-   This is where the validation pipeline is used to generate gifs.
-   ![image](https://github.com/Mayukhdeb/notes/assets/53133634/4c600655-3a14-4271-9a3a-d9588e7ccbae)
+<img src = "https://github.com/Mayukhdeb/notes/assets/53133634/bb1f8f46-dd1d-45c4-9135-1b9324237c8f" width = "100%">
 
-   The RGB image encoder is required only for sparsectrl and not for animatediff. This is the use-case for the RGB image encoder as mentioned in the sparsectrl paper.
+This is where the validation pipeline is used to generate gifs.
+<img src = "https://github.com/Mayukhdeb/notes/assets/53133634/4c600655-3a14-4271-9a3a-d9588e7ccbae" width = "100%">
 
-   ![image](https://github.com/Mayukhdeb/notes/assets/53133634/37ae7021-f2ab-4baa-a6ff-ef3ae87b776b)
+The RGB image encoder is required only for sparsectrl and not for animatediff. The following quote from the sparsectrl paper helps us infer the use-case of this rgb encoder.
 
+<img src = "https://github.com/Mayukhdeb/notes/assets/53133634/37ae7021-f2ab-4baa-a6ff-ef3ae87b776b" width = "100%">
+
+AnimateDiff's motion module generates a video from an image. On the other hand, sparsectrl can optionally generate a video from image A to image B thanks to the conditioning information provided by the RGB image encoder.
+
+The RGB image encoder can be used to insert one or more key-frames for guided video generation. In the image shown below, the images with a blue border are the key-frames.
+
+<img src = "https://github.com/Mayukhdeb/notes/assets/53133634/b0675214-4e35-45b3-83d8-7184b4de12f0" width = "100%">
 
 
 3. what are the training objectives used by these papers?

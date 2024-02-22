@@ -74,11 +74,19 @@
 <li>Have to train a temporal conditioning encoder which converts sparse control signals to dense</li>
 </ol>
 <h1 id="questions">Questions</h1>
-<ol type="1">
-<li><p>How come Moonshot and SVD can do img2vid natively, but aDiff requires an rgb-encoder (see SparseCtrl) to hack it into the model?</p>
-<p><strong>Answer</strong>:</p></li>
-<li><p>what are the training objectives used by these papers?</p></li>
-<li><p>what is the framerate of these models? can we train these models on a lower framerate and use frame interpolation models like RIFE?</p></li>
+<p><strong>1. How come Moonshot and SVD can do img2vid natively, but aDiff requires an rgb-encoder (see SparseCtrl) to hack it into the model?</strong></p>
+<p><strong>Answer</strong>: AnimateDiff itself does not require an RGB encoder. It can be seen in their validation code (in <a href="https://github.com/guoyww/AnimateDiff/blob/main/train.py"><code>train.py</code></a>) how there’s nothing extra required on top of the usual components.</p>
+<p>This is the definition of their validation pipeline.</p>
+<p><img src = "https://github.com/Mayukhdeb/notes/assets/53133634/bb1f8f46-dd1d-45c4-9135-1b9324237c8f" width = "100%"></p>
+<p>This is where the validation pipeline is used to generate gifs. <img src = "https://github.com/Mayukhdeb/notes/assets/53133634/4c600655-3a14-4271-9a3a-d9588e7ccbae" width = "100%"></p>
+<p>The RGB image encoder is required only for sparsectrl and not for animatediff. The following quote from the sparsectrl paper helps us infer the use-case of this rgb encoder.</p>
+<p><img src = "https://github.com/Mayukhdeb/notes/assets/53133634/37ae7021-f2ab-4baa-a6ff-ef3ae87b776b" width = "100%"></p>
+<p>AnimateDiff’s motion module generates a video from an image. On the other hand, sparsectrl can optionally generate a video from image A to image B thanks to the conditioning information provided by the RGB image encoder.</p>
+<p>The RGB image encoder can be used to insert one or more key-frames for guided video generation. In the image shown below, the images with a blue border are the key-frames.</p>
+<p><img src = "https://github.com/Mayukhdeb/notes/assets/53133634/b0675214-4e35-45b3-83d8-7184b4de12f0" width = "100%"></p>
+<ol start="3" type="1">
+<li>what are the training objectives used by these papers?</li>
+<li>what is the framerate of these models? can we train these models on a lower framerate and use frame interpolation models like RIFE?</li>
 </ol>
 </body>
 </html>
