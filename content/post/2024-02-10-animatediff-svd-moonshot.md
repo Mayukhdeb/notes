@@ -73,7 +73,19 @@ The authors solve this problem by integrating a temporal layers (attention acros
 
 1. How come Moonshot and SVD can do img2vid natively, but aDiff requires an rgb-encoder (see SparseCtrl) to hack it into the model?
 
-    **Answer**: 
+    **Answer**: Animatediff itself does not require an RGB encoder. It can be seen in their validation code (in [`train.py`](https://github.com/guoyww/AnimateDiff/blob/main/train.py)) how there's nothing extra required on top of the usual components.
 
-2. what are the training objectives used by these papers?
-3. what is the framerate of these models? can we train these models on a lower framerate and use frame interpolation models like RIFE?
+   This is the definition of their validation pipeline.
+   ![image](https://github.com/Mayukhdeb/notes/assets/53133634/bb1f8f46-dd1d-45c4-9135-1b9324237c8f)
+
+   This is where the validation pipeline is used to generate gifs.
+   ![image](https://github.com/Mayukhdeb/notes/assets/53133634/4c600655-3a14-4271-9a3a-d9588e7ccbae)
+
+   The RGB image encoder is required only for sparsectrl and not for animatediff. This is the use-case for the RGB image encoder as mentioned in the sparsectrl paper.
+
+   ![image](https://github.com/Mayukhdeb/notes/assets/53133634/37ae7021-f2ab-4baa-a6ff-ef3ae87b776b)
+
+
+
+3. what are the training objectives used by these papers?
+4. what is the framerate of these models? can we train these models on a lower framerate and use frame interpolation models like RIFE?
