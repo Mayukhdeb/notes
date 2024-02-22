@@ -19,13 +19,26 @@
 <header id="title-block-header">
 <h1 class="title">Video Generation Models</h1>
 </header>
-<p>We’ll explore the following 3 papers: 1. <a href="https://arxiv.org/abs/2307.04725">AnimateDiff</a> 2. <a href="https://arxiv.org/abs/2311.16933">SparseCtrl</a> 3. <a href="https://arxiv.org/abs/2401.01827">MoonShot</a></p>
+<p>We’ll explore the following 3 papers:</p>
+<ol type="1">
+<li><a href="https://arxiv.org/abs/2307.04725">AnimateDiff</a></li>
+<li><a href="https://arxiv.org/abs/2311.16933">SparseCtrl</a></li>
+<li><a href="https://arxiv.org/abs/2401.01827">MoonShot</a></li>
+</ol>
 <h1 id="animatediff">AnimateDiff</h1>
-<p><strong>Method</strong> They propose a motion module which can be integrated into an existing text-to-image (T2I) model without the need of any finetuning of the T2I model. This motion module knows how to convert the generated images into videos.</p>
-<p>They also propose a MotionLoRA module which can be used to customize the motion module on personalized videos.</p>
-<p>The motion module learns reasonable motion priors from videos.</p>
-<p>They use the webVid 10M dataset.</p>
-<p>Steps: 1. train a domain adapter which adapts the T2I model’s output space to that of the video dataset. Somehow, this helps in avoiding the motion module from learning pixel level details in the training videos (I dont know why) 2. The T2I + Domain Adapter is then frozen 3. We initialize and train a motion module on videos. 4. Optional step. We finetune the motion module using LoRA on custom motions/clips with a small number of video clips. They claim that ~50 videos are enough.</p>
+<p>They break down the objective of video generation into 2 tasks:</p>
+<ol type="1">
+<li><p>Adapt the output space of an existing text to image (T2I) model to that of the video dataset. This is done by finetuning the unet’s parameters.</p></li>
+<li><p>Train a “motion module” which can be integrated into the T2I model without finetuning the T2I model. This motion module’s job would be to learn reasonable motion patterns from videos.</p></li>
+</ol>
+<p>For this, they use the <a href="https://github.com/m-bain/webvid">webvid-10M</a> dataset.</p>
+<p><strong>Training Steps:</strong></p>
+<ol type="1">
+<li>Train a domain adapter which adapts the T2I model’s output space to that of the video dataset. Somehow, this helps in avoiding the motion module from learning pixel level details in the training videos (I dont know why)</li>
+<li>The T2I + Domain Adapter is then frozen.</li>
+<li>Initialize and train a motion module on videos.</li>
+<li>(Optional) Finetune the motion module using LoRA on custom motions/clips with a small number of video clips. They claim that ~50 videos are enough.</li>
+</ol>
 <p><strong>Domain Adapter</strong></p>
 <p>The domain adapter is used to alleviate the negative effects caused by the distribution gap between the T2I pre-training data and the video pre-training data.</p>
 <p>The domain adapter is basically a LoRA which is inserted into the self/cross attention layers in the T2I model. The LoRA adapter is optimized on static frames randomly samples from the video dataset.</p>
@@ -34,16 +47,38 @@
 <p>This way, when the internal feature maps go through the image layers, the time dependent axis i.e <code>frames</code> is ignored.</p>
 <p>The input of the motion module is the image feature map reshaped as: <code>b c h w -&gt; (b h w) c</code> i.e the spatial dimensions are merged into the batch axis.</p>
 <p>The paper does not explicitly mention what is the exact shape of the motion module transformer inputs.</p>
-<p><strong>Advantages</strong> 1. Can build on top of existing T2I models. 2. Code is available <a href="https://github.com/guoyww/AnimateDiff/blob/main/train.py">here</a></p>
-<p><strong>Disadvantages</strong> 1. Have to train 2 models. More models = more chances of things going wrong. 2. Merging spatial dims with batch dim might lead to bad spatial consistency.</p>
+<p><strong>Advantages</strong></p>
+<ol type="1">
+<li>Can build on top of existing T2I models.</li>
+<li>Code is available <a href="https://github.com/guoyww/AnimateDiff/blob/main/train.py">here</a></li>
+</ol>
+<p><strong>Disadvantages</strong></p>
+<ol type="1">
+<li>Have to train 2 models. More models = more chances of things going wrong.</li>
+<li>Merging spatial dims with batch dim might lead to bad spatial consistency.</li>
+</ol>
 <h1 id="sparsectrl">SparseCtrl</h1>
 <p>They enhance the controllability of existing text to video (T2V) models with signals that are sparse across time. They leave the original T2V model untouched.</p>
 <p>We know how ControlNet can be used to successfully add structure control on pre-trained image generation models. They do something similar, but for videos.</p>
-<p>Using a controlnet to do frame-by-frame guidance did not work well for temporally sparse conditioninig. It was seen that only the conditioned frames were valid, and there were abrupt content changes between the conditioned and the unconditioned frames.</p>
+<p>Using a controlnet to do frame-by-frame guidance did not work well for temporally sparse conditioning. It was seen that only the conditioned frames were valid, and there were abrupt content changes between the conditioned and the unconditioned frames.</p>
 <p>This inconsistency is occurring because the T2V model finds it difficult to infer the intermediate frame conditions from the sparse conditions.</p>
 <p>The authors solve this problem by integrating a temporal layers (attention across time?) to the sparse condition encoders. This would allow the condition signal to propagate across time. This helps in propagating information from the conditioned frames to the unconditioned ones.</p>
-<p><strong>Advantages</strong> 1. Compatible with pre-trained T2V models 2. Supports conditioning in multiple modalities like sketch and depthmaps 3. Source code is <a href="https://github.com/guoyww/AnimateDiff#202312-animatediff-v3-and-sparsectrl">available</a></p>
-<p><strong>Disadvantages</strong> 1. Have to train a temporal conditioning encoder which converts sparse control signals to dense</p>
-<p>I’ll be trying to answer the following questions: 1. how come Moonshot and SVD can do img2vid natively, but aDiff requires an rgb-encoder (see SparseCtrl) to hack it into the model? 2. what are the training objectives used by these papers? 3. what is the framerate of these models? can we train these models on a lower framerate and use frame interpolation models like RIFE?</p>
+<p><strong>Advantages</strong></p>
+<ol type="1">
+<li>Compatible with pre-trained T2V models</li>
+<li>Supports conditioning in multiple modalities like sketch and depthmaps</li>
+<li>Source code is <a href="https://github.com/guoyww/AnimateDiff#202312-animatediff-v3-and-sparsectrl">available</a></li>
+</ol>
+<p><strong>Disadvantages</strong></p>
+<ol type="1">
+<li>Have to train a temporal conditioning encoder which converts sparse control signals to dense</li>
+</ol>
+<h1 id="questions">Questions</h1>
+<ol type="1">
+<li><p>How come Moonshot and SVD can do img2vid natively, but aDiff requires an rgb-encoder (see SparseCtrl) to hack it into the model?</p>
+<p><strong>Answer</strong>:</p></li>
+<li><p>what are the training objectives used by these papers?</p></li>
+<li><p>what is the framerate of these models? can we train these models on a lower framerate and use frame interpolation models like RIFE?</p></li>
+</ol>
 </body>
 </html>
