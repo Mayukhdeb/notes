@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Direct Preference Optimization for Diffusion models</title>
+  <title>Direct Preference Optimization for Diffusion Models</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -79,9 +79,8 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Direct Preference Optimization for Diffusion models</h1>
+<h1 class="title">Direct Preference Optimization for Diffusion Models</h1>
 </header>
-<p>+++ title = “Direct Preference Optimization for Diffusion Models” author = “Mayukh Deb” tags = [“paper”] date = “2024-01-16” +++</p>
 <p>DPO aims to overcome the primary drawbacks of RLHF, which are it’s unstable nature and the dependence on a reward model trained on human preference data.</p>
 <p>In <a href="https://arxiv.org/abs/2311.12908">this paper</a>, they perform DPO on diffusion models by training the model to alter it’s denoising directions towards preferred images over non-preferred ones. For this objective, they use the <a href="https://huggingface.co/datasets/yuvalkirstain/pickapic_v2/viewer/default/train">pick-a-pic v2</a> dataset.</p>
 <p>I’ll be using <a href="https://github.com/huggingface/diffusers/blob/main/examples/research_projects/diffusion_dpo/train_diffusion_dpo_sdxl.py">this script</a> as a reference. Note that in the aforementioned paper, they finetune the entire model but in the script we see that they’re fine-tuning a LoRA adapter on the model.</p>
