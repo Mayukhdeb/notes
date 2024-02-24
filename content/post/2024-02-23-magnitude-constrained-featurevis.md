@@ -1,3 +1,3 @@
 The primary drawback of feature visualization has been it's inability generate interpretable features in deeper networks. In my own experience, I've seen that feature vis basically stops working once we go past the 3rd resnet block in a resnet18.
 
-This paper somehow fixes this issue by optimizing the images in the phase spectrum while keeping the magnitude constant. I have explained the concept of a phase spectrum in this [other post]().
+This paper somehow fixes this issue by optimizing the images in the phase spectrum while keeping the magnitude constant. I have explained the concept of a phase spectrum in this [other post](https://mayukhdeb.github.io/notes/posts/2024-02-24-phase-spectrum.html).
