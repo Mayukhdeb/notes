@@ -2,6 +2,11 @@ from papyrus.home import PapyrusHome, Post
 
 posts = [
     Post(
+        filename="content/post/2024-02-23-magnitude-constrained-featurevis.md",
+        slug="2024-02-23-magnitude-constrained-featurevis",
+        title="MaCo - feature visualization for deeper networks",
+    ),
+    Post(
         filename="content/post/2024-02-10-optically-pumped-magnetometers.md",
         slug="2024-02-10-optically-pumped-magnetometers",
         title="Optically Pumped Magnetometers",
