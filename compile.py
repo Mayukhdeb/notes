@@ -2,6 +2,11 @@ from papyrus.home import PapyrusHome, Post
 
 posts = [
     Post(
+        filename="content/post/2024-02-24-phase-spectrum.md",
+        slug="2024-02-24-phase-spectrum",
+        title="The Phase Spectrum",
+    ),
+    Post(
         filename="content/post/2024-02-23-magnitude-constrained-featurevis.md",
         slug="2024-02-23-magnitude-constrained-featurevis",
         title="MaCo - feature visualization for deeper networks",
