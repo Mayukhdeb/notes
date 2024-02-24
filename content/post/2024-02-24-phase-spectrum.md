@@ -1,10 +1,10 @@
-**What is the phase spectrum?**
-
 A wave can be defined by:
 
-- How often the crests and troughs occur (frequency)
-- How high are the crests and how low are the troughs (amplitude)
-- The position of the crests and the troughs (phase)
+- **Frequency**: What is the distance from one crest/trough to another? (frequency is the reciprocal of this distance)
+- **Amplitude** How high are the crests and how low are the troughs?
+- **Phase** The position of the crests and the troughs
+
+**What is the phase spectrum?**
 
 We know that the fourier transform provides the frequency domain information about the signal. The phase spectrum provides the individual phases of each individual frequency component in the frequency domain representation. To gain a better understanding, let's visualize it in a few plots.
 
