@@ -1,6 +1,7 @@
 **What is the phase spectrum?**
 
 A wave can be defined by:
+
 - How often the crests and troughs occur (frequency)
 - How high are the crests and how low are the troughs (amplitude)
 - The position of the crests and the troughs (phase)
