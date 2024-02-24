@@ -57,6 +57,28 @@ animate_spectrums(
   <source src="https://github.com/Mayukhdeb/notes/assets/53133634/acde28d3-50f5-4a6a-9fc4-0e811e1acd6c" type="video/mp4">
 </video>
 
+In order to gain a better intuition, let's also see what happens when we vary the amplitude of the new wave.
+
+```python
+animate_amplitude_variation(
+    frequencies = [1, 3],  # Frequencies in Hertz
+    initial_amplitudes = [1, 0.5],  # Initial Amplitude
+    phases = [np.pi/2, 0],  # Phase shifts in radians
+    cycles=2, 
+    fps=30, 
+    duration=10
+)
+```
+
+<video width="100%" controls>
+  <source src="https://github.com/Mayukhdeb/notes/assets/53133634/20f9a16e-6485-4fc1-a737-325530186066" type="video/mp4">
+</video>
+
+This is my conclusion:
+
+1. The amplitude spectrum controls the intensity of each wave.
+2. The phase spectrum controls the offset of each wave along the time dimension.
+
 # Source code
 
 ```python
@@ -180,4 +202,69 @@ def animate_spectrums(frequencies, amplitudes, initial_phases, cycles=1, fps=30,
     # Save animation
     FFwriter = animation.FFMpegWriter(fps=fps, codec='libx264', extra_args=['-preset', 'veryslow', '-qp', '0'])
     anim.save('phase_animation.mp4', writer=FFwriter)
+
+def animate_amplitude_variation(frequencies, initial_amplitudes, phases, cycles=1, fps=30, duration=10):
+    """
+    Create an animation varying the amplitude of the second frequency component.
+    
+    Parameters:
+        frequencies (array-like): Frequency components.
+        initial_amplitudes (array-like): Initial amplitude of each frequency component.
+        phases (array-like): Phase (in radians) of each frequency component.
+        cycles (int): Number of cycles of amplitude variation.
+        fps (int): Frames per second in the animation.
+        duration (int): Duration of the animation in seconds.
+    """
+    fig, axs = plt.subplots(3, 1, figsize=(10, 8))
+    
+    # Total frames for the animation
+    frames = fps * duration
+    
+    def update(frame):
+        # Clear previous plots
+        for ax in axs:
+            ax.clear()
+        
+        # Calculate current amplitude for the second component
+        t = (frame % (frames // (2 * cycles))) / (frames // (2 * cycles))
+        amplitude_modulation = np.abs(np.sin(np.pi * t))
+        amplitudes = initial_amplitudes.copy()
+        amplitudes[1] *= amplitude_modulation
+        
+        # Reconstruct signal with updated amplitude
+        signal = np.zeros(500)
+        t = np.linspace(0, 2*np.pi, 500)
+        for i in range(len(frequencies)):
+            signal += amplitudes[i] * np.cos(frequencies[i] * t + phases[i])
+        
+        # Update plots
+        axs[0].stem(frequencies, amplitudes, basefmt=" ", use_line_collection=True)
+        axs[1].stem(frequencies, phases, basefmt=" ", use_line_collection=True)
+        axs[2].plot(t, signal)
+        
+        # Set titles and labels
+        axs[0].set_title('Amplitude Spectrum')
+        axs[0].set_xlabel('Frequency (Hz)')
+        axs[0].set_ylabel('Amplitude')
+        axs[0].grid()
+        
+        axs[1].set_title('Phase Spectrum')
+        axs[1].set_xlabel('Frequency (Hz)')
+        axs[1].set_ylabel('Phase (radians)')
+        axs[1].set_ylim(0, 2 * np.pi*1.05)
+        axs[1].grid()
+        
+        axs[2].set_title('Reconstructed Signal')
+        axs[2].set_xlabel('Time')
+        axs[2].set_ylabel('Signal Amplitude')
+        axs[2].grid()
+        axs[2].set_ylim(-2, 2)
+        
+        plt.tight_layout()
+
+    anim = FuncAnimation(fig, update, frames=np.arange(0, frames), blit=False)
+    
+    # Save animation
+    FFwriter = animation.FFMpegWriter(fps=fps, codec='libx264', extra_args=['-preset', 'veryslow', '-qp', '0'])
+    anim.save('amplitude_variation_animation.mp4', writer=FFwriter)
 ```
