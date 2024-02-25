@@ -17,7 +17,7 @@ Unlike shallow models like VGG etc, running featurevis on deeper models yield hi
 
 This proves that featurevis images contain a a much larger amount of high frequency components. The solution to this problem would be to constrain the power spectrum to lower frequency components only.
 
-Apart from constraining high frequencies, the method is also motivated by psychophysics experiments [1, 2] that have shown that  when viewing images, humans are more sensitive to differences in phase than in magnitude. The authors build an analogous mathematical constraint for featurevis which optimizes only the phase of the image and not the magnitudes of the frequency components. 
+Apart from constraining high frequencies, the method is also motivated by psychophysics experiments [1, 2] that have shown that  when viewing images, humans are more sensitive to differences in phase than in magnitude. The authors build an analogous mathematical constraint for featurevis which optimizes only the phase of each frequency component (wave) and not the magnitudes of the frequency components. 
 
 # Method
 
