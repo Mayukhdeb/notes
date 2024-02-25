@@ -9,7 +9,7 @@ posts = [
     Post(
         filename="content/post/2024-02-23-magnitude-constrained-featurevis.md",
         slug="2024-02-23-magnitude-constrained-featurevis",
-        title="MaCo - feature visualization for deeper networks",
+        title="MaCo - Feature Visualization for Deeper Networks",
     ),
     Post(
         filename="content/post/2024-02-10-optically-pumped-magnetometers.md",
