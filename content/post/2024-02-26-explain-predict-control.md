@@ -8,8 +8,6 @@ An Austrian investigator noticed this behaviour and did the following:
 
 He put a few crabs inside of a little aquarium which contained no pebbles. Instead it had some iron filings. The crabs then rubbed themselves against these filings to form their new statocysts. Then he came over near the aquarium with a magnet and managed to completely mess up the crab's sense of orientation. He could even fool the crab into walking up the wall.
 
-This is a good example of explain, predict and controlling behaviour.
-
 ---
 
 *The first step in any new scientific field is to know what to be astonished at.*
