@@ -1,8 +1,8 @@
-> *The following is a mix of my notes and thoughts on a lecture by Hans-Lukas Teuber. I've taken the liberty to re-arrange the order of the topics/ideas to my liking. You'll find some of the nice quotes from the lecture sprinkled around.*
+> *The following is a mix of my notes and thoughts on a lecture by [Hans-Lukas Teuber](https://en.wikipedia.org/wiki/Hans-Lukas_Teuber). I've taken the liberty to re-arrange the order of the topics/ideas to my liking. You'll find some of the nice quotes from the lecture sprinkled around.*
 
-A crab has an organ known as the Statolith. The little bubble that it sits inside of is called a Statocyst. This organ is the equivalent to that of an accelerometer. It helps the crab know which way is up. Unlike humans, crabs grow up in bursts. They shed their skin (carapace) during this statge. As the skin grows back, they exhibit an interesting behaviour:
+A crab has an organ known as the Statolith. The little bubble that it sits inside of is called a [Statocyst](https://en.wikipedia.org/wiki/Statocyst). This organ is the equivalent to that of an accelerometer. It helps the crab know which way is up. Unlike humans, crabs grow up in bursts. They shed their skin (shell) during this statge. As the skin grows back, they exhibit an interesting behaviour:
 
-They pick up a little pebble and rub against it to let a new statocyst form in the new carapace.
+They pick up a little pebble and rub against it to let a new statocyst form in the new shell.
 
 An Austrian investigator noticed this behaviour and did the following:
 
