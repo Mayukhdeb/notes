@@ -2,6 +2,11 @@ from papyrus.home import PapyrusHome, Post
 
 posts = [
     Post(
+        filename="content/post/2024-02-26-explain-predict-control.md",
+        slug="2024-02-26-explain-predict-control",
+        title="Explain, Predict and Control (Teuber 1974)",
+    ),
+    Post(
         filename="content/post/2024-02-24-phase-spectrum.md",
         slug="2024-02-24-phase-spectrum",
         title="The Phase Spectrum",
