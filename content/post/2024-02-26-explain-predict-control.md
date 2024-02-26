@@ -40,7 +40,7 @@ Note how the person never says that his eyes are paralysed. What is clear by now
 
 ---
 
-The goal of any science is to **explain, predict and control**. Astrophysics for example has been good at explain and predict. But it has not been able to control the starts whose properties can be easily explained or predicted.
+The goal of any science is to **explain, predict and control**. Astrophysics for example has been good at explain and predict. But it has not been able to control the stars whose properties can be easily explained or predicted.
 
 # Physiology is micro. Sociology is macro. Psychology is the dance in between.
 
